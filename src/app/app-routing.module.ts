@@ -259,7 +259,7 @@ const routes: Routes = [
         path: 'ext-interfaces',
         children: [
           {
-            path: 'ISO8583',
+            path: 'ISO8583',//tadinya ISO8583 (ext-int-iso8583) diganti jadi Terminal
             children: [
               {
                 path: '',

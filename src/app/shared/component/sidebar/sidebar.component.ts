@@ -73,12 +73,12 @@ export class SidebarComponent {
       ]
     },
     {
-      "text": "External Interface",
+      "text": "Test Data", //sebelumnya ext-int 
       "icon": "bx bx-coin-stack",
       "operation": "EXT_INT_MENU",
       "children": [
         {
-          "text": "ISO8583",
+          "text": "Terminal",//tadinya ISO8583 (ext-int-iso8583) diganti jadi Terminal
           "routerLink": "ext-interfaces/ISO8583",
           "operation": "VIEW_EXT_ISO8583",
         },

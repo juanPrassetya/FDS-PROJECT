@@ -5,26 +5,48 @@
         <div class="sc-first-row">
           <div class="field">
             <div class="sc-field-container">
+              <div class="sc-field-container">
               <div class="sc-first-text-field-1">
-                <span class="label-txt-field">Institution Name</span>
+                <span class="label-txt-field">username</span>
                 <input
                   class="input-sm"
                   pInputText
                   aria-describedby="username-help"
-                  formControlName="institutionName"
+                  formControlName="username"
+                />
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Email</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="email"
+                />
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Role</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="Role"
                 />
               </div>
             </div>
+            </div>
 
             <div class="search-button-container">
-              <button
+              <!-- <button
               mat-stroked-button
               color="warn"
               class="dialog-button"
               (click)="onReset()"
             >
               Reset
-            </button>
+            </button> -->
               <button
                 mat-raised-button
                 color="primary"
@@ -63,9 +85,9 @@
       >
         <ng-template pTemplate="caption">
           <div class="header-table">
-            <span style="font-size: 0.8rem; padding-left: 1rem">
-              Institution Data</span
-            >
+          <b>  <span style="font-size: 0.8rem; padding-left: 1rem">
+              Institution</span
+            ></b>
 
             <div class="table-func-container-2">
               <ng-template
@@ -116,16 +138,26 @@
 
         <ng-template pTemplate="header">
           <tr>
-            <th pResizableColumn>Id</th>
             <th pResizableColumn>Name</th>
-            <th pResizableColumn>Description</th>
+            <th pResizableColumn>Institution ID/BIN</th>
+            <th pResizableColumn>FIID</th>
+            <th pResizableColumn>Sexondary ID</th>
+            <th pResizableColumn>Comment</th>
+            <th pResizableColumn>External Version</th>
+            <th pResizableColumn>External Revision</th>
+
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product let-i="rowIndex">
           <tr [pSelectableRow]="product">
-            <td class="row-width">{{ product.id }}</td>
-            <td class="row-width">{{ product.institutionName }}</td>
-            <td class="row-width">{{ product.description }}</td>
+            <td class="row-width">{{ product.name }}</td>
+            <td class="row-width">{{ product.institutionID }}</td>
+            <td class="row-width">{{ product.fiid }}</td>
+            <td class="row-width">{{ product.sexondaryID }}</td>
+            <td class="row-width">{{ product.comment }}</td>
+            <td class="row-width">{{ product.extVersion }}</td>
+            <td class="row-width">{{ product.extRevision }}</td>
+
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
