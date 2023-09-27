@@ -1,0 +1,59 @@
+<p-dialog header="List" [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '70vw'}" [draggable]="false"
+          [resizable]="false" class="condition-type-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="condition-type-container">
+    <span class="condition-caption">'With the help of a list check, you can identify cases where the value of the transaction field is included in one of the pre-prepared lists</span>
+
+    <div class="constant-form-container" [formGroup]="form">
+      <div class="operand-a">
+        <span class="operand-caption">Operand A</span>
+        <span class="operand-title">Transaction Field</span>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Transaction Field</span>
+          <p-dropdown class="field-dropdown-sm" [options]="transParams" optionLabel="description"
+                      [placeholder]="'Select Field'" [filter]="true" filterBy="description" formControlName="transField_A"
+          ></p-dropdown>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">History by</span>
+          <p-dropdown class="field-dropdown-sm" [options]="dummyHistory" optionLabel="code"
+                      [placeholder]="'Select Field'" [filter]="true" filterBy="code" formControlName="history_A"
+          ></p-dropdown>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Depth</span>
+          <p-dropdown class="field-dropdown-sm" [options]="dummyDepth" optionLabel="code"
+                      [placeholder]="'Select Depth'" formControlName="depth_A"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="relation">
+        <p-divider align="center" class="search-divider">
+          <div class="common-text-field-relation-container">
+            <span class="label-txt-field">Relation</span>
+            <p-dropdown class="field-dropdown-sm" [options]="dummyOperator" optionLabel="code"
+                        [placeholder]="'Select Relation'" formControlName="relation"
+            ></p-dropdown>
+          </div>
+        </p-divider>
+      </div>
+      <div class="operand-b">
+        <span class="operand-caption">Operand B</span>
+        <span class="operand-title">List</span>
+
+
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">List Id</span>
+          <p-dropdown class="field-dropdown-sm" [options]="fraudList" optionLabel="listName"
+                      [placeholder]="'Select List'" [filter]="true" filterBy="listName" formControlName="list_B"
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()" (click)="onSave(form.getRawValue())">Save</button>
+    </div>
+  </div>
+</p-dialog>

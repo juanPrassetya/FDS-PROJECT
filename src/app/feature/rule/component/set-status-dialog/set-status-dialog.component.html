@@ -1,0 +1,24 @@
+<p-dialog [header]="'Set Status'" [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '30vw'}" [draggable]="false"
+          [resizable]="false" class="set-status-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="set-status-dialog-container" [formGroup]="form">
+    <div class="set-status-form-container">
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Status</span>
+        <p-dropdown class="field-dropdown" formControlName="status" [options]="dummyStatus" optionLabel="name"
+                    [placeholder]="'Select Status'" [filter]="true" filterBy="name"
+        ></p-dropdown>
+      </div>
+
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Comments</span>
+        <textarea formControlName="comment" rows="1" cols="20" class="input-sm input-area-nm" style="resize: none" pInputTextarea></textarea>
+      </div>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()" (click)="onSave(form.getRawValue())">Save</button>
+    </div>
+  </div>
+</p-dialog>

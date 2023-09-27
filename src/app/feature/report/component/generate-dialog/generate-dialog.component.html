@@ -1,0 +1,66 @@
+<p-dialog
+  [header]="'Generate Report'"
+  [(visible)]="isOpen"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  class="generate-report-dialog"
+  (onHide)="onClose()">
+  <div class="generate-report-dialog-container" [formGroup]="form">
+    <div class="generate-report-form-container">
+      <div class="generate-report-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Date In</span>
+          <p-calendar
+            formControlName="dateIn"
+            appendTo="body"
+            class="calender-field-pick"
+            [showIcon]="true"
+            [showTime]="true"
+            [showSeconds]="true"
+          ></p-calendar>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Date To</span>
+          <p-calendar
+            formControlName="dateOut"
+            appendTo="body"
+            class="calender-field-pick"
+            [showIcon]="true"
+            [showTime]="true"
+            [showSeconds]="true"
+          ></p-calendar>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-button-container">
+      <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onClose()">
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="dialog-button"
+        [disabled]="isValueNotValid()"
+        (click)="onGenerate()">
+        Generate
+      </button>
+    </div>
+  </div>
+</p-dialog>
+
+<ng-template [ngIf]="visibleExportDialog">
+  <app-report-export
+    [isOpen]="visibleExportDialog"
+    [itemSelected]="itemSelected"
+    [groupItemSelected]="groupItemSelected"
+    [data]="form.getRawValue()"
+    (closeSelf)="onCloseExport($event)"
+  ></app-report-export>
+</ng-template>

@@ -1,0 +1,281 @@
+<div class="json-body-field-main-container">
+
+
+  <div class="second-container">
+    <p-card class="iso8583-body-card">
+      <p-table
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [value]="bodyFields"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="15"
+        [scrollHeight]="'50vh'"
+        selectionMode="single"
+        [(selection)]="selectedEndpoint"
+        (onRowSelect)="onEndpointSelect($event)"
+        dataKey="url"
+        class="ext-int-json-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <!-- Main Table Header -->
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Endpoint/State/Field</th>
+            <th style="width: 10rem">Type</th>
+            <th style="width: 10rem">Length</th>
+            <th style="width: 10rem">Sequence</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+            >Endpoint Data</span
+            >
+
+            <div class="table-func-container-2">
+              <button
+                type="button"
+                pButton
+                pRipple
+                icon="bx bx-layer-plus"
+                matTooltip="Add"
+                [disabled]="disabledAddBtn()"
+                (click)="onAddEndPointDialog()"
+                [matTooltipPosition]="'below'"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                (click)="onUpdateEndPointDialog()"
+                [disabled]="disabledUpdateBtn()"
+                icon="bx bx-edit"
+                matTooltip="Edit Endpoint"
+                [matTooltipPosition]="'below'"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                icon="bx bx-trash-alt"
+                [disabled]="disabledDeleteBtn()"
+                (click)="onDeleteJsonBodyDialog()"
+                matTooltip="Delete Endpoint"
+                [matTooltipPosition]="'below'"
+                class="p-button-danger"
+              ></button>
+            </div>
+          </div>
+        </ng-template>
+
+        <!-- Main Table Body -->
+        <ng-template pTemplate="body" let-endpoint let-expanded="expanded">
+          <tr [pSelectableRow]="endpoint">
+            <td>
+              <div style="display: flex; align-items: center; gap: 0.5rem">
+                <button
+                  mat-icon-button
+                  [pRowToggler]="endpoint"
+                  class="toggle-btn-json"
+                >
+                  <span
+                    [class]="
+                      expanded ? 'bx bx-chevron-down' : 'bx bx-chevron-right'
+                    "
+                  ></span>
+                </button>
+                <span>/{{ endpoint.url }}</span>
+              </div>
+            </td>
+            <td>{{ endpoint.type }}</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="4">There is no body field.</td>
+          </tr>
+        </ng-template>
+
+        <!-- Row Expansion for States -->
+        <ng-template pTemplate="rowexpansion" let-endpoint>
+          <tr>
+            <td colspan="4" style="padding: 0">
+              <p-table
+                [value]="endpoint.states"
+                selectionMode="single"
+                [(selection)]="selectedState"
+                (onRowSelect)="onStateSelect($event, endpoint)"
+                dataKey="key"
+                class="state-table"
+              >
+                <!-- Table Body for States -->
+                <ng-template
+                  pTemplate="body"
+                  let-state
+                  let-expanded1="expanded"
+                >
+                  <tr class="row-state" [pSelectableRow]="state">
+                    <td class="row-expand">
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          gap: 0.5rem;
+                          padding-left: 1rem;
+                        "
+                      >
+                        <button
+                          mat-icon-button
+                          [pRowToggler]="state"
+                          [pRowTogglerDisabled]="
+                            checkExpandButtonStatus(state.configs)
+                          "
+                          (click)="selectedStateBtn(state, endpoint)"
+                          [disabled]="checkExpandButtonStatus(state.configs)"
+                          class="toggle-btn-json"
+                          [style]="checkExpandButtonStyle(state.configs)"
+                        >
+                          <span
+                            [class]="
+                              expanded1
+                                ? 'bx bx-chevron-down'
+                                : 'bx bx-chevron-right'
+                            "
+                          ></span>
+                        </button>
+                        <span>{{ state.state }}</span>
+                      </div>
+                    </td>
+                    <td style="width: 10rem"></td>
+                    <td style="width: 10rem"></td>
+                    <td style="width: 10rem"></td>
+                  </tr>
+                </ng-template>
+
+                <!-- Row Expansion for Field Config -->
+                <ng-template pTemplate="rowexpansion" let-state>
+                  <ng-container
+                    *ngTemplateOutlet="
+                      nestedFieldConfigRow;
+                      context: { data: state.configs, level: 0 }
+                    "
+                  ></ng-container>
+                </ng-template>
+              </p-table>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <ng-template #nestedFieldConfigRow let-v1="data" let-level="level">
+        <tr>
+          <td
+            colspan="4"
+            class="row-expand"
+            style="padding: 0; border-bottom: unset"
+          >
+            <div>
+              <p-table
+                [value]="v1"
+                selectionMode="single"
+                [(selection)]="selectedFieldConfig"
+                (onRowSelect)="onSelectedFieldConfig($event)"
+                dataKey="id"
+                class="config-table"
+              >
+                <!-- Table Body for Field Config -->
+                <ng-template
+                  pTemplate="body"
+                  let-config
+                  let-expanded2="expanded"
+                >
+                  <tr class="row-ex" [pSelectableRow]="config">
+                    <td class="row-expand1">
+                      <div
+                        [style.padding-left.rem]="calculatePadding(level)"
+                        style="display: flex; align-items: center; gap: 0.5rem"
+                      >
+                        <button
+                          mat-icon-button
+                          [pRowToggler]="config"
+                          [pRowTogglerDisabled]="
+                            checkExpandButtonStatus(config.childField)
+                          "
+                          (click)="selectedChildFieldBtn(config)"
+                          [disabled]="
+                            checkExpandButtonStatus(config.childField)
+                          "
+                          class="toggle-btn-json"
+                          [style]="checkExpandButtonStyle(config.childField)"
+                        >
+                          <span
+                            [class]="
+                              expanded2
+                                ? 'bx bx-chevron-down'
+                                : 'bx bx-chevron-right'
+                            "
+                          ></span>
+                        </button>
+                        <span>{{ config.fieldName }}</span>
+                      </div>
+                    </td>
+                    <td style="width: 10rem">
+                      {{ config.dataType.description }}
+                    </td>
+                    <td style="width: 10rem">{{ config.length }}</td>
+                    <td style="width: 10rem">{{ config.sequence }}</td>
+                  </tr>
+                </ng-template>
+
+                <!-- Row Expansion for Child Config -->
+                <ng-template pTemplate="rowexpansion" let-config>
+                  <ng-container
+                    *ngTemplateOutlet="
+                      nestedFieldConfigRow;
+                      context: { data: config.childField, level: level + 1 }
+                    "
+                  ></ng-container>
+                </ng-template>
+              </p-table>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-card>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+<ng-template [ngIf]="visibleEndpointDialog">
+  <app-json-endpoint-dialog
+    (isOpen)="(visibleEndpointDialog)"
+    [selectedItem]="selectedEndpoint"
+    (closeSelf)="onCloseEndpointDialog($event)"
+    [dialogMode]="dialogMode"
+    (isLoading)="onLoading($event)"
+  ></app-json-endpoint-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleFieldConfigDialog">
+  <app-json-body-field-config-dialog
+    (isOpen)="(visibleEndpointDialog)"
+    [endpointId]="endpointId"
+    [states]="states"
+    [prevParentField]="prevParentField"
+    [childConfigId]="configChildParentId"
+    [levelConfig]="level"
+    [selectedItem]="selectedFieldConfig"
+    (closeSelf)="onCloseFieldConfigDialog($event)"
+    [dialogMode]="dialogMode"
+    (isLoading)="onLoading($event)"
+  >
+  </app-json-body-field-config-dialog>
+</ng-template>

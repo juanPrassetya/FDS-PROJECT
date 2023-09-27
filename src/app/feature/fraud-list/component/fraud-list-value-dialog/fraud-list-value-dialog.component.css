@@ -1,0 +1,37 @@
+.crud-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem
+}
+
+.crud-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem
+}
+
+.common-text-field-dialog-container {
+  width: 100%;
+}
+
+.common-text-field-relation-container {
+  width: 10vw;
+  margin-bottom: 1.5rem;
+}
+
+.dialog-button-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.dialog-button {
+  width: 100px;
+  font-size: .8rem;
+}
+
+/*NG DEEP*/
+::ng-deep .crud-dialog .p-dialog-content {
+  overflow-y: unset;
+}

@@ -1,0 +1,75 @@
+<p-dialog header="Alert Case Detail" class="alert-case-container"
+          [modal]="true" [(visible)]="isOpen"
+          [position]="'right'" [draggable]="false"
+          [resizable]="false"
+          (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [style]="{ width: '30vw', height: '100vh' }">
+  <p-tabView class="alert-case-tab">
+    <p-tabPanel header="Information">
+      <div class="information-container">
+        <div class="alert-case-field-container">
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.case_id)">
+            <span class="label-txt-field">Case Id</span>
+            <span class="value-txt">{{selectedItem?.case_id}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.utrnno)">
+            <span class="label-txt-field">Utrnno</span>
+            <span class="value-txt">{{selectedItem?.utrnno}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.hpan)">
+            <span class="label-txt-field">HPAN</span>
+            <span class="value-txt">{{selectedItem?.hpan}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.clasification_type)">
+            <span class="label-txt-field">Classification Type</span>
+            <span class="value-txt">{{getClassified(selectedItem?.clasification_type)}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.action_type)">
+            <span class="label-txt-field">Action Type</span>
+            <span class="value-txt">{{getActionDesc(selectedItem?.action_type)}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.classified_date)">
+            <span class="label-txt-field">Classified Date</span>
+            <span class="value-txt">{{DateUtils.ConvertToDateFormat(selectedItem?.classified_date)}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.action_date)">
+            <span class="label-txt-field">Action Date</span>
+            <span class="value-txt">{{DateUtils.ConvertToDateFormat(selectedItem?.action_date)}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.last_update)">
+            <span class="label-txt-field">Last Date</span>
+            <span class="value-txt">{{DateUtils.ConvertToDateFormat(selectedItem?.last_update)}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.initiator)">
+            <span class="label-txt-field">Initiator</span>
+            <span class="value-txt">{{selectedItem?.initiator}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.forwarded_to)">
+            <span class="label-txt-field">Forwarded To</span>
+            <span class="value-txt">{{selectedItem?.forwarded_to}}</span>
+          </div>
+
+          <div class="text-field-alert-case-desc" *ngIf="isAvailable(selectedItem?.case_comment)">
+            <span class="label-txt-field">Case Comment</span>
+            <span class="value-txt-desc">{{selectedItem?.case_comment}}</span>
+          </div>
+
+          <div class="text-field-alert-case-desc" *ngIf="isAvailable(selectedItem?.clasified_comment)">
+            <span class="label-txt-field">Classified Comment</span>
+            <span class="value-txt-desc">{{selectedItem?.clasified_comment}}</span>
+          </div>
+        </div>
+
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>

@@ -1,0 +1,32 @@
+export class TransactionDomain {
+  id: number = 0
+  acct1: string = ''
+  acct2: string = ''
+  acctBalance: string = ''
+  acqInstitCode: string = ''
+  amount: string = ''
+  currency: string = ''
+  desInstitCode: string = ''
+  feeAmount: string = ''
+  fraudFlags: number = 0
+  hpan: string = ''
+  issInstitCode: string = ''
+  merchantType: string = ''
+  posDataCode: string = ''
+  prcCode:string = ''
+  refNum: string = ''
+  respCode: string = ''
+  respCodeDesc: string = ''
+  stan: string = ''
+  sysdate: string = ''
+  terminalAddress: string = ''
+  terminalId: string = ''
+  transType: string = ''
+  transTypeDesc: string = ''
+  utrnno: number = 0;
+  pid: string = ''
+  checked: boolean = false
+  isAlerted: boolean = false
+  cifId: string = ''
+  ruleTrigger: number = 0
+}

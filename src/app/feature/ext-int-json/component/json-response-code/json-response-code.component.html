@@ -1,0 +1,147 @@
+<div class="json-response-code-main-container">
+  <div class="first-container">
+    <div class="search-container" [formGroup]="formGroup">
+      <div class="sc-first-row">
+        <div class="field">
+          <div class="sc-field-container">
+            <div class="sc-first-text-field-1">
+              <span class="label-txt-field">Int Response Code</span>
+              <p-dropdown
+                class="field-dropdown-sm"
+                [options]="intRespCodes"
+                [filter]="true"
+                optionLabel="description"
+                formControlName="intResp"
+                placeholder="Select Int Response Code"
+                [showClear]="true"
+              ></p-dropdown>
+            </div>
+
+            <div class="sc-first-text-field-1">
+              <span class="label-txt-field">Response Code</span>
+              <input
+                class="input-sm"
+                pInputText
+                aria-describedby="username-help"
+                formControlName="respCode"
+              />
+            </div>
+          </div>
+
+          <div class="search-button-container">
+            <button
+            mat-stroked-button
+            color="warn"
+            class="dialog-button"
+            (click)="onReset()"
+          >
+            Reset
+          </button>
+            <button
+              mat-raised-button
+              color="primary"
+              class="sc-search-button"
+              (click)="onSearchClicked(formGroup.getRawValue())"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="second-container">
+    <p-card class="iso8583-body-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="responseCodeItems"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [scrollable]="true"
+        [rows]="15"
+        [(selection)]="selectedResponseCode"
+        dataKey="id"
+        scrollHeight="50vh"
+        class="rule-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+              <span style="font-size: 0.8rem; padding-left: 1rem"
+              >Response Code Data</span
+              >
+
+            <div class="table-func-container-2">
+              <button
+                type="button"
+                pButton
+                pRipple
+                icon="bx bx-layer-plus"
+                (click)="onClickedResponseCode()"
+                matTooltip="Add Response Code"
+                [matTooltipPosition]="'below'"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                [disabled]="selectedResponseCode == undefined"
+                icon="bx bx-edit"
+                (click)="onUpdateResponseCode()"
+                matTooltip="Edit Response Code"
+                [matTooltipPosition]="'below'"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                [disabled]="selectedResponseCode == undefined"
+                icon="bx bx-trash-alt"
+                (click)="onDeleteResponseCode()"
+                matTooltip="Delete Response Code"
+                [matTooltipPosition]="'below'"
+                class="p-button-danger"
+              ></button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Response Code</th>
+            <th pResizableColumn>Int Response Code</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr [pSelectableRow]="product">
+            <td class="row-width-xs">{{ product.respCode }}</td>
+            <td class="row-width">{{ product.intResp?.description }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="3">There is no response code.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<app-json-response-code-dialog
+  [isOpen]="visibleResponseCodeDialog"
+  [selectedItem]="selectedResponseCode"
+  [dialogMode]="dialogMode"
+  (closeSelf)="onCloseResponseCode($event)"
+  (isLoading)="onLoading($event)"
+>
+</app-json-response-code-dialog>

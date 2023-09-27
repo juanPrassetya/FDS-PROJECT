@@ -1,0 +1,63 @@
+.condition-type-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem
+}
+
+.condition-caption {
+  font-size: .6rem;
+}
+
+.constant-form-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-flow: column;
+  align-items: center;
+}
+
+.operand-a,
+.operand-b {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: .5rem 1rem 1rem;
+  gap: 10px;
+  height: 100%;
+  position: relative;
+}
+
+.operand-title {
+  font-size: 1rem;
+  font-weight: 600;
+  padding-bottom: 10px;
+}
+
+.operand-caption {
+  width: 100%;
+  text-align: start;
+  font-size: .7rem;
+  padding-bottom: .2rem;
+}
+
+.common-text-field-dialog-container {
+  width: 100%;
+}
+
+.common-text-field-relation-container {
+  width: 10vw;
+  margin-bottom: 1.5rem;
+}
+
+.dialog-button-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.dialog-button {
+  width: 100px;
+  font-size: .8rem;
+}

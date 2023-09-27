@@ -1,0 +1,305 @@
+<div class="white-list-main-container">
+  <div class="first-container">
+    <p-card class="search-card">
+      <div class="search-container" [formGroup]="formGroup">
+        <div class="sc-first-row">
+          <div class="field">
+            <div class="sc-field-container">
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Date In</span>
+                <p-calendar
+                  appendTo="body"
+                  class="calender-field-pick-sm"
+                  [showIcon]="true"
+                  formControlName="dateIn"
+                  [showButtonBar]="true"
+                ></p-calendar>
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Date Out</span>
+                <p-calendar
+                  appendTo="body"
+                  class="calender-field-pick-sm"
+                  [showIcon]="true"
+                  formControlName="dateOut"
+                  [showButtonBar]="true"
+                ></p-calendar>
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Value</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="value"
+                />
+              </div>
+            </div>
+
+            <div class="search-button-container">
+              <button
+                mat-mini-fab
+                color="primary"
+                class="sc-mini-search-button"
+                (click)="showAddtSearchFilter()"
+              >
+                <span class="bx bxs-chevron-down"></span>
+              </button>
+
+              <button
+                mat-raised-button
+                color="primary"
+                class="sc-search-button"
+                (click)="onSearchClicked(formGroup.getRawValue())"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="second-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="whiteListItems"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="15"
+        [(selection)]="selectedWhiteListItem"
+        (onRowSelect)="onListClicked()"
+        (onRowUnselect)="onListUnClicked()"
+        dataKey="id"
+        class="white-list-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+              >White List Data</span
+            >
+
+            <div class="table-func-container-2">
+              <button type="button" pButton pRipple class="btn-with-txt-prime"
+                      (click)="onClickedAction()"
+                      matTooltip="Take Action" [matTooltipPosition]="'below'">
+                Action
+              </button>
+
+              <ng-template
+                [ngIf]="
+                  StringUtils.findOperations(authorities, 'ADD_WHITE_LIST')
+                "
+              >
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  icon="bx bx-layer-plus"
+                  (click)="onClickedAddListDialog()"
+                  matTooltip="Add White List"
+                  [matTooltipPosition]="'below'"
+                ></button>
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedWhiteListItem == undefined"
+                  icon="bx bx-edit"
+                  (click)="onClickedEditListDialog()"
+                  matTooltip="Edit White List"
+                  [matTooltipPosition]="'below'"
+                ></button>
+              </ng-template>
+
+              <ng-template
+                [ngIf]="
+                  StringUtils.findOperations(authorities, 'DELETE_WHITE_LIST')
+                "
+              >
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedWhiteListItem == undefined"
+                  icon="bx bx-trash-alt"
+                  (click)="onClickedDeleteList()"
+                  matTooltip="Delete White List"
+                  [matTooltipPosition]="'below'"
+                  class="p-button-danger"
+                ></button>
+              </ng-template>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Date In</th>
+            <th pResizableColumn>Date Out</th>
+            <th pResizableColumn>Value</th>
+            <th pResizableColumn>Entity Type</th>
+<!--            <th pResizableColumn>Group</th>-->
+            <th pResizableColumn></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-i="rowIndex">
+          <tr [pSelectableRow]="product">
+            <td class="row-width-xs">
+              {{ DateUtils.ConvertToDateFormat(product.dateIn) }}
+            </td>
+            <td class="row-width-xs">
+              {{ DateUtils.ConvertToDateFormat(product.dateOut) }}
+            </td>
+            <td class="row-width">{{ product.value }}</td>
+            <td class="row-width">{{ product.entityType }}</td>
+<!--            <td class="row-width">{{ product?.userGroup?.groupName }}</td>-->
+            <td class="row-width-xs">
+              <button
+                mat-raised-button
+                class="detail-btn"
+                (click)="onDetailClicked(product)"
+                matTooltip="View Details Data"
+                [matTooltipPosition]="'below'"
+                [disabled]="selectedWhiteListItem == undefined"
+              >
+                <div class="detail-container">
+                  <span class="detail-text">Details</span>
+                </div>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="6">There is no white list.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<!--Search Filter DIALOG-->
+<ng-template [ngIf]="visibleSearchDialog">
+  <p-dialog header="Search Filter" [(visible)]="visibleSearchDialog" [modal]="true" [style]="{ width: '50vw' }"
+            [draggable]="false" [resizable]="false" class="search-dialog">
+    <div class="addt-search-filter-container" [formGroup]="formGroup">
+
+      <div class="search-addt-field">
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Date In</span>
+          <p-calendar
+                  appendTo="body"
+                  class="calender-field-pick"
+                  [showIcon]="true"
+                  formControlName="dateIn"
+                  [showButtonBar]="true"
+                ></p-calendar>
+        </div>
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Date Out</span>
+          <p-calendar
+                  appendTo="body"
+                  class="calender-field-pick"
+                  [showIcon]="true"
+                  formControlName="dateOut"
+                  [showButtonBar]="true"
+                ></p-calendar>
+        </div>
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Value</span>
+          <input formControlName="value" pInputText aria-describedby="username-help"/>
+        </div>
+      </div>
+
+      <p-divider align="center" class="search-divider">
+        <span style="font-size: 0.8rem; color: var(--inactive-txt-color); margin-top: 2px; opacity: .5">Additional Search Filter</span>
+      </p-divider>
+
+      <div class="addt-row-container">
+        <div class="addt-row" *ngFor="let filterField of searchFilterFields | keyvalue">
+          <div class="addt-text-field" *ngFor="let row of filterField.value">
+            <span class="label-txt-field">{{row.name}}</span>
+            <input [formControlName]="row.field"  *ngIf="row.type == 1" pInputText [id]="row.name"/>
+            <p-dropdown [showClear]="true" appendTo="body" formControlName="entityType" class="field-dropdown" *ngIf="row.type == 2" [options]="entityTypes" optionLabel="attribute"
+                        [placeholder]="'Select ' + row.name.toLowerCase()"></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="addt-button-container">
+        <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onReset()"
+      >
+        Reset
+      </button>
+        <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+        <p-button label="Search" class="addt-button" icon="pi pi-search" (click)="onSearchClicked(formGroup.getRawValue())"></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleActionDialog">
+  <p-dialog header="List Action" [(visible)]="visibleActionDialog" [modal]="true" [style]="{ width: 'fit-content'}"
+            [draggable]="false"
+            [resizable]="false">
+    <div class="action-container">
+      <p-button (onClick)="onClickedImport()" class="action-main-container"
+                styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>Import White List</span>
+        </div>
+      </p-button>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleWhiteListDialog">
+  <!--CRUD White List Dialog-->
+  <app-white-list-dialog
+    [isOpen]="visibleWhiteListDialog"
+    [itemSelected]="selectedWhiteListItem"
+    (closeSelf)="onCloseListDialog($event)"
+    (isLoading)="onLoading($event)"
+    [dialogMode]="dialogMode"
+  ></app-white-list-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleWhiteListDetailDialog">
+  <!--White List Detail Dialog-->
+  <app-white-list-detail
+    [isOpen]="visibleWhiteListDetailDialog"
+    [selectedItem]="selectedWhiteListItem"
+    (closeSelf)="onCloseDetail($event)"
+  ></app-white-list-detail>
+</ng-template>
+
+<ng-template [ngIf]="visibleImportWhiteDialog">
+  <app-white-list-import-dialog
+    [isOpen]="visibleImportWhiteDialog"
+    (closeSelf)="onCloseImport($event)"
+    (isLoading)="onLoading($event)"
+  ></app-white-list-import-dialog>
+</ng-template>
+

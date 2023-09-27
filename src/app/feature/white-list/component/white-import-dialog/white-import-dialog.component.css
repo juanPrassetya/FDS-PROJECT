@@ -1,0 +1,20 @@
+.import-white-list-dialog-container {
+  @apply
+  se-w-full
+  se-flex se-flex-col se-gap-[30px]
+}
+
+.import-white-list-form-container {
+  @apply
+  se-w-full
+  se-flex se-flex-col se-justify-center se-gap-[10px]
+}
+
+/*NG DEEP*/
+::ng-deep .import-white-list-dialog .p-dialog-content {
+  overflow-y: unset !important;
+}
+
+::ng-deep .import-white-list-dialog .p-dialog .p-dialog-content {
+  padding: 0 1.5rem 1rem;
+}

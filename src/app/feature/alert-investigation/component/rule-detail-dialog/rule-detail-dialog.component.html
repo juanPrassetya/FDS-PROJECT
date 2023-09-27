@@ -1,0 +1,7 @@
+<p-dialog [header]="'Rule Detail'" [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '80vw'}" [draggable]="false" [maximizable]="true"
+          [resizable]="false" class="card-detail-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="card-detail-dialog-container">
+    <p-tree [value]="ruleInfo" class="rule-tree"></p-tree>
+  </div>
+</p-dialog>

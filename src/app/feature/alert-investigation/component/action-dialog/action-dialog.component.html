@@ -1,0 +1,107 @@
+<p-dialog [header]="'Take Action'" [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '50vw'}" [draggable]="false"
+          [resizable]="false" class="alert-investigation-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="alert-investigation-dialog-container" [formGroup]="form">
+    <div class="alert-investigation-form-container">
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Action Type</span>
+        <p-dropdown appendTo="body" class="field-dropdown" formControlName="actionType" [options]="dummyActionType" optionLabel="name"
+                    [placeholder]="'Select Classification Type'" [filter]="true" filterBy="name"
+                    (onChange)="actionChecker($event)"
+        ></p-dropdown>
+      </div>
+
+      <ng-container *ngIf="isActionField('92')">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Username</span>
+          <p-dropdown appendTo="body" class="field-dropdown" formControlName="username" [options]="userList" optionLabel="username"
+                      [placeholder]="'Select Username'" [filter]="true" filterBy="username"
+          ></p-dropdown>
+        </div>
+
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Comments</span>
+          <textarea formControlName="comment" rows="1" cols="20" class="input-sm input-area-nm" style="resize: none"
+                    pInputTextarea></textarea>
+        </div>
+      </ng-container>
+
+      <div class="common-text-field-dialog-container" *ngIf="isActionField('91')">
+        <span class="label-txt-field-sm">Comments</span>
+        <textarea formControlName="comment" rows="1" cols="20" class="input-sm input-area-nm" style="resize: none"
+                  pInputTextarea></textarea>
+      </div>
+
+      <ng-container *ngIf="isActionList()">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">List</span>
+          <p-dropdown appendTo="body" class="field-dropdown" [options]="fraudLists" optionLabel="listName"
+                      [placeholder]="'Select List'" [filter]="true" filterBy="listName" formControlName="listId"
+          ></p-dropdown>
+        </div>
+
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-normal">Value</span>
+          <input formControlName="value" pInputText/>
+        </div>
+
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Comments</span>
+          <textarea formControlName="comment" rows="1" cols="20" class="input-sm input-area-nm" style="resize: none"
+                    pInputTextarea></textarea>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="isWhiteBlackList()">
+        <div class="white-first-form">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Value</span>
+            <input class="input" pInputText formControlName="value"/>
+          </div>
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Entity Type</span>
+            <input formControlName="entityType" pInputText/>
+          </div>
+        </div>
+        <div class="white-first-form">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Date In</span>
+            <p-calendar formControlName="dateIn" appendTo="body" class="calender-field-pick" [showIcon]="true"
+                        [showTime]="true" [showSeconds]="true"></p-calendar>
+          </div>
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Date To</span>
+            <p-calendar formControlName="dateOut" appendTo="body" class="calender-field-pick" [showIcon]="true"
+                        [showTime]="true" [showSeconds]="true"></p-calendar>
+          </div>
+        </div>
+        <div class="white-first-form">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Reason</span>
+            <input class="input" formControlName="reason" pInputText/>
+          </div>
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">User Group</span>
+            <p-dropdown appendTo="body" class="field-dropdown" formControlName="userGroup" [options]="userGroups"
+                        optionLabel="groupName"
+                        [placeholder]="'Select User Group'" [filter]="true" filterBy="groupName"
+            ></p-dropdown>
+          </div>
+        </div>
+
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Comments</span>
+          <textarea formControlName="comment" rows="1" cols="20" class="input-sm input-area-nm" style="resize: none"
+                    pInputTextarea></textarea>
+        </div>
+      </ng-container>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()"
+              (click)="onSave(form.getRawValue())">Save
+      </button>
+    </div>
+  </div>
+</p-dialog>

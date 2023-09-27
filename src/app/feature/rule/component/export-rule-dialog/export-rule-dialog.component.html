@@ -1,0 +1,98 @@
+<p-dialog
+  [header]="'Export Rule'"
+  [(visible)]="isOpen"
+  [modal]="true"
+  [style]="{ width: '70vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  class="import-rule-dialog"
+  (onShow)="onDialogVisible()"
+  (onHide)="onClose()"
+>
+  <div class="condition-type-container">
+    <span class="condition-caption"
+      >Please select rule that want to be exported</span
+    >
+
+    <div class="second-container">
+      <p-card class="table-card">
+        <p-table
+          #dt
+          [tableStyle]="{ 'min-width': '50rem' }"
+          [resizableColumns]="true"
+          [value]="items"
+          selectionMode="multiple"
+          [paginator]="true"
+          [exportHeader]="'customExportHeader'"
+          [showCurrentPageReport]="true"
+          [(selection)]="selectedListIds"
+          (onRowSelect)="onRowSelect($event)"
+          (onRowUnselect)="onRowUnselect($event)"
+          [scrollable]="true"
+          [rows]="10"
+          dataKey="ruleId"
+          class="rule-table"
+          styleClass="p-datatable-sm p-datatable-gridlines"
+        >
+          <ng-template pTemplate="caption">
+            <p-tableHeaderCheckbox (click)="selectAll($event)"></p-tableHeaderCheckbox>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>Rule Id</th>
+              <th pResizableColumn>Rule Name</th>
+              <th pResizableColumn>Author</th>
+              <th pResizableColumn>Status</th>
+              <th pResizableColumn>Active</th>
+              <th pResizableColumn>Date From</th>
+              <th pResizableColumn>Date To</th>
+              <th pResizableColumn>Priority</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product let-i="rowIndex">
+            <tr [pSelectableRow]="product">
+              <td class="row-width-xs">{{ product.ruleId }}</td>
+              <td class="row-width">{{ product.ruleName }}</td>
+              <td class="row-width">{{ product.author }}</td>
+              <td class="row-width">{{ charReplacement(product.status) }}</td>
+              <td class="row-width">
+                {{ StringUtils.converterOption(product.isActive) }}
+              </td>
+              <td class="row-width">
+                {{ DateUtils.ConvertToDateFormat(product.dateFrom) }}
+              </td>
+              <td class="row-width">
+                {{ DateUtils.ConvertToDateFormat(product.dateTo) }}
+              </td>
+              <td class="row-width">{{ product.priority }}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr style="">
+              <td colspan="10">There is no rule.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+    <div class="dialog-button-container">
+      <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="this.listIds.length == 0"
+        (click)="onSave()"
+        class="dialog-button"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</p-dialog>

@@ -1,0 +1,91 @@
+<p-dialog header="Audit Detail" class="user-audit-detail-container"
+          [modal]="true" [(visible)]="isOpen"
+          [position]="'right'" [draggable]="false"
+          [resizable]="false"
+          (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [style]="{ width: '30vw', height: '100vh' }">
+  <p-tabView class="user-audit-detail-tab">
+    <p-tabPanel header="Information">
+      <div class="information-container">
+        <div class="user-audit-detail-field-container">
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.auditId)">
+            <span class="label-txt-field">Audit Id</span>
+            <span class="value-txt">{{selectedItem?.auditId}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.user?.username)">
+            <span class="label-txt-field">Username</span>
+            <span class="value-txt">{{selectedItem?.user?.username}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.user?.role?.roleName)">
+            <span class="label-txt-field">Role</span>
+            <span class="value-txt">{{selectedItem?.user?.role?.roleName}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.user?.userGroup?.groupName)">
+            <span class="label-txt-field">User Group</span>
+            <span class="value-txt">{{selectedItem?.user?.userGroup?.groupName}}</span>
+          </div>
+
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.user?.institution?.institutionName)">
+            <span class="label-txt-field">Institution</span>
+            <span class="value-txt">{{selectedItem?.user?.institution?.institutionName}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.captureDate)">
+            <span class="label-txt-field">Capture Date</span>
+            <span class="value-txt">{{selectedItem?.captureDate}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.remoteAddress)">
+            <span class="label-txt-field">Remote Address</span>
+            <span class="value-txt">{{selectedItem?.remoteAddress}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.host)">
+            <span class="label-txt-field">Host Address</span>
+            <span class="value-txt">{{selectedItem?.host}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.uri)">
+            <span class="label-txt-field">Endpoint</span>
+            <span class="value-txt">{{selectedItem?.uri}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.method)">
+            <span class="label-txt-field">Method</span>
+            <span class="value-txt">{{selectedItem?.method}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.status)">
+            <span class="label-txt-field">Status</span>
+            <span class="value-txt">{{selectedItem?.status}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.timeTaken)">
+            <span class="label-txt-field">Elapsed Time</span>
+            <span class="value-txt">{{selectedItem?.timeTaken}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.reqContentType)">
+            <span class="label-txt-field">Request Type</span>
+            <span class="value-txt">{{selectedItem?.reqContentType}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail" *ngIf="StringUtils.isAvailable(selectedItem?.respContentType)">
+            <span class="label-txt-field">Response Type</span>
+            <span class="value-txt">{{selectedItem?.respContentType}}</span>
+          </div>
+
+          <div class="text-field-user-audit-detail-desc" *ngIf="StringUtils.isAvailable(selectedItem?.userAgent)">
+            <span class="label-txt-field">Agent</span>
+            <span class="value-txt-desc">{{selectedItem?.userAgent}}</span>
+          </div>
+
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>

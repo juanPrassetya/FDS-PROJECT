@@ -1,0 +1,22 @@
+.overlay-loading-container {
+  height: 5rem;
+  width: 5rem;
+  background: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 3rem;
+  gap: 10px;
+  font-size: .8rem;
+}
+
+.loading-caption {
+  color: #808080;
+}
+
+::ng-deep .p-blockui-document.p-component-overlay {
+  z-index: 9999;
+}

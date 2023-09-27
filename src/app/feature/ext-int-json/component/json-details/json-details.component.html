@@ -1,0 +1,35 @@
+<div class="json-detail-main-container">
+  <div class="first-container">
+    <p-tabView class="json-detail-tab" (onChange)="onTabChange($event)">
+      <p-tabPanel header="General Setting">
+        <app-json-general-setting
+          (isLoading)="onLoading($event)"
+        ></app-json-general-setting>
+      </p-tabPanel>
+
+      <p-tabPanel header="Header Field">
+        <app-json-header-field></app-json-header-field>
+      </p-tabPanel>
+
+      <p-tabPanel header="Body Field">
+        <app-json-body-field></app-json-body-field>
+      </p-tabPanel>
+
+      <p-tabPanel header="Transaction Parameter">
+        <app-json-transaction-param></app-json-transaction-param>
+      </p-tabPanel>
+
+      <p-tabPanel header="Response Code">
+        <app-json-response-code></app-json-response-code>
+      </p-tabPanel>
+
+      <p-tabPanel header="Transaction Type">
+        <app-json-transaction-type></app-json-transaction-type>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>

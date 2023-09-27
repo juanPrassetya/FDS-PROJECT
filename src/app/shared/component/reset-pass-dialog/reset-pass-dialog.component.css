@@ -1,0 +1,85 @@
+.black-list-dialog-container {
+  @apply se-w-full
+  se-flex se-flex-col se-gap-[30px];
+}
+
+.black-form-container {
+  @apply se-w-full
+  se-flex se-flex-col se-justify-center se-gap-[10px];
+}
+
+.common-text-field-dialog-container {
+  @apply
+  se-w-full
+}
+
+.label-txt-field-sm {
+  @apply
+  se-text-[.8rem]
+  se-font-semibold
+}
+
+.dialog-button-container {
+  @apply
+  se-flex se-justify-end se-gap-[15px]
+}
+
+.dialog-button {
+  @apply
+  se-w-[100px] se-text-[.8rem]
+}
+
+/*NG DEEP*/
+::ng-deep .action-dialog .p-dialog-content {
+  overflow-y: unset !important;
+}
+
+
+.reset-form-container {
+  @apply se-h-[400px] se-w-[500px]
+  se-rounded-xl
+  se-bg-white
+  se-flex se-flex-col se-justify-between
+  se-p-8;
+}
+
+.reset-form-title-container {
+  @apply se-flex se-flex-col se-justify-start se-gap-4 se-pb-2;
+}
+
+.reset-pass-form-title {
+  @apply se-text-xl/[1rem]
+  se-font-semibold;
+}
+
+.reset-pass-form-caption {
+  @apply se-text-xs
+  se-text-slate-500;
+}
+
+.reset-pass-field-container {
+  @apply se-w-full
+  se-flex se-flex-col se-justify-center se-items-center se-gap-[15px];
+}
+
+.common-text-field-container {
+  @apply se-w-full
+  se-flex se-flex-col se-gap-[5px];
+}
+
+.text-field-label {
+  @apply se-font-light;
+}
+
+.button-container {
+  @apply se-w-full
+  se-flex se-justify-center;
+}
+
+.reset-pass-button {
+  @apply se-w-full;
+}
+
+.reset-pass-button > span {
+  @apply se-flex se-items-center;
+}

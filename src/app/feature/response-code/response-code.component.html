@@ -1,0 +1,209 @@
+<div class="response-code-main-container">
+  <div class="first-container">
+    <p-card class="search-card">
+      <div class="search-container" [formGroup]="formGroup">
+        <div class="sc-first-row">
+          <div class="field">
+            <div class="sc-field-container">
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Config Id</span>
+                <p-dropdown
+                  class="field-dropdown-sm"
+                  [options]="[]"
+                  [filter]="true"
+                  optionLabel="stat"
+                  formControlName="configId"
+                ></p-dropdown>
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Name</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="name"
+                />
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Message Type</span>
+                <p-dropdown
+                  class="field-dropdown-sm"
+                  [options]="[]"
+                  [filter]="true"
+                  optionLabel="stat"
+                  formControlName="messageType"
+                ></p-dropdown>
+              </div>
+            </div>
+            <div class="search-button-container">
+              <button
+                mat-raised-button
+                color="primary"
+                class="sc-search-button"
+                (click)="onSearchClicked(formGroup.getRawValue())"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="second-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="messageConfigurationItems"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="5"
+        [(selection)]="selectedMessageConfiguration"
+        (onRowSelect)="onMsgConfigChecked()"
+        (onRowUnselect)="onMsgConfigUnChecked()"
+        dataKey="configId"
+        class="rule-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+              >Message Configuration Data</span
+            >
+
+            <div class="table-func-container-2">
+              <button
+                [disabled]="true"
+                style="opacity: 0"
+                type="button"
+                pButton
+                pRipple
+                icon="pi pi-file"
+                class="p-button-info"
+              ></button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Config Id</th>
+            <th pResizableColumn>Name</th>
+            <th pResizableColumn>Message Type</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-i="rowIndex">
+          <tr [pSelectableRow]="product">
+            <td class="row-width-xs">{{ product.configId }}</td>
+            <td class="row-width">{{ product.name }}</td>
+            <td class="row-width">{{ product?.msgType.name }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="3">There is no message configuration.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+  <div class="third-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="responseCodeItems"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [scrollable]="true"
+        [rows]="5"
+        [(selection)]="selectedResponseCode"
+        dataKey="id"
+        class="rule-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+              >Response Code Data</span
+            >
+
+            <div class="table-func-container-2">
+              <button
+                type="button"
+                pButton
+                pRipple
+                icon="bx bx-layer-plus"
+                (click)="onClickedResponseCode()"
+                [disabled]="selectedMessageConfiguration == undefined"
+                matTooltip="Add Response Code"
+                [matTooltipPosition]="'below'"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                [disabled]="selectedResponseCode == undefined"
+                icon="bx bx-edit"
+                (click)="onUpdateResponseCode()"
+                matTooltip="Edit Response Code"
+                [matTooltipPosition]="'below'"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                [disabled]="selectedResponseCode == undefined"
+                icon="bx bx-trash-alt"
+                (click)="onDeleteResponseCode()"
+                matTooltip="Delete Response Code"
+                [matTooltipPosition]="'below'"
+                class="p-button-danger"
+              ></button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Response Code</th>
+            <th pResizableColumn>Description</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr [pSelectableRow]="product">
+            <td class="row-width-xs">{{ product.respCode }}</td>
+            <td class="row-width">{{ product.description }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="2">There is no response code.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+<app-responsecodecrud
+  [isOpen]="visibleResponseCodeDialog"
+  [selectedItem]="selectedResponseCode"
+  (closeSelf)="onCloseResponseCode($event)"
+  (isLoading)="onLoading($event)"
+  [dialogMode]="dialogMode"
+>
+</app-responsecodecrud>
+<app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>

@@ -1,0 +1,50 @@
+<p-dialog header="Rule Group Detail" class="alert-case-container"
+          [modal]="true" [(visible)]="isOpen"
+          [position]="'right'" [draggable]="false"
+          [resizable]="false"
+          (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [style]="{ width: '30vw', height: '100vh' }">
+  <p-tabView class="alert-case-tab">
+    <p-tabPanel header="Information">
+      <div class="information-container">
+        <div class="alert-case-field-container">
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.id)">
+            <span class="label-txt-field">Group Id</span>
+            <span class="value-txt">{{selectedItem?.id}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.groupName)">
+            <span class="label-txt-field">Name</span>
+            <span class="value-txt">{{selectedItem?.groupName}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.userGroup?.groupName)">
+            <span class="label-txt-field">User Group</span>
+            <span class="value-txt">{{selectedItem?.userGroup?.groupName}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.priority)">
+            <span class="label-txt-field">Priority</span>
+            <span class="value-txt">{{selectedItem?.priority}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.threshouldBlack)">
+            <span class="label-txt-field">Threshold Black</span>
+            <span class="value-txt">{{selectedItem?.threshouldBlack}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.threshouldGrey)">
+            <span class="label-txt-field">Threshold Grey</span>
+            <span class="value-txt">{{selectedItem?.threshouldGrey}}</span>
+          </div>
+
+          <div class="text-field-alert-case" *ngIf="isAvailable(selectedItem?.isActive)">
+            <span class="label-txt-field">Status</span>
+            <span class="value-txt">{{getStatus(selectedItem?.isActive)}}</span>
+          </div>
+        </div>
+
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>

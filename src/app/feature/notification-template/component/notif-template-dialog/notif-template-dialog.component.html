@@ -1,0 +1,94 @@
+<p-dialog
+  [header]="
+    StringUtils.capitalizeFirstLetter(dialogMode.toLocaleLowerCase()) + ' Template'"
+  [(visible)]="isOpen"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  class="notif-template-dialog"
+  (onShow)="onDialogVisible()"
+  (onHide)="onClose()">
+  <div class="notif-template-dialog-container" [formGroup]="form">
+    <div class="black-form-container">
+
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Notification Type</span>
+        <p-dropdown
+          formControlName="notificationType"
+          class="field-dropdown"
+          [options]="notifTypes"
+          optionLabel="notificationType"
+          [placeholder]="'Select Notification Type'"
+          [filter]="true"
+          filterBy="notificationType"
+        ></p-dropdown>
+      </div>
+
+      <div class="black-first-form">
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Subject</span>
+            <input class="input" pInputText formControlName="subjectText"/>
+          </div>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Description</span>
+            <input class="input" pInputText formControlName="description"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="black-first-form-1">
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Placeholder</span>
+
+            <p-dropdown appendTo="body"
+              formControlName="placeholder"
+              class="field-dropdown"
+              [options]="StringUtils.dummyPlaceHolder"
+              optionLabel="name"
+              [placeholder]="'Select Placeholder'"
+              [filter]="true"
+              filterBy="name"
+            ></p-dropdown>
+          </div>
+        </div>
+
+        <div class="add-btn-placeholder-container">
+          <button mat-raised-button color="primary" class="ph-dialog-button" [disabled]="isPlaceholderValid()"
+                  (click)="addPlaceholder(getPlaceholderField()?.getRawValue().code)">Add
+          </button>
+        </div>
+      </div>
+
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Template</span>
+        <textarea #templateInput formControlName="templateText" rows="1" cols="20" class="input-sm input-area-lg" style="resize: none"
+                  pInputTextarea></textarea>
+      </div>
+    </div>
+
+
+    <div class="dialog-button-container">
+      <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="dialog-button"
+        [disabled]="isValueNotValid()"
+        (click)="onSave(form.getRawValue())">
+        Save
+      </button>
+    </div>
+  </div>
+</p-dialog>

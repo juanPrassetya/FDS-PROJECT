@@ -1,0 +1,40 @@
+<p-dialog header="Notification Template Detail" class="notif-template-detail-container"
+          [modal]="true" [(visible)]="isOpen"
+          [position]="'right'" [draggable]="false"
+          [resizable]="false"
+          (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [style]="{ width: '30vw', height: '100vh' }">
+  <p-tabView class="notif-template-detail-tab">
+    <p-tabPanel header="Information">
+      <div class="information-container">
+        <div class="notif-template-detail-field-container">
+          <div class="text-field-notif-template-detail" *ngIf="StringUtils.isAvailable(selectedItem?.templateId)">
+            <span class="label-txt-field">Template Id</span>
+            <span class="value-txt">{{selectedItem?.templateId}}</span>
+          </div>
+
+          <div class="text-field-notif-template-detail" *ngIf="StringUtils.isAvailable(selectedItem?.notificationType?.notificationType)">
+            <span class="label-txt-field">Notification Type</span>
+            <span class="value-txt">{{selectedItem?.notificationType?.notificationType}}</span>
+          </div>
+
+          <div class="text-field-notif-template-detail" *ngIf="StringUtils.isAvailable(selectedItem?.subjectText)">
+            <span class="label-txt-field">Subject</span>
+            <span class="value-txt">{{selectedItem?.subjectText}}</span>
+          </div>
+
+          <div class="text-field-notif-template-detail-desc" *ngIf="StringUtils.isAvailable(selectedItem?.description)">
+            <span class="label-txt-field">Description</span>
+            <span class="value-txt-desc">{{selectedItem?.description}}</span>
+          </div>
+
+          <div class="text-field-notif-template-detail-desc" *ngIf="StringUtils.isAvailable(selectedItem?.templateText)">
+            <span class="label-txt-field">Template</span>
+            <span class="value-txt-desc">{{selectedItem?.templateText}}</span>
+          </div>
+        </div>
+
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>

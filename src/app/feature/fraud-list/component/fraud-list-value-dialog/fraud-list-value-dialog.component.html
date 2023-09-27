@@ -1,0 +1,25 @@
+<!--FraudList Dialog-->
+<p-dialog header="Fraud List Value" [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '50vw'}" [draggable]="false"
+          [resizable]="false" class="action-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="crud-container" [formGroup]="form">
+    <div class="crud-field-container">
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-normal">Value</span>
+        <input formControlName="value" pInputText/>
+      </div>
+
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-normal">Fraud List</span>
+        <p-dropdown class="field-dropdown" [options]="fraudLists" optionLabel="listName"
+                    [placeholder]="'Select List'" [filter]="true" filterBy="listName" formControlName="listId"
+        ></p-dropdown>
+      </div>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()" (click)="onSave(form.getRawValue())">Save</button>
+    </div>
+  </div>
+</p-dialog>

@@ -1,0 +1,24 @@
+<!--FraudList Dialog-->
+<p-dialog header="Fraud List" [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '30vw'}" [draggable]="false"
+          [resizable]="false" class="action-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="action-dialog-container" [formGroup]="form">
+    <div class="fraud-flag-form-container">
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Fraud Flag</span>
+        <p-dropdown formControlName="fraudFlag" class="field-dropdown" [options]="dummyFraudFlag" optionLabel="name"
+                    [placeholder]="'Select Fraud Flag'" [filter]="true" filterBy="name"
+        ></p-dropdown>
+      </div>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()" (click)="onSave(form.getRawValue())">Save</button>
+    </div>
+  </div>
+</p-dialog>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>

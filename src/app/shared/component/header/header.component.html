@@ -1,0 +1,66 @@
+<div class="header-container">
+  <div class="breadcrumb">
+    <p-breadcrumb class="breadcrumb" [model]="items" [home]="home"></p-breadcrumb>
+  </div>
+
+  <div class="user-info">
+
+<!--    <div class="user-icon-container">-->
+<!--      <i class="pi pi-bell text-3xl" pBadge value="2" (click)="op.toggle($event)"></i>-->
+<!--    </div>-->
+
+    <app-acct-fab-button></app-acct-fab-button>
+    <!--      <p-avatar label="V" styleClass="mr-2" [style]="{ 'background-color': '#2196F3', color: '#ffffff', cursor: 'pointer' }" [matMenuTriggerFor]="beforeMenu"></p-avatar>-->
+    <!--      <mat-menu #beforeMenu="matMenu" xPosition="before">-->
+    <!--        <button mat-menu-item style="color: #f44336" (click)="logout()">-->
+    <!--          <div style="display: flex; width: 100%; align-items: center; justify-content: center; gap: .2rem">-->
+    <!--            <span>Logout</span>-->
+    <!--            <span class="bx bx-exit" style="font-size: 1.25rem"></span>-->
+    <!--          </div>-->
+    <!--        </button>-->
+    <!--      </mat-menu>-->
+
+  </div>
+</div>
+
+<p-overlayPanel #op [style]="{'width': '350px', 'height': '400px'}" styleClass="notif-overlay" (onShow)="onNotifPanelShow()">
+  <ng-template pTemplate="content">
+    <div class="notif-container">
+      <div class="notif-header-container">
+        <span style="font-weight: 800;">Notifications</span>
+      </div>
+
+      <p-divider class="notif-divider"></p-divider>
+
+      <div class="notif-content-container">
+        <ng-template [ngIf]="userNotifs.length > 0">
+          <ng-container *ngFor="let data of userNotifs">
+            <div class="notif-content-subcontainer" (click)="onNotifClicked(data.notificationType, $event, op)">
+              <div class="notif-content">
+                <div class="content-1">
+                  <div class="notif-icon">
+                    <span [class]="notifTypeChecker(data.notificationType)"></span>
+                  </div>
+                </div>
+                <div class="content-2">
+                  <span style="font-weight: 600;">{{data.notificationType}}</span>
+                  <div style="margin-top: 3px; display: flex; flex-direction: column">
+                    <span style="word-break: break-word;">{{data.description}}</span>
+                    <span style="font-size: .75rem; color: #959ea7">{{DateUtils.timeChecker(data.dateOccurance)}}</span>
+                  </div>
+                </div>
+              </div>
+
+              <p-divider class="notif-divider"></p-divider>
+            </div>
+          </ng-container>
+        </ng-template>
+      </div>
+    </div>
+  </ng-template>
+</p-overlayPanel>
+
+<!--<div class="logo">-->
+<!--  <img ngSrc="../../../../assets/logo-removedBg.png" alt="" height="60" width="60">-->
+<!--  <h1 style="font-size: 2.5em;color: var(&#45;&#45;fd-main-color);">FDS</h1>-->
+<!--</div>-->

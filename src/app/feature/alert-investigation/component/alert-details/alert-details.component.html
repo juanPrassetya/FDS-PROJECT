@@ -1,0 +1,78 @@
+<div class="alert-detail-container">
+  <p-button class="case-management-btn-container" styleClass="p-button-raised p-button-text" [disabled]="triggeredRule.length == 0" (onClick)="onRuleClicked()">
+    <div class="case-management-btn-content">
+      <span class="bx bx-task case-management-btn-icon"></span>
+      <span>Rule</span>
+    </div>
+  </p-button>
+
+  <p-button class="case-management-btn-container" styleClass="p-button-raised p-button-text" [disabled]="cardData.length == 0" (onClick)="onCardClicked()">
+    <div class="case-management-btn-content">
+      <span class="bx bx-credit-card-front case-management-btn-icon"></span>
+      <span>Card</span>
+    </div>
+  </p-button>
+
+  <p-button class="case-management-btn-container" styleClass="p-button-raised p-button-text" [disabled]="personData == undefined" (onClick)="onPersonClicked()">
+    <div class="case-management-btn-content">
+      <span class="bx bx-id-card case-management-btn-icon"></span>
+      <span>Cardholder Details</span>
+    </div>
+  </p-button>
+
+  <p-button class="case-management-btn-container" styleClass="p-button-raised p-button-text" [disabled]="acctData.length == 0" (onClick)="onAccountClicked()">
+    <div class="case-management-btn-content">
+      <span class="bx bxs-user-account case-management-btn-icon"></span>
+      <span>Account Details</span>
+    </div>
+  </p-button>
+
+  <p-button class="case-management-btn-container" styleClass="p-button-raised p-button-text" [disabled]="true">
+    <div class="case-management-btn-content">
+      <span class="bx bx-book-content case-management-btn-icon"></span>
+      <span>Customer Details</span>
+    </div>
+
+  </p-button>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"
+  ></app-overlay-loading>
+</ng-template>
+
+<ng-template [ngIf]="visibleCardDialog">
+  <app-card-detail-dialog
+    [isOpen]="visibleCardDialog"
+    [data]="cardData"
+    (closeSelf)="onCloseCard($event)"
+    (isLoading)="onLoading($event)"
+  ></app-card-detail-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleAcctDialog">
+  <app-acct-detail-dialog
+    [isOpen]="visibleAcctDialog"
+    [data]="acctData"
+    (closeSelf)="onCloseAccount($event)"
+    (isLoading)="onLoading($event)"
+  ></app-acct-detail-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visiblePersonDialog">
+  <app-person-detail-dialog
+    [isOpen]="visiblePersonDialog"
+    [data]="personData"
+    (closeSelf)="onClosePerson($event)"
+    (isLoading)="onLoading($event)"
+  ></app-person-detail-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleRuleDialog">
+  <app-rule-detail-dialog
+    [isOpen]="visibleRuleDialog"
+    [ruleInfo]="triggeredRule"
+    (closeSelf)="onCloseRule($event)"
+    (isLoading)="onLoading($event)"
+  ></app-rule-detail-dialog>
+</ng-template>

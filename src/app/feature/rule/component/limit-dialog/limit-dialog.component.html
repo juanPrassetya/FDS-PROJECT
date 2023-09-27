@@ -1,0 +1,102 @@
+<p-dialog header="Limit" [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '70vw'}" [draggable]="false" (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [resizable]="false" [closeOnEscape]="false" class="condition-type-dialog">
+  <div class="condition-type-container">
+    <span class="condition-caption">Limit condition allows you to detect exceeding the set threshold (limit) by the aggregated value calculated on a given time interval</span>
+
+    <div class="constant-form-container" [formGroup]="form">
+      <div class="operand-a">
+        <span class="operand-caption">Operand A</span>
+        <span class="operand-title">Aggregate counter</span>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Aggregate counter</span>
+          <textarea formControlName="aggregate_A" rows="1" cols="20" class="input-sm" [autoResize]="true" pInputTextarea></textarea>
+        </div>
+
+        <div class="aggregate-btn-container">
+
+          <ng-template [ngIf]="selectedAggregate == undefined">
+            <button mat-raised-button color="primary" class="aggregate-btn" (click)="onCreateAggregate()">
+              <div class="aggregate-label-container">
+                <span>Create new aggregating counter</span>
+                <span class="aggregate-icon bx bx-plus"></span>
+              </div>
+            </button>
+          </ng-template>
+
+          <ng-template [ngIf]="selectedAggregate != undefined">
+            <button mat-raised-button color="primary" class="aggregate-btn" (click)="onEditAggregate()">
+              <div class="aggregate-label-container">
+                <span>Edit existing aggregating counter</span>
+                <span class="aggregate-icon bx bx-edit-alt"></span>
+              </div>
+            </button>
+          </ng-template>
+
+          <button mat-raised-button color="primary" class="aggregate-btn" (click)="onFindExistingAggregate()">
+            <div class="aggregate-label-container">
+              <span>Use existing aggregating counter</span>
+              <span class="aggregate-icon bx bx-search-alt"></span>
+            </div>
+          </button>
+        </div>
+      </div>
+      <div class="relation">
+        <p-divider align="center" class="search-divider">
+          <div class="common-text-field-relation-container">
+            <span class="label-txt-field">Relation</span>
+            <p-dropdown class="field-dropdown-sm" [options]="dummyOperator" optionLabel="code"
+                        [placeholder]="'Select Relation'" formControlName="relation"
+            ></p-dropdown>
+          </div>
+        </p-divider>
+      </div>
+      <div class="operand-b">
+        <span class="operand-caption">Operand B</span>
+        <span class="operand-title">Threshold</span>
+
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Threshold value</span>
+          <input class="input-sm" formControlName="constant_B" pInputText/>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()"
+              (click)="onSave(form.getRawValue())">Save
+      </button>
+    </div>
+  </div>
+</p-dialog>
+
+<ng-template [ngIf]="visibleAggregateDialog">
+  <!--Aggregate Dialog-->
+  <app-aggregate-dialog
+    [isOpen]="visibleAggregateDialog"
+    [selectedAggregate]="selectedAggregate"
+    [dialogMode]="aggregateDialogMode"
+    (closeSelf)="onCloseAggregate($event)"
+    (onAddItem)="getExistingAggregate($event)"
+  ></app-aggregate-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleExistingAggregateDialog">
+  <app-existing-aggregate-dialog
+    [isOpen]="visibleExistingAggregateDialog"
+    [selectedItem]="selectedAggregate"
+    (closeSelf)="onCloseExistingAggaregate($event)"
+    (existingAggregate)="getExistingAggregate($event)"
+  ></app-existing-aggregate-dialog>
+</ng-template>
+
+<!--<app-aggregate-dialog-->
+<!--  [isOpen]="visibleLimitDialog"-->
+<!--  [itemSelected]="itemSelected"-->
+<!--  (closeSelf)="onCloseLimit($event)"-->
+<!--  (isLoading)="onLoadingCondition($event)"-->
+<!--  (onAddItem)="onAddRuleBody($event)"-->
+<!--  [conditionCounter]="conditionCounter"-->
+<!--  [dialogMode]="dialogMode"-->
+<!--&gt;</app-aggregate-dialog>-->

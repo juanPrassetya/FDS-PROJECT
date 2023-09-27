@@ -1,0 +1,262 @@
+<div class="fraud-reactions-main-container">
+  <div class="first-container">
+    <p-card class="search-card">
+      <div class="search-container" [formGroup]="formGroup">
+        <div class="sc-first-row">
+          <div class="field">
+            <div class="sc-field-container">
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Binding Id</span>
+                <input formControlName="bindingId" class="input-sm" pInputText aria-describedby="username-help"/>
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Binding Type</span>
+                <p-dropdown appendTo="body" formControlName="bindingType" class="field-dropdown-sm" [options]="dummyBindingType" optionLabel="name"
+                        [placeholder]="'Select Binding Type'" [showClear]="true"></p-dropdown>
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Priority</span>
+                <input formControlName="priority" class="input-sm" pInputText aria-describedby="username-help"/>
+              </div>
+            </div>
+
+            <div class="search-button-container">
+              <button mat-mini-fab color="primary" class="sc-mini-search-button" (click)="showAddtSearchFilter()">
+                <span class="bx bxs-chevron-down"></span>
+              </button>
+
+              <button mat-raised-button color="primary" class="sc-search-button" (click)="onSearchClicked(formGroup.getRawValue())">Search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="second-container">
+    <p-card class="table-card">
+      <p-table #dt [tableStyle]="{'min-width': '50rem'}"
+               [resizableColumns]="true"
+               [value]="fraudReactionsItems" selectionMode="single"
+               [paginator]="true"
+               [exportHeader]="'customExportHeader'"
+               [showCurrentPageReport]="true"
+               [rowsPerPageOptions]="[15, 25, 50, 100, 250, 500]"
+               [scrollable]="true"
+               [rows]="15"
+               [(selection)]="selectedFraudReactionsItem"
+               (onRowSelect)="onReactClicked()"
+               (onRowUnselect)="onReactUnClicked()"
+               dataKey="id" class="fraud-reactions-table" styleClass="p-datatable-sm p-datatable-gridlines">
+
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: .8rem; padding-left: 1rem">Fraud Reactions Data</span>
+
+            <div class="table-func-container-2">
+              <ng-template [ngIf]="StringUtils.findOperations(authorities, 'ADD_REACTIONS')">
+                <button type="button" pButton pRipple icon="bx bx-layer-plus" (click)="onClickedAddReactDialog()"
+                        matTooltip="Add Fraud Reaction" [matTooltipPosition]="'below'"></button>
+                <button type="button" pButton pRipple [disabled]="selectedFraudReactionsItem == undefined" icon="bx bx-edit" (click)="onClickedEditReactDialog()"
+                        matTooltip="Edit Fraud Reaction" [matTooltipPosition]="'below'"></button>
+              </ng-template>
+              <ng-template [ngIf]="StringUtils.findOperations(authorities, 'DELETE_REACTIONS')">
+                <button type="button" pButton pRipple [disabled]="selectedFraudReactionsItem == undefined" icon="bx bx-trash-alt" (click)="onClickedDeleteReact()"
+                        matTooltip="Delete Fraud Reaction" [matTooltipPosition]="'below'" class="p-button-danger"></button>
+              </ng-template>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Id</th>
+            <th pResizableColumn>Binding Id</th>
+            <th pResizableColumn>Binding Type</th>
+            <th pResizableColumn>Priority</th>
+            <th pResizableColumn>Zone</th>
+            <th pResizableColumn>Action</th>
+            <th pResizableColumn>Action Value</th>
+            <th pResizableColumn></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-i="rowIndex">
+          <tr [pSelectableRow]="product">
+            <td class="row-width-xs">{{product.id}}</td>
+            <td class="row-width-xs">{{product.bindingId}}</td>
+            <td class="row-width">{{product.bindingType}}</td>
+            <td class="row-width-xs">{{product.priority}}</td>
+            <td class="row-width-xs">{{product.zone}}</td>
+            <td class="row-width-xs">{{charReplacement(product.action)}}</td>
+            <td class="row-width-xs">{{actionValueMapping(product)}}</td>
+            <td class="row-width-xs">
+              <button mat-raised-button class="detail-btn" (click)="onDetailClicked(product)"
+                      matTooltip="View Details Data" [matTooltipPosition]="'below'"
+                      [disabled]="selectedFraudReactionsItem == undefined">
+                <div class="detail-container">
+                  <span class="detail-text">Details</span>
+                </div>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="10">There is no Reactions.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<!--Binding Type Dialog-->
+<ng-template [ngIf]="visibleBindingTypeDialog">
+  <p-dialog header="Binding Type" [(visible)]="visibleBindingTypeDialog" [modal]="true" [style]="{ width: '50vw'}"
+            [draggable]="false"
+            [resizable]="false">
+    <div class="action-container">
+      <p-button (click)="onClickedRule()" class="action-main-container" styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>Rule</span>
+        </div>
+      </p-button>
+
+      <p-button (click)="onClickedRuleGroup()" class="action-main-container" styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>Rule Group</span>
+        </div>
+      </p-button>
+
+      <p-button (click)="onClickedWhite()" class="action-main-container" styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>White List</span>
+        </div>
+      </p-button>
+
+      <p-button (click)="onClickedBlack()" class="action-main-container" styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>Black List</span>
+        </div>
+      </p-button>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<!--Search Filter DIALOG-->
+<ng-template [ngIf]="visibleSearchDialog">
+  <p-dialog header="Search Filter" [(visible)]="visibleSearchDialog" [modal]="true" [style]="{ width: '50vw' }"
+            [draggable]="false" [resizable]="false" class="search-dialog">
+    <div class="addt-search-filter-container" [formGroup]="formGroup">
+
+      <div class="search-addt-field">
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Binding Id</span>
+          <input formControlName="bindingId" pInputText aria-describedby="username-help"/>
+        </div>
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Binding Type</span>
+          <p-dropdown appendTo="body" formControlName="bindingType" class="field-dropdown" [options]="dummyBindingType" optionLabel="name"
+                        [placeholder]="'Select Binding Type'" [showClear]="true"></p-dropdown>
+        </div>
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Priority</span>
+          <input formControlName="priority" pInputText aria-describedby="username-help"/>
+        </div>
+      </div>
+
+      <p-divider align="center" class="search-divider">
+        <span style="font-size: 0.8rem; color: var(--inactive-txt-color); margin-top: 2px; opacity: .5">Additional Search Filter</span>
+      </p-divider>
+
+      <div class="addt-row-container">
+        <div class="addt-row" *ngFor="let filterField of searchFilterFields | keyvalue">
+          <div class="addt-text-field" *ngFor="let row of filterField.value">
+            <span class="label-txt-field">{{row.name}}</span>
+            <input [formControlName]="row.field"  *ngIf="row.type == 1" pInputText [id]="row.name"/>
+            <p-dropdown appendTo="body" formControlName="action" class="field-dropdown" *ngIf="row.type == 2" [options]="StringUtils.dummyAction" optionLabel="name"
+                        [placeholder]="'Select ' + row.name.toLowerCase()" [showClear]="true"></p-dropdown>
+            <p-dropdown appendTo="body" formControlName="zone" class="field-dropdown" *ngIf="row.type == 3" [options]="StringUtils.dummyZone" optionLabel="name"
+                        [placeholder]="'Select ' + row.name.toLowerCase()" [showClear]="true"></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="addt-button-container">
+        <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onReset()"
+      >
+        Reset
+      </button>
+        <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+        <p-button label="Search" class="addt-button" icon="pi pi-search" (click)="onSearchClicked(formGroup.getRawValue())"></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleFraudReactionsDetailDialog">
+  <!--Fraud Reaction Detail Dialog-->
+  <app-fraud-reactions-detail
+    [isOpen]="visibleFraudReactionsDetailDialog"
+    [selectedItem]="selectedFraudReactionsItem"
+    (closeSelf)="onCloseDetail($event)"
+  ></app-fraud-reactions-detail>
+</ng-template>
+
+<ng-template [ngIf]="visibleRuleDialog">
+  <!--Rule Reaction Dialog-->
+  <app-rule-reactions-dialog
+    [isOpen]="visibleRuleDialog"
+    [itemSelected]="selectedFraudReactionsItem"
+    (closeSelf)="onCloseRuleDialog($event)"
+    (isLoading)="onLoading($event)"
+    [dialogMode]="dialogMode"
+  ></app-rule-reactions-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleRuleGroupDialog">
+  <!--Rule Group Reaction Dialog-->
+  <app-group-reactions-dialog
+    [isOpen]="visibleRuleGroupDialog"
+    [itemSelected]="selectedFraudReactionsItem"
+    (closeSelf)="onCloseRuleGroupDialog($event)"
+    (isLoading)="onLoading($event)"
+    [dialogMode]="dialogMode"
+  ></app-group-reactions-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleWhiteDialog">
+  <!--White Reaction Dialog-->
+  <app-white-reactions-dialog
+    [isOpen]="visibleWhiteDialog"
+    [itemSelected]="selectedFraudReactionsItem"
+    (closeSelf)="onCloseWhiteDialog($event)"
+    (isLoading)="onLoading($event)"
+    [dialogMode]="dialogMode"
+  ></app-white-reactions-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleBlackDialog">
+  <!--Black Reaction Dialog-->
+  <app-black-reactions-dialog
+    [isOpen]="visibleBlackDialog"
+    [itemSelected]="selectedFraudReactionsItem"
+    (closeSelf)="onCloseBlackDialog($event)"
+    (isLoading)="onLoading($event)"
+    [dialogMode]="dialogMode"
+  ></app-black-reactions-dialog>
+</ng-template>

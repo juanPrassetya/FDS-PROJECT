@@ -1,0 +1,46 @@
+<div class="investigation-history-container">
+  <p-table #dt [tableStyle]="{'min-width': '50rem'}"
+           [resizableColumns]="true"
+           [value]="history" selectionMode="single"
+           [paginator]="true"
+           [exportHeader]="'customExportHeader'"
+           [showCurrentPageReport]="true"
+           [rowsPerPageOptions]="[5, 25, 50, 100, 250, 500]"
+           [scrollable]="true"
+           [rows]="5"
+
+           dataKey="id" class="transaction-sum-table" styleClass="p-datatable-sm p-datatable-gridlines">
+
+    <ng-template pTemplate="caption">
+      <div class="header-table">
+        <span style="font-size: .8rem; padding-left: 1rem">Investigation History</span>
+
+        <div class="table-func-container-2" style="opacity: 0">
+          <button type="button" pButton pRipple icon="bx bx-layer-plus" [disabled]="true"></button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pResizableColumn>Action Date</th>
+        <th pResizableColumn>Action Type</th>
+        <th pResizableColumn>Intiator</th>
+        <th pResizableColumn>Description</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-i="rowIndex">
+      <tr [pSelectableRow]="product">
+        <td class="row-width-xs">{{DateUtils.ConvertToDateFormat(product.actionDate)}}</td>
+        <td class="row-width">{{product.actionType}}</td>
+        <td class="row-width">{{product?.initiator}}</td>
+        <td class="row-width">{{product?.info}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr style="">
+        <td colspan="4">There is no history.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

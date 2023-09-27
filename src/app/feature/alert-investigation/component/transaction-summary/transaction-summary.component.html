@@ -1,0 +1,94 @@
+<div class="transaction-sum-container">
+  <p-table #dt [tableStyle]="{'min-width': '50rem'}"
+           [resizableColumns]="true"
+           [value]="transactions" selectionMode="single"
+           [paginator]="true"
+           [exportHeader]="'customExportHeader'"
+           [showCurrentPageReport]="true"
+           [rowsPerPageOptions]="[5, 25, 50, 100, 250, 500]"
+           [scrollable]="true"
+           scrollHeight="70vh"
+           [rows]="5" [(selection)]="selectedItem"
+           (onRowSelect)="onRowClicked()" (onRowUnselect)="onRowUnClicked()"
+           dataKey="utrnno" class="transaction-sum-table" styleClass="p-datatable-sm p-datatable-gridlines">
+
+    <ng-template pTemplate="caption">
+      <div class="header-table">
+        <span style="font-size: .8rem; padding-left: 1rem">Transaction Summary Data</span>
+
+        <div class="table-func-container-2" style="opacity: 0">
+          <button type="button" pButton pRipple icon="bx bx-layer-plus" [disabled]="true"></button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+<!--        <th pResizableColumn>Alerted</th>-->
+        <th pResizableColumn>Transaction Date</th>
+        <th pResizableColumn>Transaction Type</th>
+        <th pResizableColumn>Utrnno</th>
+        <th pResizableColumn>HPAN</th>
+        <th pResizableColumn>CIF Id</th>
+        <th pResizableColumn>Account</th>
+        <th pResizableColumn>Amount</th>
+        <th pResizableColumn>Currency Code</th>
+        <th pResizableColumn>Response Code</th>
+        <th pResizableColumn>Fraud Flag</th>
+        <!-- <th pResizableColumn>Reference Number</th> -->
+        <th pResizableColumn></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-i="rowIndex">
+      <tr [pSelectableRow]="product" [class]="isRuleTriggered(product)">
+<!--        <td>-->
+<!--          <input type="checkbox" [(ngModel)]="product.alerted" [checked]="product.checked" [disabled]="true"/>-->
+<!--        </td>-->
+        <td>{{product.sysdate}}</td>
+        <td>{{product.transTypeDesc}}</td>
+        <td>{{product.utrnno}}</td>
+        <td>{{product.hpan}}</td>
+        <td>{{product.cif_id}}</td>
+        <td>{{product.acct1}}</td>
+        <td>{{product.amount}}</td>
+        <td>{{product.currency}}</td>
+        <td [class]="isTransDeclined(product.respCode)">{{product.respCodeDesc}}</td>
+        <td>
+          <div style="display: flex; gap: 5px; align-items: center">
+                <span class="flag-status-color" [className]="getSev(product.fraudFlags)">
+                  <span class="flag-status-icon"></span>
+                </span>
+            <span>{{getFraudFlag(product.fraudFlags)}}</span>
+          </div>
+        </td>
+        <!-- <td>{{product.refNum}}</td> -->
+        <td class="row-width-xs">
+          <button mat-raised-button class="detail-btn" (click)="onDetailClicked(product)"
+                  matTooltip="View Details Data" [matTooltipPosition]="'below'"
+                  [disabled]="selectedItem == undefined">
+            <div class="detail-container">
+              <span class="detail-text">Details</span>
+            </div>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr style="">
+        <td colspan="10">There is no history.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<ng-template [ngIf]="visibleTransactionDialog">
+  <app-trans-detail [isOpen]="visibleTransactionDialog"
+                    [selectedItem]="convertedItem"
+                    [ruleInfo]="triggeredRule"
+                    [addtData]="addtData"
+                    (closeSelf)="onCloseTransDetailDialog($event)"></app-trans-detail>
+</ng-template>

@@ -1,0 +1,15 @@
+<p-toast styleClass="custom-toast" [showTransformOptions]="'translateX(100%)'"
+         [hideTransformOptions]="'translateX(100%)'"></p-toast>
+<!--<p-confirmPopup styleClass="custom-confirm"></p-confirmPopup>-->
+<p-confirmDialog #cd [style]="{width: '35vw'}">
+  <ng-template pTemplate="footer">
+    <button mat-stroked-button color="warn" class="dialog-button" (click)="cd.reject()">No</button>
+    <button mat-raised-button color="primary" class="dialog-button" (click)="cd.accept()">Yes</button>
+  </ng-template>
+</p-confirmDialog>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<router-outlet></router-outlet>

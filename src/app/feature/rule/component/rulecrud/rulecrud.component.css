@@ -1,0 +1,176 @@
+.rulecrud-container {
+  height: 100%;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 15px
+}
+
+.first-card {
+  height: 100%
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: 1fr  2fr;
+  gap: 50px;
+  height: 100%;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px
+}
+
+.table-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+}
+
+.first-container,
+.second-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+.first-container {
+  padding-bottom: 2rem;
+}
+
+.second-container {
+  padding-bottom: 1rem;
+}
+
+
+
+.common-text-field-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.header-table {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.header-title-sm {
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+.table-func-container-2 {
+  display: flex;
+  gap: 10px
+}
+
+.action-container {
+  margin: 20px;
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.action-main-container {
+  width: calc(100% / 5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: .8vw;
+  font-weight: 600;
+  gap: 10px;
+  height: 10vh;
+  width: 100%;
+}
+
+.action-button {
+  font-size: 2vw;
+}
+
+.calender-field-container {
+  display: flex;
+  gap: 20px;
+}
+
+.dialog-button-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.dialog-button {
+  width: 100px;
+  font-size: .8rem;
+}
+
+/*NG DEEP*/
+::ng-deep .first-card > .p-card .p-card-body {
+  padding: 1rem 1rem 1.5rem
+}
+
+::ng-deep .p-card .p-card-content {
+  padding: unset;
+}
+
+::ng-deep .p-inputtext:enabled:focus {
+  box-shadow: unset;
+}
+
+::ng-deep .p-dropdown:not(.p-disabled).p-focus {
+  box-shadow: unset;
+}
+
+.calender-field-pick-sm,
+::ng-deep .calender-field-pick-sm > .p-calendar{
+  width: 100%;
+}
+
+::ng-deep .rulecrud-table .p-datatable-wrapper {
+  /*height: 190px !important;*/
+  height: fit-content !important;
+}
+
+::ng-deep .rulecrud-table .p-datatable p-paginator {
+  bottom: unset;
+}
+
+::ng-deep .rulecrud-table  .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+  font-size: .7rem;
+}
+
+::ng-deep .action-main-container .p-button {
+  width: 100%;
+}
+
+::ng-deep .condition-type-dialog .p-dialog-header {
+  padding: 1.5rem 1.5em 0;
+}
+
+::ng-deep .rulecrud-divider .p-divider.p-divider-vertical {
+  padding: 0;
+  margin: 0;
+}
+
+::ng-deep .condition-type-dialog .p-dialog-content {
+  overflow-y: unset;
+}

@@ -1,0 +1,306 @@
+.transaction-container {
+  background: var(--main-bg-color);
+  padding: 15px 20px 15px 20px;
+
+  @apply
+  se-flex se-flex-col se-gap-[15px]
+  se-w-full se-h-full
+  se-overflow-auto
+}
+
+.first-container {
+  @apply
+  se-w-full
+}
+
+.four-container {
+  @apply se-h-full
+}
+
+.search-container {
+  @apply
+  se-flex se-flex-auto se-gap-[20px] se-w-full
+}
+
+.sc-first-row {
+  padding: 10px 30px 0;
+
+  @apply
+  se-flex se-justify-between
+  se-w-full
+}
+
+.field {
+  @apply
+  se-flex se-items-center se-justify-between
+  se-w-full
+}
+
+.search-addt-field {
+  grid-template-columns: .4fr 1fr;
+  gap: 20px;
+
+  @apply
+  se-grid
+}
+
+.common-text-field-container,
+.sc-first-text-field-2,
+.text-field-addt {
+  @apply
+  se-w-full
+  se-flex se-flex-col se-gap-[5px]
+}
+
+.common-text-field-container {
+  @apply
+  se-w-[30%]
+}
+
+.sc-first-text-field-2 {
+  @apply
+  se-w-[50%]
+}
+
+.addt-search-filter-container > .field > .sc-first-text-field-2 {
+  @apply
+  se-w-[70%]
+}
+
+.label-txt-field,
+.value-txt {
+  @apply
+  se-text-[.8rem]
+  se-font-semibold
+}
+
+.value-txt {
+  @apply
+  se-text-end
+}
+
+.label-txt-field-sm {
+  @apply
+  se-text-[.8rem]
+  se-font-semibold
+}
+
+.date-range-container {
+  @apply
+  se-flex se-gap-[20px]
+  se-w-full
+}
+
+.calender-field {
+  @apply
+  se-flex se-items-center se-gap-[10px]
+  se-w-full
+}
+
+.calender-field-pick {
+  width: 100%;
+}
+
+p-table {
+  border-radius: 10px;
+}
+
+.search-button-container {
+  @apply
+  se-flex se-h-full se-items-end se-gap-[10px]
+}
+
+.sc-addt-button-container {
+  @apply
+  se-flex se-w-full se-h-full
+}
+
+.sc-search-button {
+  @apply
+  se-w-full se-text-[.8rem]
+}
+
+.sc-mini-search-button {
+  @apply
+  se-w-[36px] se-h-[36px]
+}
+
+.tran-detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: .5em;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  padding: 0 1.75rem 0 1.75rem;
+}
+
+.tran-detail-field {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px
+}
+
+.header-table {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
+.table-func-container-1 {
+  width: 88%;
+}
+
+.table-func-container-2 {
+  display: flex;
+  gap: 10px
+}
+
+.addt-search-filter-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.addt-row-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.addt-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.addt-text-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: calc(100% / 3)
+}
+
+.addt-button-container {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px
+}
+
+.update-60 {
+  font-size: .8rem;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.action-container {
+  margin: 20px;
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.action-main-container {
+  width: calc(100% / 4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: .8vw;
+  font-weight: 600;
+  gap: 10px;
+  height: 10vh;
+  width: 100%;
+}
+
+.action-button,
+.action-icon{
+  font-size: 2vw;
+}
+
+.detail-btn {
+  height: fit-content;
+  padding: .4rem
+}
+
+.detail-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .6rem;
+}
+
+.detail-text {
+  font-weight: 800;
+}
+
+/* NG DEEP */
+p-card {
+  position: relative
+}
+
+/*::ng-deep .search-card > .p-card .p-card-body {*/
+/*  padding: 1rem 0*/
+/*}*/
+
+::ng-deep .text-field-addt > .p-inputtext:disabled {
+  width: 100%;
+  padding: 0.4rem;
+  font-size: .8em;
+  color: black;
+  font-weight: 400;
+  border: 2px solid #ced4da;
+}
+
+::ng-deep .third-rg-container > p-button > .p-button {
+  padding: .5rem .75rem .5rem .75rem;
+  font-size: 14px
+}
+
+::ng-deep .p-tabview-nav-content {
+  /*margin-bottom: 10px;*/
+}
+
+::ng-deep .fraud-tag > span > .p-tag-value {
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  line-height: unset !important;
+}
+
+::ng-deep .p-inputtext {
+  font-size: .8rem;
+  padding: 0.4rem 0.5rem;
+}
+
+::ng-deep .addt-button > .p-button {
+  padding: 0.5rem 0.8rem;
+  font-size: .8rem;
+  font-weight: 400;
+}
+
+::ng-deep .search-divider > .p-divider.p-divider-horizontal {
+  margin: 1rem 0;
+}
+
+::ng-deep .trans-divider .p-divider.p-divider-horizontal .p-divider-content {
+  padding: 0 0.5rem 0.3rem 0.5rem;
+}
+
+::ng-deep .search-dialog .p-dialog-content {
+  padding: 0 2rem 1rem 2rem;
+  /* overflow-y: unset !important; */
+}
+
+:host ::ng-deep .search-dialog .p-dropdown-panel {
+  overflow-wrap: anywhere;
+}

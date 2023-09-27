@@ -1,0 +1,71 @@
+<div class="rules-sum-container">
+  <p-table #dt [tableStyle]="{'min-width': '50rem'}"
+           [resizableColumns]="true"
+           [value]="rules" selectionMode="single"
+           [paginator]="true"
+           [exportHeader]="'customExportHeader'"
+           [showCurrentPageReport]="true"
+           [rowsPerPageOptions]="[5, 25, 50, 100, 250, 500]"
+           [scrollable]="true"
+           [rows]="5" [(selection)]="selectedItem"
+           (onRowSelect)="onRowClicked()" (onRowUnselect)="onRowUnClicked()"
+           dataKey="ruleId" class="rules-sum-table" styleClass="p-datatable-sm p-datatable-gridlines">
+
+    <ng-template pTemplate="caption">
+      <div class="header-table">
+        <span style="font-size: .8rem; padding-left: 1rem">Rule Data</span>
+
+        <div class="table-func-container-2" style="opacity: 0">
+          <button type="button" pButton pRipple icon="bx bx-layer-plus" [disabled]="true"></button>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pResizableColumn>Rule Id</th>
+        <th pResizableColumn>Rule Name</th>
+        <th pResizableColumn>Author</th>
+        <th pResizableColumn>Status</th>
+        <th pResizableColumn>Date From</th>
+        <th pResizableColumn>Date To</th>
+        <th pResizableColumn>Type</th>
+        <th pResizableColumn></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-i="rowIndex">
+      <tr [pSelectableRow]="product">
+        <td class="row-width-xs">{{product.ruleId}}</td>
+        <td class="row-width">{{product.ruleName}}</td>
+        <td class="row-width">{{product.author}}</td>
+        <td class="row-width">{{product.isActive}}</td>
+        <td class="row-width">{{DateUtils.ConvertToDateFormat(product.dateFrom)}}</td>
+        <td class="row-width">{{DateUtils.ConvertToDateFormat(product.dateTo)}}</td>
+        <td class="row-width">{{product.type}}</td>
+        <td class="row-width-xs">
+          <button mat-raised-button class="detail-btn" (click)="onDetailClicked(product)"
+                  matTooltip="View Details Data" [matTooltipPosition]="'below'"
+                  [disabled]="selectedItem == undefined">
+            <div class="detail-container">
+              <span class="detail-text">Details</span>
+            </div>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr style="">
+        <td colspan="10">There is no rule.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<ng-template [ngIf]="visibleRuleDetailDialog">
+  <!--Rule Detail Dialog-->
+  <app-rule-detail
+    [isOpen]="visibleRuleDetailDialog"
+    [selectedItem]="selectedItem"
+    (closeSelf)="onCloseTransDetailDialog($event)"
+  ></app-rule-detail>
+</ng-template>

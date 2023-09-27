@@ -1,0 +1,35 @@
+<div class="iso8583-detail-main-container">
+  <div class="first-container">
+    <p-tabView class="iso8583-detail-tab" (onChange)="onTabChange($event)">
+      <p-tabPanel header="General Setting">
+        <app-iso8583-general-setting
+          (isLoading)="onLoading($event)"
+        ></app-iso8583-general-setting>
+      </p-tabPanel>
+
+      <p-tabPanel header="Header Field">
+        <app-iso8583-header-field></app-iso8583-header-field>
+      </p-tabPanel>
+
+      <p-tabPanel header="Body Field">
+        <app-iso8583-body-field></app-iso8583-body-field>
+      </p-tabPanel>
+
+      <p-tabPanel header="Transaction Parameter">
+        <app-iso8583-transaction-param></app-iso8583-transaction-param>
+      </p-tabPanel>
+
+      <p-tabPanel header="Response Code">
+        <app-iso8583-response-code></app-iso8583-response-code>
+      </p-tabPanel>
+
+      <p-tabPanel header="Transaction Type">
+        <app-iso8583-transaction-type></app-iso8583-transaction-type>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>

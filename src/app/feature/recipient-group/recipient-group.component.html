@@ -1,0 +1,232 @@
+<div class="recipient-group-main-container">
+  <div class="first-container">
+    <p-card class="search-card">
+      <div class="search-container" [formGroup]="formGroup">
+        <div class="sc-first-row">
+          <div class="field">
+            <div class="sc-field-container">
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Notification Type</span>
+                <p-dropdown
+                  class="field-dropdown-sm"
+                  [options]="notifTypes"
+                  [filter]="true"
+                  placeholder="Select Notification Type"
+                  optionLabel="notificationType"
+                  formControlName="notificationType"
+                  [showClear]="true"
+                ></p-dropdown>
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Group Name</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="groupName"
+                />
+              </div>
+            </div>
+
+            <div class="search-button-container">
+              <button
+              mat-stroked-button
+              color="warn"
+              class="dialog-button"
+              (click)="onReset()"
+            >
+              Reset
+            </button>
+              <button
+                mat-raised-button
+                color="primary"
+                class="sc-search-button"
+                (click)="onSearchClicked(formGroup.getRawValue())"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="second-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="items"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="5"
+        [(selection)]="selectedItem"
+        (onRowSelect)="onListClicked()"
+        (onRowUnselect)="onListUnClicked()"
+        dataKey="groupId"
+        class="recipient-group-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+              >Group Data</span
+            >
+
+            <div class="table-func-container-2">
+              <ng-template
+                [ngIf]="
+                  StringUtils.findOperations(authorities, 'ADD_RECIPIENT_GROUP')
+                "
+              >
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  icon="bx bx-layer-plus"
+                  (click)="onClickedAddListDialog()"
+                  matTooltip="Add Group"
+                  [matTooltipPosition]="'below'"
+                ></button>
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedItem == undefined"
+                  icon="bx bx-edit"
+                  (click)="onClickedEditListDialog()"
+                  matTooltip="Edit Group"
+                  [matTooltipPosition]="'below'"
+                ></button>
+              </ng-template>
+              <ng-template
+                [ngIf]="
+                  StringUtils.findOperations(authorities, 'DELETE_RECIPIENT_GROUP')
+                "
+              >
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedItem == undefined"
+                  icon="bx bx-trash-alt"
+                  (click)="onClickedDeleteList()"
+                  matTooltip="Delete Group"
+                  [matTooltipPosition]="'below'"
+                  class="p-button-danger"
+                ></button>
+              </ng-template>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Id</th>
+            <th pResizableColumn>Type</th>
+            <th pResizableColumn>Group Name</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-i="rowIndex">
+          <tr [pSelectableRow]="product">
+            <td class="row-width-xs">{{ product.groupId }}</td>
+            <td class="row-width">
+              {{ product?.notificationType?.notificationType }}
+            </td>
+            <td class="row-width">{{ product.groupName }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="5">There is no group.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+  <div class="third-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="childItems"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [scrollable]="true"
+        [rows]="5"
+        dataKey="recipientId"
+        class="recipient-setup-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+              >Recipient Setup Data</span
+            >
+
+            <div class="table-func-container-2" style="opacity: 0">
+              <button
+                type="button"
+                pButton
+                pRipple
+                icon="bx bx-layer-plus"
+                [disabled]="true"
+              ></button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Id</th>
+            <th pResizableColumn>Type</th>
+            <th pResizableColumn>Firstname</th>
+            <th pResizableColumn>Lastname</th>
+            <th pResizableColumn>Contact</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-i="rowIndex">
+          <tr [pSelectableRow]="product">
+            <td class="row-width">{{ product.recipientId }}</td>
+            <td class="row-width">
+              {{ product?.notificationType?.notificationType }}
+            </td>
+            <td class="row-width">{{ product.firstName }}</td>
+            <td class="row-width">{{ product.lastName }}</td>
+            <td class="row-width">{{ product.contactValue }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="6">There is no setup.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<ng-template [ngIf]="visibleRecipientDialog">
+  <app-recipient-group-dialog
+    [isOpen]="visibleRecipientDialog"
+    [itemSelected]="selectedItem"
+    (closeSelf)="onCloseListDialog($event)"
+    (isLoading)="onLoading($event)"
+    [dialogMode]="dialogMode"
+  ></app-recipient-group-dialog>
+</ng-template>

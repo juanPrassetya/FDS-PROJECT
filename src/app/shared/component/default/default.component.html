@@ -1,0 +1,14 @@
+<div class="main-container">
+  <div class="header-container">
+    <app-header></app-header>
+  </div>
+
+  <mat-sidenav-container class="sidebar-sidenav-container">
+    <mat-sidenav mode="side" opened="true" [disableClose]="true">
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content class="router-container">
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

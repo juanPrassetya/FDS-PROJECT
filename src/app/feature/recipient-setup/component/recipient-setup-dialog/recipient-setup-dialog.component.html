@@ -1,0 +1,69 @@
+<p-dialog
+  [header]="
+    StringUtils.capitalizeFirstLetter(dialogMode.toLocaleLowerCase()) + ' Setup'"
+  [(visible)]="isOpen"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  class="recipient-setup-dialog"
+  (onShow)="onDialogVisible()"
+  (onHide)="onClose()">
+  <div class="recipient-setup-dialog-container" [formGroup]="form">
+    <div class="black-form-container">
+
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Notification Type</span>
+        <p-dropdown
+          formControlName="notificationType"
+          class="field-dropdown"
+          [options]="notifTypes"
+          optionLabel="notificationType"
+          [placeholder]="'Select Notification Type'"
+          [filter]="true"
+          filterBy="notificationType"
+        ></p-dropdown>
+      </div>
+
+      <div class="black-first-form">
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Firstname</span>
+            <input class="input" pInputText formControlName="firstName"/>
+          </div>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Lastname</span>
+            <input class="input" pInputText formControlName="lastName"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Contact</span>
+        <input class="input" pInputText formControlName="contactValue" type="email"/>
+      </div>
+    </div>
+
+
+    <div class="dialog-button-container">
+      <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="dialog-button"
+        [disabled]="isValueNotValid()"
+        (click)="onSave(form.getRawValue())">
+        Save
+      </button>
+    </div>
+  </div>
+</p-dialog>

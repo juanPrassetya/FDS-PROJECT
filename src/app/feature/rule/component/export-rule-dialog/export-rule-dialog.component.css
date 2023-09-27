@@ -1,0 +1,31 @@
+.condition-type-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem
+}
+
+.condition-caption {
+  font-size: .7rem;
+}
+
+.dialog-button-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.dialog-button {
+  width: 100px;
+  font-size: .8rem;
+}
+
+/*NG DEEP*/
+::ng-deep .import-rule-dialog .p-dialog-content {
+  overflow-y: unset !important;
+}
+
+::ng-deep .import-rule-dialog .p-dialog .p-dialog-content {
+  padding: 0 1.5rem 1rem;
+}

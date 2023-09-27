@@ -1,0 +1,68 @@
+<p-dialog
+  [header]="StringUtils.capitalizeFirstLetter(dialogMode.toLocaleLowerCase()) + ' Child Body Field'"
+  [(visible)]="isOpen" [modal]="true"
+  [style]="{ width: '50vw'}" [draggable]="false"
+  [resizable]="false" class="iso8583-header-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="iso8583-header-dialog-container" [formGroup]="form">
+    <div class="iso8583-header-form-container">
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Field Type</span>
+        <p-dropdown class="field-dropdown" formControlName="isTlvFormat" [options]="StringUtils.dummyFieldType"
+                    optionLabel="name" (onChange)="onFieldTypeChange($event)"
+                    [placeholder]="'Select Field Type'" [filter]="true" filterBy="name"
+        ></p-dropdown>
+      </div>
+
+      <div class="iso8583-header-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Field Id</span>
+          <input class="input" pInputText formControlName="fieldId" type="number"/>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Description</span>
+          <input class="input" pInputText formControlName="description"/>
+        </div>
+      </div>
+
+      <div class="iso8583-header-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Format</span>
+          <p-dropdown class="field-dropdown" formControlName="formatId" [options]="fieldFormat"
+                      optionLabel="formatType" (onChange)="onFormatChange($event)"
+                      [placeholder]="'Select Format'" [filter]="true" filterBy="formatType"
+          ></p-dropdown>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Encoding</span>
+          <p-dropdown class="field-dropdown" formControlName="encodingId" [options]="fieldEncoding"
+                      optionLabel="encodingType"
+                      [placeholder]="'Select Encoding'" [filter]="true" filterBy="encodingType"
+          ></p-dropdown>
+        </div>
+      </div>
+
+
+      <div class="iso8583-header-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Priority</span>
+          <p-dropdown class="field-dropdown" formControlName="priority" [options]="StringUtils.dummyPriority"
+                      optionLabel="code"
+                      [placeholder]="'Select Priority'" [filter]="true" filterBy="code"
+          ></p-dropdown>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Length</span>
+          <input class="input" formControlName="length" type="number" pInputText/>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()"
+              (click)="onSave(form.getRawValue())">Save
+      </button>
+    </div>
+  </div>
+</p-dialog>

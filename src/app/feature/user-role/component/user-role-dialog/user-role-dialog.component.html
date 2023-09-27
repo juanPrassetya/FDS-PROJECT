@@ -1,0 +1,49 @@
+<p-dialog
+  [header]="
+    StringUtils.capitalizeFirstLetter(dialogMode.toLocaleLowerCase()) + ' Role'"
+  [(visible)]="isOpen"
+  [modal]="true"
+  [style]="{ width: '70vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  class="user-roledialog"
+  (onShow)="onDialogVisible()"
+  (onHide)="onClose()">
+  <div class="user-roledialog-container" [formGroup]="form">
+    <div class="black-form-container">
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Name</span>
+        <input class="input" pInputText formControlName="roleName"/>
+      </div>
+
+      <div class="common-text-field-dialog-container">
+        <p-pickList [source]="operations" [target]="targetOperations" sourceHeader="Available Operation" targetHeader="Selected Operation" [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '40vh' }"
+                    [targetStyle]="{ height: '40vh' }" filterBy="opName" sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
+          <ng-template let-product pTemplate="item">
+            <span style="font-size: .7rem">{{product.opName}}</span>
+          </ng-template>
+        </p-pickList>
+      </div>
+    </div>
+
+
+    <div class="dialog-button-container">
+      <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="dialog-button"
+        [disabled]="isValueNotValid()"
+        (click)="onSave(form.getRawValue())">
+        Save
+      </button>
+    </div>
+  </div>
+</p-dialog>

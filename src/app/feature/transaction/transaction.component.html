@@ -1,0 +1,615 @@
+<div class="transaction-container">
+  <div class="first-container">
+    <p-card class="search-card">
+      <div class="search-container">
+        <div class="sc-first-row" [formGroup]="formGroup">
+          <div class="field">
+            <div class="sc-first-text-field-1">
+              <span class="label-txt-field">Utrnno</span>
+              <input
+                class="input-sm"
+                formControlName="utrnno"
+                pInputText
+                id="username"
+                aria-describedby="username-help"
+              />
+            </div>
+
+            <div class="sc-first-text-field-2">
+              <span class="label-txt-field">Transaction Date</span>
+              <div class="date-range-container">
+                <div class="calender-field">
+                  <span class="label-txt-field-sm">From</span>
+                  <p-calendar
+                    appendTo="body"
+                    class="calender-field-pick-sm"
+                    formControlName="dateFrom"
+                    [showIcon]="true"
+                    [showButtonBar]="true"
+                  ></p-calendar>
+                </div>
+                <div class="calender-field">
+                  <span class="label-txt-field-sm">To</span>
+                  <p-calendar
+                    appendTo="body"
+                    class="calender-field-pick-sm"
+                    formControlName="dateTo"
+                    [showIcon]="true"
+                    [showButtonBar]="true"
+                  ></p-calendar>
+                </div>
+              </div>
+            </div>
+
+            <div class="search-button-container">
+              <button
+                mat-mini-fab
+                color="primary"
+                class="sc-mini-search-button"
+                (click)="showAddtSearchFilter()"
+              >
+                <span class="bx bxs-chevron-down"></span>
+              </button>
+
+              <button
+                mat-raised-button
+                color="primary"
+                class="sc-search-button"
+                (click)="onSearchClicked(formGroup.getRawValue())"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="four-container">
+    <p-card class="table-card">
+      <p-table
+        #transtable
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [columns]="columns"
+        [value]="items"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="15"
+        [(selection)]="selectedItem"
+        (onRowSelect)="onRowClicked()"
+        (onRowUnselect)="onRowUnClicked()"
+        dataKey="utrnno"
+        class="transaction-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <p-checkbox
+              name="groupname"
+              (onChange)="updateCheck($event)"
+              [value]="true"
+              label="Update Every 60 Second"
+              class="update-60"
+            ></p-checkbox>
+
+            <div class="table-func-container-2">
+              <button
+                type="button"
+                pButton
+                pRipple
+                icon="pi pi-file"
+                (click)="transtable.exportCSV()"
+                class="p-button-info"
+                matTooltip="Export CSV"
+                [matTooltipPosition]="'below'"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                icon="pi pi-file-excel"
+                (click)="exportExcel()"
+                class="p-button-success"
+                matTooltip="Export XLS"
+                [matTooltipPosition]="'below'"
+              ></button>
+              <button
+                type="button"
+                pButton
+                pRipple
+                (click)="onActionClicked()"
+                icon="pi pi-sliders-h"
+                [disabled]="selectedItem == undefined"
+                class="p-button-info"
+                matTooltip="Actions"
+                [matTooltipPosition]="'below'"
+              ></button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn *ngFor="let col of columns">
+              {{ col.header }}
+          </th>
+            <!-- <th pResizableColumn>Transaction Date</th>
+            <th pResizableColumn>Transaction Type</th>
+            <th pResizableColumn>Utrnno</th>
+            <th pResizableColumn>HPAN</th>
+            <th pResizableColumn>CIF Id</th>
+            <th pResizableColumn>Account</th>
+            <th pResizableColumn>Amount</th>
+            <th pResizableColumn>Currency Code</th>
+            <th pResizableColumn>Response Code</th>
+            <th pResizableColumn>Fraud Flag</th>
+            <th pResizableColumn></th> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-columns="columns">
+          <tr [pSelectableRow]="product" [ngClass]="isRuleTriggered(product)">
+            <td>{{ product.sysdate }}</td>
+            <td>{{ product.transTypeDesc }}</td>
+            <td>{{ product.utrnno }}</td>
+            <td>
+              <a (click)="showHPAN(product.hpan)" href="javascript:void(0);">{{
+                product.hpan
+              }}</a>
+            </td>
+            <td>{{ product.cif_id }}</td>
+            <td>{{ product.acct1 }}</td>
+            <td>{{ product.cvtAmount }}</td>
+            <td>{{ product.currency }}</td>
+            <td [class]="isTransDeclined(product.respCode)">
+              {{ product.respCode }}
+            </td>
+            <td>
+              <div style="display: flex; gap: 5px; align-items: center">
+                <span
+                  class="flag-status-color"
+                  [className]="getFraudSev(product.fraudFlags)"
+                >
+                  <span class="flag-status-icon"></span>
+                </span>
+                <span>{{ getFraudFlag(product.fraudFlags) }}</span>
+              </div>
+            </td>
+            <!--            <td>-->
+            <!--              <div style="display: flex; gap: 5px; align-items: center">-->
+            <!--                <span class="flag-status-color" [className]="getAlertSev(product.alerted)">-->
+            <!--                  <span class="flag-status-icon"></span>-->
+            <!--                </span>-->
+            <!--                <span>{{getAlertFlag(product.alerted)}}</span>-->
+            <!--              </div>-->
+            <!--            </td>-->
+            <!-- <td>{{product.refNum}}</td> -->
+            <td class="row-width-xs">
+              <button
+                mat-raised-button
+                class="detail-btn"
+                (click)="onDetailClicked(product)"
+                matTooltip="View Details Data"
+                [matTooltipPosition]="'below'"
+                [disabled]="selectedItem == undefined"
+              >
+                <div class="detail-container">
+                  <span class="detail-text">Details</span>
+                </div>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="11">There is no transaction.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<!--Search Filter DIALOG-->
+<ng-template [ngIf]="visibleSearchDialog">
+  <p-dialog
+    header="Search Filter"
+    [(visible)]="visibleSearchDialog"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [draggable]="false"
+    [resizable]="false"
+    class="search-dialog"
+  >
+    <div class="addt-search-filter-container" [formGroup]="formGroup">
+      <div class="search-addt-field">
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Utrnno</span>
+          <input
+            formControlName="utrnno"
+            pInputText
+            aria-describedby="username-help"
+          />
+        </div>
+
+        <div style="width: 100%">
+          <span class="label-txt-field">Transaction Date</span>
+          <div class="date-range-container">
+            <div class="calender-field">
+              <span class="label-txt-field-sm">From</span>
+              <p-calendar
+                formControlName="dateFrom"
+                appendTo="body"
+                class="calender-field-pick"
+                [showIcon]="true"
+                [showButtonBar]="true"
+              ></p-calendar>
+            </div>
+            <div class="calender-field">
+              <span class="label-txt-field-sm">To</span>
+              <p-calendar
+                formControlName="dateTo"
+                appendTo="body"
+                class="calender-field-pick"
+                [showIcon]="true"
+                [showButtonBar]="true"
+              ></p-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p-divider align="center" class="search-divider">
+        <span
+          style="
+            font-size: 0.8rem;
+            color: var(--inactive-txt-color);
+            margin-top: 2px;
+            opacity: 0.5;
+          "
+          >Additional Search Filter</span
+        >
+      </p-divider>
+
+      <div class="addt-row-container">
+        <div
+          class="addt-row"
+          *ngFor="let filterField of searchFilterFields | keyvalue"
+        >
+          <div class="addt-text-field" *ngFor="let row of filterField.value">
+            <span class="label-txt-field">{{ row.name }}</span>
+            <input
+              [formControlName]="row.field"
+              *ngIf="row.type == 1"
+              pInputText
+              [id]="row.name"
+            />
+            <p-dropdown
+              formControlName="fraudFlags"
+              class="field-dropdown"
+              *ngIf="row.type == 2"
+              [options]="fraudFlags"
+              optionLabel="name"
+              [placeholder]="'Select ' + row.name.toLowerCase()"
+              [showClear]="true"
+            ></p-dropdown>
+            <p-dropdown
+              formControlName="isAlerted"
+              class="field-dropdown"
+              *ngIf="row.type == 3"
+              [options]="isAlerted"
+              optionLabel="name"
+              [placeholder]="'Select ' + row.name.toLowerCase()"
+              [showClear]="true"
+            ></p-dropdown>
+            <p-dropdown
+              formControlName="respCode"
+              class="field-dropdown"
+              *ngIf="row.type == 4"
+              [options]="intRespCodes"
+              optionLabel="code"
+              [showClear]="true"
+              [placeholder]="'Select ' + row.name.toLowerCase()"
+            >
+              <ng-template let-data pTemplate="respCodes">
+                <div class="item">
+                  <span>{{ data.code }} - {{ data.description }}</span>
+                </div>
+              </ng-template></p-dropdown
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="addt-button-container">
+        <button
+          mat-stroked-button
+          color="warn"
+          class="dialog-button"
+          (click)="onReset()"
+        >
+          Reset
+        </button>
+        <button
+          mat-stroked-button
+          color="warn"
+          class="dialog-button"
+          (click)="onClose()"
+        >
+          Cancel
+        </button>
+        <p-button
+          label="Search"
+          class="addt-button"
+          icon="pi pi-search"
+          (click)="onSearchClicked(formGroup.getRawValue())"
+        ></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<!--HPAN DIALOG-->
+<ng-template [ngIf]="visibleHPANDialog">
+  <p-dialog
+    header="HPAN"
+    [(visible)]="visibleHPANDialog"
+    [modal]="true"
+    [style]="{ width: '20vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        border: 1px solid gray;
+        border-radius: 5px;
+        padding: 0.5em;
+      "
+    >
+      <span>{{ this.clearHpan }}</span>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<!--Action Dialog-->
+<ng-template [ngIf]="visibleActionDialog">
+  <p-dialog
+    header="Actions"
+    [(visible)]="visibleActionDialog"
+    [modal]="true"
+    [style]="{ width: '45vw' }"
+    [draggable]="false"
+    [resizable]="false"
+  >
+    <div class="action-container">
+      <p-button
+        [disabled]="
+          !StringUtils.findOperations(authorities, 'ASSIGN_WHITE_TRANSACTION')
+        "
+        class="action-main-container"
+        styleClass="p-button-raised p-button-text"
+        (onClick)="onClickedWhite()"
+      >
+        <div class="action-button-container">
+          <span class="bx bx-check-shield action-icon"></span>
+          <span>White List Entity</span>
+        </div>
+      </p-button>
+
+      <p-button
+        [disabled]="
+          !StringUtils.findOperations(authorities, 'PUT_FRAUD_TRANSACTION')
+        "
+        class="action-main-container"
+        styleClass="p-button-raised p-button-text"
+        (onClick)="onClickedFraud()"
+      >
+        <div class="action-button-container">
+          <span class="bx bx-list-plus action-icon"></span>
+          <span>Put In Fraud List</span>
+        </div>
+      </p-button>
+
+      <!--      <p-button class="action-main-container" styleClass="p-button-raised p-button-text">-->
+      <!--        <div class="action-button-container">-->
+      <!--          <span class="bx bx-envelope action-icon"></span>-->
+      <!--          <span>Letter</span>-->
+      <!--        </div>-->
+      <!--      </p-button>-->
+
+      <p-button
+        [disabled]="
+          !StringUtils.findOperations(authorities, 'ASSIGN_BLACK_TRANSACTION')
+        "
+        class="action-main-container"
+        styleClass="p-button-raised p-button-text"
+        (onClick)="onClickedBlack()"
+      >
+        <div class="action-button-container">
+          <span class="bx bx-shield-minus action-icon"></span>
+          <span>Black List Entity</span>
+        </div>
+      </p-button>
+
+      <p-button
+        [disabled]="
+          !StringUtils.findOperations(authorities, 'ASSIGN_FRAUD_TRANSACTION')
+        "
+        class="action-main-container"
+        styleClass="p-button-raised p-button-text"
+        (onClick)="onClickedFraudFlag()"
+      >
+        <div class="action-button-container">
+          <span class="bx bx-flag action-icon"></span>
+          <span>Assign Fraud Flag</span>
+        </div>
+      </p-button>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<!--Transaction Detail DIALOG-->
+<ng-template [ngIf]="visibleTransactionDialog">
+  <app-trans-detail
+    [isOpen]="visibleTransactionDialog"
+    [selectedItem]="itemSelected"
+    [ruleInfo]="triggeredRule"
+    [addtData]="addtData"
+    (closeSelf)="onCloseTransDialog($event)"
+  ></app-trans-detail>
+</ng-template>
+
+<!--WhiteList Dialog-->
+<ng-template [ngIf]="visibleWhiteListDialog">
+  <app-wlist-action
+    [isOpen]="visibleWhiteListDialog"
+    [selectedItem]="itemSelected"
+    (closeSelf)="onCloseWhite($event)"
+  ></app-wlist-action>
+</ng-template>
+
+<!--BlackList Dialog-->
+<ng-template [ngIf]="visibleBlackListDialog">
+  <app-blist-action
+    [isOpen]="visibleBlackListDialog"
+    [selectedItem]="itemSelected"
+    (closeSelf)="onCloseBlack($event)"
+  ></app-blist-action>
+</ng-template>
+
+<!--FraudList Dialog-->
+<ng-template [ngIf]="visibleFraudListDialog">
+  <app-fraud-list-action
+    [isOpen]="visibleFraudListDialog"
+    [selectedItem]="itemSelected"
+    (closeSelf)="onCloseFraud($event)"
+  ></app-fraud-list-action>
+</ng-template>
+
+<ng-template [ngIf]="visibleFraudFlagDialog">
+  <app-fraud-flag-action
+    [isOpen]="visibleFraudFlagDialog"
+    [selectedItem]="selectedItem"
+    (closeSelf)="onCloseFraudFlag($event)"
+  ></app-fraud-flag-action>
+</ng-template>
+<!--<div class="five-container">-->
+<!--  <p-tabView>-->
+<!--    <p-tabPanel header="Transaction Detail">-->
+<!--      <div class="tran-detail-container">-->
+<!--        <div class="tran-detail-field">-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Utrnno</span>-->
+<!--            <input pInputText id="Utrnno" value="1234567890" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Transaction Type</span>-->
+<!--            <input pInputText id="TT" value="119" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Issuer Institution Id</span>-->
+<!--            <input pInputText id="IssId" value="009 (Bank Mandiri)" [disabled]="true"/>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="tran-detail-field">-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">PID</span>-->
+<!--            <input pInputText id="PID" value="119" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Amount</span>-->
+<!--            <input pInputText id="Amount" value="500.000" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Destination Institution Id</span>-->
+<!--            <input pInputText id="DesId" value="451 (Bank Syariah Indonesia)" [disabled]="true"/>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="tran-detail-field">-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Reference Number</span>-->
+<!--            <input pInputText id="RRN" value="1234567890" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Currency</span>-->
+<!--            <input pInputText id="Currency" value="360 (Indonesia)" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Acquire Institution Id</span>-->
+<!--            <input pInputText id="AcqId" value="009 (Bank Mandiri)" [disabled]="true"/>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="tran-detail-field">-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Flaud Flag</span>-->
+<!--            <input pInputText id="fraud" value="FRAUD" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Utrnno</span>-->
+<!--            <input pInputText id="Merchant Type" value="6011 (ATM)" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Source Account</span>-->
+<!--            <input pInputText id="srcAcct" value="1234567890" [disabled]="true"/>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="tran-detail-field">-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Response Code</span>-->
+<!--            <input pInputText id="rc" value="00 (Success)" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Terminal Id</span>-->
+<!--            <input pInputText id="tId" value="1234567890" [disabled]="true"/>-->
+<!--          </div>-->
+<!--          <div class="text-field-addt">-->
+<!--            <span class="label-txt-field">Destination Account</span>-->
+<!--            <input pInputText id="dstAcct" value="1234567890" [disabled]="true"/>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </p-tabPanel>-->
+<!--    <p-tabPanel header="Action">-->
+<!--      <p>-->
+<!--        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem-->
+<!--        aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.-->
+<!--        Nemo enim-->
+<!--        ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui-->
+<!--        ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.-->
+<!--      </p>-->
+<!--    </p-tabPanel>-->
+<!--    <p-tabPanel header="Rule Info">-->
+<!--      <p>-->
+<!--        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti-->
+<!--        atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique-->
+<!--        sunt in culpa-->
+<!--        qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et-->
+<!--        expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.-->
+<!--      </p>-->
+<!--    </p-tabPanel>-->
+<!--    <p-tabPanel header="Additional Data">-->
+<!--      <p>-->
+<!--        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti-->
+<!--        atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique-->
+<!--        sunt in culpa-->
+<!--        qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et-->
+<!--        expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.-->
+<!--      </p>-->
+<!--    </p-tabPanel>-->
+<!--  </p-tabView>-->
+<!--</div>-->

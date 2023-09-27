@@ -1,0 +1,179 @@
+.fraud-list-main-container {
+  background: var(--main-bg-color);
+  padding: 15px 20px 15px 20px;
+
+  @apply
+  se-flex se-flex-col se-gap-[15px]
+  se-w-full se-h-full
+  se-overflow-auto
+}
+
+.first-container {
+  @apply
+  se-w-full
+}
+
+.search-container {
+  @apply
+  se-flex se-flex-auto se-gap-[20px] se-w-full
+}
+
+.sc-first-row {
+  /*padding: 10px 30px 0;*/
+
+  @apply
+  se-flex se-justify-between
+  se-w-full
+}
+
+.field {
+  /*grid-template-columns: 1fr .1fr;*/
+
+  @apply
+  se-flex se-justify-between se-gap-[15rem]
+  se-w-full
+}
+
+.sc-field-container {
+  align-items: center;
+  @apply
+  se-flex se-gap-[1rem] se-w-full
+}
+
+.sc-first-text-field-1 {
+  @apply se-w-full
+}
+
+.sc-first-text-field-2 {
+  @apply
+  se-w-[50%]
+  se-flex se-flex-col se-gap-[5px]
+}
+
+.label-txt-field,
+.value-txt {
+  @apply
+  se-text-[.8rem]
+  se-font-semibold
+}
+
+.date-range-container {
+  @apply
+  se-flex se-gap-[20px]
+  se-w-full
+}
+
+.calender-field-pick {
+  width: 100%;
+}
+
+.search-button-container {
+  @apply
+  se-flex se-h-full se-items-end se-gap-[10px]
+}
+
+.sc-addt-button-container {
+  @apply
+  se-flex se-w-full se-h-full
+}
+
+.sc-search-button {
+  @apply
+  se-w-full se-text-[.8rem]
+}
+
+.sc-mini-search-button {
+  @apply
+  se-w-[36px] se-h-[36px]
+}
+
+.second-container,
+.third-container{
+  @apply
+  se-h-full
+}
+
+.header-table {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
+.action-button {
+  padding: 0;
+  height: 30px;
+  min-width: 40px;
+}
+
+.add-button {
+  @apply se-text-[.8rem]
+}
+
+.action-container {
+  margin: 20px;
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.action-main-container {
+  width: calc(100% / 2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 1vw;
+  font-weight: 600;
+  gap: 10px;
+  height: 10vh;
+  width: 100%;
+}
+
+.action-icon{
+  font-size: 2vw;
+}
+
+.table-func-container-2 {
+  display: flex;
+  gap: 10px
+}
+
+.action-container {
+  margin: 20px;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-main-container {
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: .8rem;
+  font-weight: 600;
+  gap: 10px;
+  height: 5rem;
+  width: 100%;
+}
+
+.action-button {
+  font-size: 2rem;
+}
+

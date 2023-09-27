@@ -1,0 +1,18 @@
+<p-dialog header="User Role Detail" class="pay-detail-container"
+          [modal]="true" [(visible)]="isOpen"
+          [position]="'right'" [draggable]="false"
+          [resizable]="false" [maximizable]="true"
+          (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [style]="{ width: '30vw', height: '100vh' }">
+  <p-tabView class="user-role-detail-tab">
+    <p-tabPanel header="Information">
+      <div class="rule-container">
+        <p-tree [value]="ruleInfo" class="rule-tree">
+          <!--          <ng-template let-node pTemplate="default">-->
+          <!--            <span style="white-space: pre-line">{{ node.label}}</span>-->
+          <!--          </ng-template>-->
+        </p-tree>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>

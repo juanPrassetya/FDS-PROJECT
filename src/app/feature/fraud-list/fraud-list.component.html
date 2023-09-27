@@ -1,0 +1,295 @@
+<div class="fraud-list-main-container">
+  <div class="first-container">
+    <p-card class="search-card">
+      <div class="search-container" [formGroup]="formGroup">
+        <div class="sc-first-row">
+          <div class="field">
+            <div class="sc-field-container">
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">List Name</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="listName"
+                />
+              </div>
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Entity Type</span>
+                <p-dropdown
+                  class="field-dropdown-sm"
+                  [options]="entityTypes"
+                  [filter]="true"
+                  optionLabel="entityType"
+                  formControlName="entityType"
+                  filterBy="entityType"
+                  appendTo="body"
+                  [placeholder]="'Select Field'"
+                  [showClear]="true"
+                ></p-dropdown>
+              </div>
+            </div>
+
+            <div class="search-button-container">
+              <button
+              mat-stroked-button
+              color="warn"
+              class="dialog-button"
+              (click)="onReset()"
+            >
+              Reset
+            </button>
+              <button
+                mat-raised-button
+                color="primary"
+                class="sc-search-button"
+                (click)="onSearchClicked(formGroup.getRawValue())"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="second-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="fraudListItems"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="5"
+        [(selection)]="selectedFraudListItem"
+        (onRowSelect)="onListClicked()"
+        (onRowUnselect)="onListUnClicked()"
+        dataKey="listId"
+        class="rule-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem">Fraud List Data</span>
+
+            <div class="table-func-container-2">
+              <ng-template [ngIf]="StringUtils.findOperations(authorities, 'ADD_FRAUD_LIST')">
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  icon="bx bx-layer-plus"
+                  (click)="onClickedAddListDialog()"
+                  matTooltip="Add Fraud List"
+                  [matTooltipPosition]="'below'"
+                ></button>
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedFraudListItem == undefined"
+                  icon="bx bx-edit"
+                  (click)="onClickedEditListDialog()"
+                  matTooltip="Edit Fraud List"
+                  [matTooltipPosition]="'below'"
+                ></button>
+              </ng-template>
+              <ng-template [ngIf]="StringUtils.findOperations(authorities, 'DELETE_FRAUD_LIST')">
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedFraudListItem == undefined"
+                  icon="bx bx-trash-alt"
+                  (click)="onClickedDeleteList()"
+                  matTooltip="Delete Fraud List"
+                  [matTooltipPosition]="'below'"
+                  class="p-button-danger"
+                ></button>
+              </ng-template>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>List Id</th>
+            <th pResizableColumn>List Name</th>
+            <th pResizableColumn>Entity Type</th>
+            <th pResizableColumn>Group</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-i="rowIndex">
+          <tr [pSelectableRow]="product">
+            <td class="row-width-xs">{{ product.listId }}</td>
+            <td class="row-width">{{ product.listName }}</td>
+            <td class="row-width">{{ product?.entityType?.entityType }}</td>
+            <td class="row-width">{{ product?.userGroup?.groupName }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="5">There is no fraud list.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+  <div class="third-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="fraudValueItems"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [scrollable]="true"
+        [rows]="5"
+        [(selection)]="selectedFraudListValueItem"
+        dataKey="id"
+        class="rule-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+            >Fraud List Value Data</span
+            >
+
+            <div class="table-func-container-2">
+              <button type="button" pButton pRipple class="btn-with-txt-prime"
+                      (click)="onClickedAction()" [disabled]="selectedFraudListItem == undefined"
+                      matTooltip="Take Action" [matTooltipPosition]="'below'">
+                Action
+              </button>
+
+              <ng-template [ngIf]="StringUtils.findOperations(authorities, 'ADD_FRAUD_VALUE')">
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  icon="bx bx-layer-plus"
+                  (click)="onClickedAddValueDialog()"
+                  matTooltip="Add Fraud List Value"
+                  [disabled]="selectedFraudListItem == undefined"
+                  [matTooltipPosition]="'below'"
+                ></button>
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedFraudListValueItem == undefined"
+                  icon="bx bx-edit"
+                  (click)="onClickedEditValueDialog()"
+                  matTooltip="Edit Fraud List Value"
+                  [matTooltipPosition]="'below'"
+                ></button>
+              </ng-template>
+
+              <ng-template [ngIf]="StringUtils.findOperations(authorities, 'DELETE_FRAUD_VALUE')">
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedFraudListValueItem == undefined"
+                  icon="bx bx-trash-alt"
+                  (click)="onClickedDeleteValue()"
+                  matTooltip="Delete Fraud List Value"
+                  [matTooltipPosition]="'below'"
+                  class="p-button-danger"
+                ></button>
+              </ng-template>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Value Id</th>
+            <th pResizableColumn>Value</th>
+            <th pResizableColumn>Author</th>
+            <th pResizableColumn>Creation Date</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr [pSelectableRow]="product">
+            <td class="row-width-xs">{{ product.id }}</td>
+            <td class="row-width">{{ product.value }}</td>
+            <td class="row-width">{{ product.author }}</td>
+            <td class="row-width">
+              {{ DateUtils.ConvertToDateFormat(product.creationDate) }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="5">There is no fraud list value.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+
+<ng-template [ngIf]="visibleActionDialog">
+  <p-dialog header="List Action" [(visible)]="visibleActionDialog" [modal]="true" [style]="{ width: 'fit-content'}"
+            [draggable]="false"
+            [resizable]="false">
+    <div class="action-container">
+      <p-button (onClick)="onClickedImport()" class="action-main-container"
+                styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>Import Fraud Value</span>
+        </div>
+      </p-button>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<!--CRUD Fraud List Dialog-->
+<ng-template [ngIf]="visibleFraudListDialog">
+  <app-fraud-list-dialog
+    [isOpen]="visibleFraudListDialog"
+    [itemSelected]="selectedFraudListItem"
+    (closeSelf)="onCloseListDialog($event)"
+    (isLoading)="onLoading($event)"
+    [dialogMode]="dialogMode"
+  ></app-fraud-list-dialog>
+</ng-template>
+
+<!--CRUD Fraud List Value Dialog-->
+<ng-template [ngIf]="visibleFraudValueDialog">
+  <app-fraud-list-value-dialog
+    [isOpen]="visibleFraudValueDialog"
+    [itemSelected]="selectedFraudListValueItem"
+    [listSelected]="selectedFraudListItem"
+    (closeSelf)="onCloseValueDialog($event)"
+    (isLoading)="onLoading($event)"
+    [dialogMode]="dialogMode"
+  ></app-fraud-list-value-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleImportFraudValueDialog">
+  <app-fraud-value-import-dialog
+    [isOpen]="visibleImportFraudValueDialog"
+    [selectedFraudList]="selectedFraudListItem"
+    (closeSelf)="onCloseImport($event)"
+    (isLoading)="onLoading($event)"
+  ></app-fraud-value-import-dialog>
+</ng-template>

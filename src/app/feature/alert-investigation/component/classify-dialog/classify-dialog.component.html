@@ -1,0 +1,24 @@
+<p-dialog [header]="'Classify Alert'" [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '30vw'}" [draggable]="false"
+          [resizable]="false" class="alert-investigation-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="alert-investigation-dialog-container" [formGroup]="form">
+    <div class="alert-investigation-form-container">
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Classification Type</span>
+        <p-dropdown class="field-dropdown" formControlName="classificationType" [options]="dummyClassificationType" optionLabel="name"
+                    [placeholder]="'Select Classification Type'" [filter]="true" filterBy="name"
+        ></p-dropdown>
+      </div>
+
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">Comments</span>
+        <textarea formControlName="comment" rows="1" cols="20" class="input-sm input-area-nm" style="resize: none" pInputTextarea></textarea>
+      </div>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()" (click)="onSave(form.getRawValue())">Save</button>
+    </div>
+  </div>
+</p-dialog>

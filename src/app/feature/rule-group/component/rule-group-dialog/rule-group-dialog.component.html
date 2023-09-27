@@ -1,0 +1,62 @@
+<p-dialog [header]="StringUtils.capitalizeFirstLetter(dialogMode.toLocaleLowerCase()) + ' Rule Group'"
+          [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '50vw'}" [draggable]="false"
+          [resizable]="false" class="rule-group-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="rule-group-dialog-container" [formGroup]="form">
+    <div class="rule-group-form-container">
+      <div class="rule-group-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Group Name</span>
+          <input class="input" pInputText formControlName="groupName"/>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Status</span>
+          <p-dropdown formControlName="isActive" class="field-dropdown" [options]="StringUtils.dummyStatus" optionLabel="name"
+                      [placeholder]="'Select Status'" [filter]="true" filterBy="name"></p-dropdown>
+        </div>
+      </div>
+
+      <div class="rule-group-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Threshold Black</span>
+          <input class="input" pInputText formControlName="threshouldBlack" type="number"/>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Threshold Grey</span>
+          <input class="input" pInputText formControlName="threshouldGrey" type="number"/>
+        </div>
+      </div>
+
+      <div class="rule-group-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Priority</span>
+          <p-dropdown class="field-dropdown" formControlName="priority" [options]="StringUtils.dummyPriority"
+                      optionLabel="code"
+                      [placeholder]="'Select Priority'" [filter]="true" filterBy="code"
+          ></p-dropdown>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Forced Reaction</span>
+          <p-dropdown class="field-dropdown" formControlName="isForcedReaction" [options]="StringUtils.dummyOption"
+                      optionLabel="name"
+                      [placeholder]="'Select Priority'" [filter]="true" filterBy="name"
+          ></p-dropdown>
+        </div>
+      </div>
+
+      <div class="common-text-field-dialog-container">
+        <span class="label-txt-field-sm">User Group</span>
+        <p-dropdown class="field-dropdown" formControlName="userGroup" [options]="userGroups" optionLabel="groupName"
+                    [placeholder]="'Select User Group'" [filter]="true" filterBy="groupName">
+        </p-dropdown>
+      </div>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()"
+              (click)="onSave(form.getRawValue())">Save
+      </button>
+    </div>
+  </div>
+</p-dialog>

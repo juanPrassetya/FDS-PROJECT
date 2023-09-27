@@ -1,0 +1,274 @@
+<div class="user-audit-main-container">
+  <div class="first-container">
+    <p-card class="search-card">
+      <div class="search-container" [formGroup]="formGroup">
+        <div class="sc-first-row">
+          <div class="field">
+            <div class="sc-field-container">
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Date From</span>
+                <p-calendar
+                  appendTo="body"
+                  class="calender-field-pick-sm"
+                  [showIcon]="true"
+                  formControlName="dateFrom"
+                  [showButtonBar]="true"
+                ></p-calendar>
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Date To</span>
+                <p-calendar
+                appendTo="body"
+                class="calender-field-pick-sm"
+                [showIcon]="true"
+                formControlName="dateTo"
+                [showButtonBar]="true"
+              ></p-calendar>
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Status</span>
+                <input
+                class="input-sm"
+                pInputText
+                aria-describedby="username-help"
+                formControlName="status"
+              />
+              </div>
+            </div>
+
+            <div class="search-button-container">
+              <button
+                mat-mini-fab
+                color="primary"
+                class="sc-mini-search-button"
+                (click)="showAddtSearchFilter()"
+              >
+                <span class="bx bxs-chevron-down"></span>
+              </button>
+
+              <button
+                mat-raised-button
+                color="primary"
+                class="sc-search-button"
+                (click)="onSearchClicked(formGroup.getRawValue())"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="second-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="items"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="15"
+        [(selection)]="selectedItem"
+        (onRowSelect)="onListClicked()"
+        (onRowUnselect)="onListUnClicked()"
+        dataKey="auditId"
+        class="user-audit-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+              >Audit Data</span
+            >
+
+            <div class="table-func-container-2" style="opacity: 0">
+              <button
+                type="button"
+                pButton
+                pRipple
+                icon="bx bx-layer-plus"
+                [disabled]="true"
+              ></button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Id</th>
+            <th pResizableColumn>User</th>
+            <th pResizableColumn>Capture Date</th>
+            <th pResizableColumn>Remote Addr</th>
+            <th pResizableColumn>Host Addr</th>
+            <th pResizableColumn>Endpoint</th>
+            <th pResizableColumn>Method</th>
+            <th pResizableColumn>Status</th>
+            <th pResizableColumn>Elapsed Time</th>
+            <th pResizableColumn>Agent</th>
+            <th pResizableColumn></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-i="rowIndex">
+          <tr [pSelectableRow]="product">
+            <td class="row-width">{{ product.auditId }}</td>
+            <td class="row-width">{{ product.user?.username }}</td>
+            <td class="row-width">{{ product.captureDate }}</td>
+            <td class="row-width">{{ product.remoteAddress }}</td>
+            <td class="row-width">{{ product.host }}</td>
+            <td class="row-width">{{ product.uri }}</td>
+            <td class="row-width">{{ product.method }}</td>
+            <td class="row-width">{{ product.status }}</td>
+            <td class="row-width">{{ product.timeTaken }}</td>
+            <td class="row-width">{{ product.userAgent }}</td>
+            <td class="row-width-xs">
+              <button
+                mat-raised-button
+                class="detail-btn"
+                (click)="onDetailClicked(product)"
+                matTooltip="View Details Data"
+                [matTooltipPosition]="'below'"
+                [disabled]="selectedItem == undefined"
+              >
+                <div class="detail-container">
+                  <span class="detail-text">Details</span>
+                </div>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="15">There is no audit.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<!--Search Filter DIALOG-->
+<ng-template [ngIf]="visibleSearchDialog">
+  <p-dialog
+    header="Search Filter"
+    [(visible)]="visibleSearchDialog"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [draggable]="false"
+    [resizable]="false"
+    class="search-dialog"
+  >
+    <div class="addt-search-filter-container" [formGroup]="formGroup">
+      <div class="sc-field-container">
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Date From</span>
+          <p-calendar
+            appendTo="body"
+            class="calender-field-pick"
+            [showIcon]="true"
+            formControlName="dateFrom"
+            [showButtonBar]="true"
+          ></p-calendar>
+        </div>
+
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Date To</span>
+          <p-calendar
+            appendTo="body"
+            class="calender-field-pick"
+            [showIcon]="true"
+            formControlName="dateTo"
+            [showButtonBar]="true"
+          ></p-calendar>
+        </div>
+
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Status</span>
+          <input formControlName="status" class="input-sm" pInputText aria-describedby="username-help" />
+
+        </div>
+      </div>
+
+      <p-divider align="center" class="search-divider">
+        <span
+          style="
+            font-size: 0.8rem;
+            color: var(--inactive-txt-color);
+            margin-top: 2px;
+            opacity: 0.5;
+          "
+          >Additional Search Filter</span
+        >
+      </p-divider>
+
+      <div class="addt-row-container">
+        <div
+          class="addt-row"
+          *ngFor="let filterField of searchFilterFields | keyvalue"
+        >
+          <div class="addt-text-field" *ngFor="let row of filterField.value">
+            <span class="label-txt-field">{{ row.name }}</span>
+            <input [formControlName]="row.field" *ngIf="row.type == 1" pInputText [id]="row.name" />
+            <p-dropdown
+              class="field-dropdown"
+              *ngIf="row.type == 2"
+              [options]="method"
+              optionLabel="name"
+              [placeholder]="'Select ' + row.name.toLowerCase()"
+              formControlName="method"
+              [showClear]="true"
+            ></p-dropdown>
+            <p-dropdown
+              class="field-dropdown"
+              *ngIf="row.type == 3"
+              [options]="itemUsers"
+              optionLabel="username"
+              [placeholder]="'Select ' + row.name.toLowerCase()"
+              formControlName="user"
+              appendTo="body"
+              [showClear]="true"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="addt-button-container">
+        <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onReset()"
+      >
+        Reset
+      </button>
+        <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+        <p-button
+          label="Search"
+          class="addt-button"
+          icon="pi pi-search"
+          (click)="onSearchClicked(formGroup.getRawValue())"
+        ></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleUserAuditDetail">
+  <app-user-audit-detail
+    [isOpen]="visibleUserAuditDetail"
+    [selectedItem]="selectedItem"
+    (closeSelf)="onCloseDetail($event)"
+  ></app-user-audit-detail>
+</ng-template>

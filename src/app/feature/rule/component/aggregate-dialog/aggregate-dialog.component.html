@@ -1,0 +1,187 @@
+<p-dialog header="Aggregate Counter" [(visible)]="isOpen" [modal]="true" [closeOnEscape]="false"
+          [style]="{ width: '60vw'}" [draggable]="false" (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [resizable]="false" class="aggregate-dialog">
+  <div class="condition-type-container" [formGroup]="form">
+    <div class="form-container">
+      <div class="form-cycle-container">
+        <div class="cycle-container">
+          <span class="cycle-title">Time Start Cycle</span>
+          <div class="cycle-body-container">
+            <div class="common-text-field-dialog-container">
+              <span class="label-txt-field-sm">Days</span>
+              <input class="input-sm" pInputText type="number" formControlName="days_s"/>
+            </div>
+
+            <div class="common-text-field-dialog-container">
+              <span class="label-txt-field-sm">Hours</span>
+              <input class="input-sm" pInputText type="number" formControlName="hours_s"/>
+            </div>
+
+            <div class="common-text-field-dialog-container">
+              <span class="label-txt-field-sm">Minutes</span>
+              <input class="input-sm" pInputText type="number" formControlName="min_s"/>
+            </div>
+
+            <div class="common-text-field-dialog-container">
+              <span class="label-txt-field-sm">Seconds</span>
+              <input class="input-sm" pInputText type="number" formControlName="sec_s"/>
+            </div>
+          </div>
+        </div>
+
+        <div class="cycle-container">
+          <span class="cycle-title">Time End Cycle</span>
+          <div class="cycle-body-container">
+            <div class="common-text-field-dialog-container">
+              <span class="label-txt-field-sm">Days</span>
+              <input class="input-sm" pInputText type="number" formControlName="days_e"/>
+            </div>
+
+            <div class="common-text-field-dialog-container">
+              <span class="label-txt-field-sm">Hours</span>
+              <input class="input-sm" pInputText type="number" formControlName="hours_e"/>
+            </div>
+
+            <div class="common-text-field-dialog-container">
+              <span class="label-txt-field-sm">Minutes</span>
+              <input class="input-sm" pInputText type="number" formControlName="min_e"/>
+            </div>
+
+            <div class="common-text-field-dialog-container">
+              <span class="label-txt-field-sm">Seconds</span>
+              <input class="input-sm" pInputText type="number" formControlName="sec_e"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-field-container">
+        <div class="field-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Name</span>
+            <input class="input-sm" pInputText formControlName="name"/>
+          </div>
+
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Description</span>
+            <input class="input-sm" pInputText formControlName="description"/>
+          </div>
+        </div>
+
+        <div class="field-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Aggregating Entity</span>
+            <p-dropdown class="field-dropdown-sm" [placeholder]="'Select Entity'" [options]="transParams" optionLabel="description"
+                        [filter]="true" formControlName="entity"
+            ></p-dropdown>
+          </div>
+
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Attribute</span>
+            <p-dropdown class="field-dropdown-sm" [placeholder]="'Select Attribute'" [options]="transParams" optionLabel="description"
+                        [filter]="true" formControlName="attribute"
+            ></p-dropdown>
+          </div>
+        </div>
+
+        <div class="field-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Metric Type</span>
+            <p-dropdown class="field-dropdown-sm" [options]="StringUtils.dummyMetric" optionLabel="name"
+                        [placeholder]="'Select Relation'" [filter]="true" formControlName="metric"
+            ></p-dropdown>
+          </div>
+
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Incrementation Mode</span>
+            <p-dropdown class="field-dropdown-sm" [options]="StringUtils.dummyIncMode" optionLabel="name"
+                        [placeholder]="'Select Relation'" [filter]="true" formControlName="incMode"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-tb-container">
+      <span class="formula-title">Filtration</span>
+      <div class="filtration-container">
+        <div class="formula-cbx">
+          <p-checkbox formControlName="isFormula" [binary]="true" inputId="ny"></p-checkbox>
+          <span style="font-size: .7rem; font-weight: 600">Formula</span>
+        </div>
+
+        <input *ngIf="isFormulaChecked()" class="input-sm" pInputText formControlName="formula"/>
+      </div>
+
+      <div style="height: 100%; padding-bottom: .5rem;">
+        <p-table #dt [tableStyle]="{'min-width': '30vw'}"
+                 [resizableColumns]="true"
+                 [value]="filtations"
+                 selectionMode="single"
+                 [exportHeader]="'customExportHeader'"
+                 [scrollable]="true"
+                 [(selection)]="selectedFiltration"
+                 dataKey="conditionId" class="aggregate-table" styleClass="p-datatable-sm p-datatable-gridlines">
+
+          <ng-template pTemplate="caption">
+            <div class="table-func-container-2">
+              <button type="button" pButton pRipple icon="bx bx-layer-plus" (click)="onAttributeDialogVisible()"
+                      matTooltip="Add Rule" [matTooltipPosition]="'below'"></button>
+              <button type="button" pButton pRipple icon="bx bx-edit" [disabled]="selectedFiltration == undefined" (click)="onEditAttribute()"
+                      matTooltip="Edit Rule" [matTooltipPosition]="'below'"></button>
+              <button type="button" pButton pRipple icon="bx bx-trash-alt" [disabled]="selectedFiltration == undefined" (click)="onDeleteAttribute()"
+                      matTooltip="Delete Rule" [matTooltipPosition]="'below'" class="p-button-danger"></button>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn style="font-size: .6rem;">Id</th>
+              <th pResizableColumn style="font-size: .6rem;">Attribute</th>
+              <th pResizableColumn style="font-size: .6rem;">Operator</th>
+              <th pResizableColumn style="font-size: .6rem;">Operator Details</th>
+              <th pResizableColumn style="font-size: .6rem;">Value</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-item>
+            <tr [pSelectableRow]="item">
+              <td style="font-size: .6rem;" class="row-width-xs">{{item.conditionId}}</td>
+              <td style="font-size: .6rem;">{{item.attribute}}</td>
+              <td style="font-size: .6rem;">{{item?.operator}}</td>
+              <td style="font-size: .6rem;">{{item.operatorDetails}}</td>
+              <td style="font-size: .6rem;" class="row-width-wrap">{{item.value}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5">There is no condition.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()" (click)="onSave(form.getRawValue())">Save</button>
+    </div>
+  </div>
+</p-dialog>
+
+<ng-template [ngIf]="visibleAttributeDialog">
+  <!--Attribute Dialog-->
+  <app-attribute-dialog
+    [isOpen]="visibleAttributeDialog"
+    (closeSelf)="onCloseAttribute($event)"
+    (onAddItem)="onAddAttribute($event)"
+    (isLoading)="onLoading($event)"
+    [conditionCounter]="conditionCounter"
+    [dialogMode]="attrDialogMode"
+    [itemSelected]="selectedFiltration"
+  ></app-attribute-dialog>
+</ng-template>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>

@@ -1,0 +1,32 @@
+<div class="login-container">
+  <div class="logo-container">
+    <span class="logo-text">Fraud Management System</span>
+  </div>
+
+  <form class="login-form-container mat-elevation-z8">
+    <div class="login-form-title-container">
+      <span class="login-form-title">Login</span>
+      <span class="login-form-caption">Enter your credentials to access the application.</span>
+    </div>
+
+    <div class="login-field-container" [formGroup]="form">
+      <div class="common-text-field-container">
+        <span class="text-field-label">Username</span>
+        <input formControlName="username" pInputText/>
+      </div>
+
+      <div class="common-text-field-container">
+        <span class="text-field-label">Password</span>
+        <p-password formControlName="password" [feedback]="false" [toggleMask]="true"></p-password>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button type="submit" mat-raised-button color="primary" class="login-button" (click)="onLogin(form.value)" [disabled]="isValueNotValid() || isLoading">
+        <span>Login</span>
+      </button>
+    </div>
+  </form>
+</div>
+
+<app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>

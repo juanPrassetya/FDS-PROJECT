@@ -1,0 +1,35 @@
+.main-container {
+  height: 100vh;
+  width: 100vw;
+  display       : flex;
+  flex-direction: column;
+  position      : absolute;
+  top           : 0;
+  bottom        : 0;
+  left          : 0;
+  right         : 0;
+}
+
+.header-container {
+  width: calc(100vw - 250px);
+  margin-left: 250px;
+}
+
+.sidebar-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+       causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex            : 1;
+  background-color: rgb(223, 222, 222) !important;
+}
+
+.mat-drawer {
+  width: 250px;
+}
+
+.router-container {
+  background: var(--main-bg-color);
+}
+
+::ng-deep .mat-sidenav {
+  padding: 30px 0 20px 0 !important;
+}

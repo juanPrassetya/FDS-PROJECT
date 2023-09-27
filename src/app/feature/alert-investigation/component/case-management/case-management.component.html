@@ -1,0 +1,38 @@
+<div class="case-management-container">
+  <p-button (onClick)="onClickedClassify()" [disabled]="itemSelected == undefined || !StringUtils.findOperations(authorities, 'CLASIFY_ALERT')" class="case-management-btn-container" styleClass="p-button-raised p-button-text">
+    <div class="case-management-btn-content">
+      <span class="bx bx-search-alt case-management-btn-icon"></span>
+      <span>Classify Alert</span>
+    </div>
+  </p-button>
+
+  <p-button (onClick)="onClickedAction()" [disabled]="itemSelected == undefined || !StringUtils.findOperations(authorities, 'ACTION_ALERT')" class="case-management-btn-container" styleClass="p-button-raised p-button-text">
+    <div class="case-management-btn-content">
+      <span class="bx bx-list-plus case-management-btn-icon"></span>
+      <span>Take Action</span>
+    </div>
+  </p-button>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<!--CLASSIFY DIALOG-->
+<ng-template [ngIf]="visibleClassifyDialog">
+  <app-classify-dialog
+    [isOpen]="visibleClassifyDialog"
+    [itemSelected]="itemSelected"
+    (closeSelf)="onCloseClassify($event)"
+    (isLoading)="onLoading($event)"
+  ></app-classify-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleActionDialog">
+  <app-action-dialog
+    [isOpen]="visibleActionDialog"
+    [itemSelected]="itemSelected"
+    (closeSelf)="onCloseAction($event)"
+    (isLoading)="onLoading($event)"
+  ></app-action-dialog>
+</ng-template>

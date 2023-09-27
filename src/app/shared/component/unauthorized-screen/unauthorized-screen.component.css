@@ -1,0 +1,63 @@
+.unauthorized-main-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.content-container {
+  width: 90vw;
+  height: fit-content;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: .7fr .5fr;
+  align-items: center;
+  padding: 5rem 2rem;
+  color: var(--inactive-txt-color);
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+}
+
+.icon {
+  width: 40rem;
+}
+
+.txt-container {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem
+}
+
+.title-container {
+  font-size: 2.5rem;
+  font-weight: 800;
+  display: flex;
+  justify-content: center;
+}
+
+.sub-title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+  width: 8rem;
+}

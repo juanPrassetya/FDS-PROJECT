@@ -1,0 +1,55 @@
+<p-dialog header="Fraud Reactions Detail" class="fraud-reactions-container"
+          [modal]="true" [(visible)]="isOpen"
+          [position]="'right'" [draggable]="false"
+          [resizable]="false"
+          (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [style]="{ width: '30vw', height: '100vh' }">
+  <p-tabView class="fraud-reactions-tab">
+    <p-tabPanel header="Information">
+      <div class="information-container">
+        <div class="fraud-reactions-field-container">
+          <div class="text-field-fraud-reactions" *ngIf="isAvailable(selectedItem?.id)">
+            <span class="label-txt-field">Reaction Id</span>
+            <span class="value-txt">{{selectedItem?.id}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="isAvailable(selectedItem?.bindingId)">
+            <span class="label-txt-field">Binding Id</span>
+            <span class="value-txt">{{selectedItem?.bindingId}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="isAvailable(selectedItem?.bindingType)">
+            <span class="label-txt-field">Binding Type</span>
+            <span class="value-txt">{{selectedItem?.bindingType}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="isAvailable(selectedItem?.priority)">
+            <span class="label-txt-field">Priority</span>
+            <span class="value-txt">{{selectedItem?.priority}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="isAvailable(selectedItem?.zone)">
+            <span class="label-txt-field">Zone</span>
+            <span class="value-txt">{{selectedItem?.zone}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="isAvailable(selectedItem?.action)">
+            <span class="label-txt-field">Action</span>
+            <span class="value-txt">{{charReplacement(selectedItem?.action)}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="isAvailable(selectedItem?.actionValue)">
+            <span class="label-txt-field">Action Value</span>
+            <span class="value-txt">{{ actionValueMapping(selectedItem)}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions-desc" *ngIf="isAvailable(selectedItem?.description)">
+            <span class="label-txt-field">Description</span>
+            <span class="value-txt-desc">{{selectedItem?.description}}</span>
+          </div>
+        </div>
+
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>

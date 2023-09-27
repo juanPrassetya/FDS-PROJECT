@@ -1,0 +1,101 @@
+<p-dialog header="Rule Detail" class="rule-detail-container"
+          [modal]="true" [(visible)]="isOpen"
+          [position]="'right'" [draggable]="false"
+          [resizable]="false" [maximizable]="true"
+          (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [style]="{ width: '30vw', height: '100vh' }">
+  <p-tabView class="rule-detail-tab">
+    <p-tabPanel header="Information">
+      <div class="information-container">
+        <div class="fraud-reactions-field-container">
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.ruleId)">
+            <span class="label-txt-field">Rule Id</span>
+            <span class="value-txt">{{selectedItem?.ruleId}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.ruleName)">
+            <span class="label-txt-field">Rule Name</span>
+            <span class="value-txt">{{selectedItem?.ruleName}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.ruleGroup?.groupName)">
+            <span class="label-txt-field">Rule Group</span>
+            <span class="value-txt">{{selectedItem?.ruleGroup?.groupName}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.status)">
+            <span class="label-txt-field">Status</span>
+            <span class="value-txt">{{charReplacement(selectedItem?.status)}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions">
+            <span class="label-txt-field">Active</span>
+            <span class="value-txt">{{StringUtils.converterStatus(selectedItem?.isActive)}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.riskValue)">
+            <span class="label-txt-field">Risk Value</span>
+            <span class="value-txt">{{selectedItem?.riskValue}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.dateFrom)">
+            <span class="label-txt-field">Date From</span>
+            <span class="value-txt">{{DateUtils.ConvertToDateFormat(selectedItem?.dateFrom)}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.dateTo)">
+            <span class="label-txt-field">Date To</span>
+            <span class="value-txt">{{DateUtils.ConvertToDateFormat(selectedItem?.dateTo)}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.type)">
+            <span class="label-txt-field">Type</span>
+            <span class="value-txt">{{selectedItem?.type}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.author)">
+            <span class="label-txt-field">Author</span>
+            <span class="value-txt">{{selectedItem?.author}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions" *ngIf="StringUtils.isAvailable(selectedItem?.sformula)">
+            <span class="label-txt-field">sFormula</span>
+            <span class="value-txt">{{selectedItem?.sformula}}</span>
+          </div>
+
+          <div class="text-field-fraud-reactions-desc" *ngIf="StringUtils.isAvailable(selectedItem?.description)">
+            <span class="label-txt-field">Description</span>
+            <span class="value-txt-desc">{{selectedItem?.description}}</span>
+          </div>
+        </div>
+
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="History">
+      <div class="information-container">
+        <div class="notif-content-container">
+          <ng-template [ngIf]="isContainHistory()">
+            <ng-container *ngFor="let data of ruleHistory">
+              <p-card class="rule-notif-card">
+                <div class="notif-content">
+                  <div class="content-2">
+                    <span style="font-weight: 600;">{{data.initiator}} | {{StringUtils.charReplacement(data.status)}}</span>
+                    <div style="margin-top: 3px; display: flex; flex-direction: column; font-size: .7rem">
+                      <span style="word-break: break-word;">{{data.description}}</span>
+                      <div class="text-field-fraud-reactions-desc" *ngIf="data.comment != undefined">
+                        <span class="value-txt-desc-comment">{{data.comment}}</span>
+                      </div>
+                      <span style="color: #959ea7; margin-top: 10px; text-align: right">{{DateUtils.timeChecker(data.timestamp)}}</span>
+                    </div>
+                  </div>
+                </div>
+
+<!--                <p-divider class="notif-divider"></p-divider>-->
+              </p-card>
+            </ng-container>
+          </ng-template>
+        </div>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>

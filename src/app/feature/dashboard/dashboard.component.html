@@ -1,0 +1,98 @@
+<div class="dashboard-container">
+
+  <div class="ds-con-1">
+    <div class="counter-main-container">
+      <div class="counter-container">
+        <p-card class="ds-card ds-card-not-fraud">
+          <div class="summary-con">
+            <span class="txt-1">{{isDataNotNull(transactionStatus[0]) ? transactionStatus[0].totalCount : 0}}</span>
+            <div class="summary-sub-con">
+              <span class="txt-2">Not Fraud Transaction</span>
+            </div>
+          </div>
+        </p-card>
+      </div>
+      <div class="counter-container">
+        <p-card class="ds-card ds-card-suspicious">
+          <div class="summary-con">
+            <span class="txt-1">{{isDataNotNull(transactionStatus[1]) ? transactionStatus[1].totalCount : 0}}</span>
+            <div class="summary-sub-con">
+              <span class="txt-2">Suspicious Transaction</span>
+            </div>
+          </div>
+        </p-card>
+      </div>
+      <div class="counter-container">
+        <p-card class="ds-card ds-card-fraud">
+          <div class="summary-con">
+            <span class="txt-1">{{isDataNotNull(transactionStatus[2]) ? transactionStatus[2].totalCount : 0}}</span>
+            <div class="summary-sub-con">
+              <span class="txt-2">Fraud Transaction</span>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <div style="height: 100%">
+      <p-card class="ds-card">
+        <div style="height: 100%; width: 100%; position: relative">
+          <div echarts [merge]="transActivityChartOpt" [options]="transActivityChartOpt" style="width: 100%; height: 100%; position: absolute"></div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+  <div class="ds-con-2">
+    <div class="sub-ds-con2-1">
+      <p-card>
+        <div style="height: 100%; width: 100%; position: relative">
+          <div echarts [merge]="alertCaseActivityChartOpt" [options]="alertCaseActivityChartOpt" style="width: 100%; height: 100%; position: absolute"></div>
+        </div>
+      </p-card>
+    </div>
+    <div class="sub-ds-con2-2">
+      <p-card>
+        <div class="top-rule-trigger-container">
+          <div style="display: flex; flex-direction: column; gap: 3px">
+            <span style="font-size: 1rem; font-weight: bold">Top Rule Triggered</span>
+            <span style="font-size: .7rem">Showing Top Triggered Rule</span>
+          </div>
+
+          <p-table
+            [resizableColumns]="true"
+            [value]="topRuleTriggeredData"
+            selectionMode="single"
+            [exportHeader]="'customExportHeader'"
+            [scrollable]="true"
+            scrollHeight="30vh"
+            dataKey="id" class="top-rule-trigger-table" styleClass="p-datatable-sm p-datatable-gridlines">
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 3rem">Id</th>
+                <th pResizableColumn>Name</th>
+                <th style="width: 3rem">Total</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+              <tr [pSelectableRow]="product">
+                <td>{{product.ruleId}}</td>
+                <td class="row-width-xs">{{product.ruleName}}</td>
+                <td>{{product.totalTriggered}}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr style="">
+                <td colspan="11">There is no data.</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+

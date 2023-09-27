@@ -1,0 +1,335 @@
+<div class="rule-group-main-container">
+  <div class="first-container">
+    <p-card class="search-card">
+      <div class="search-container" [formGroup]="formGroup">
+        <div class="sc-first-row">
+          <div class="field">
+            <div class="sc-field-container">
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Group Name</span>
+                <input
+                  formControlName="groupName"
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                />
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Threshold Black</span>
+                <input
+                  formControlName="threshouldBlack"
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                />
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Threshold Grey</span>
+                <input
+                  formControlName="threshouldGrey"
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                />
+              </div>
+            </div>
+
+            <div class="search-button-container">
+              <button
+                mat-mini-fab
+                color="primary"
+                class="sc-mini-search-button"
+                (click)="showAddtSearchFilter()"
+              >
+                <span class="bx bxs-chevron-down"></span>
+              </button>
+
+              <button
+                mat-raised-button
+                color="primary"
+                class="sc-search-button"
+                (click)="onSearchClicked(formGroup.getRawValue())"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="second-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="ruleGroups"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="15"
+        [(selection)]="selectedRuleGroup"
+        (onRowSelect)="onRuleGroupClicked()"
+        (onRowUnselect)="onRuleGroupUnClicked()"
+        dataKey="id"
+        class="rule-group-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+              >Rule Group Data</span
+            >
+
+            <div class="table-func-container-2">
+              <ng-template
+                [ngIf]="
+                  StringUtils.findOperations(authorities, 'ADD_RULE_GROUP')
+                "
+              >
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  icon="bx bx-layer-plus"
+                  (click)="onClickedAddRuleGroupDialog()"
+                  matTooltip="Add Rule Group"
+                  [matTooltipPosition]="'below'"
+                ></button>
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedRuleGroup == undefined"
+                  icon="bx bx-edit"
+                  (click)="onClickedEditRuleGroupDialog()"
+                  matTooltip="Edit Rule Group"
+                  [matTooltipPosition]="'below'"
+                ></button>
+              </ng-template>
+
+              <ng-template
+                [ngIf]="
+                  StringUtils.findOperations(authorities, 'DELETE_RULE_GROUP')
+                "
+              >
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  [disabled]="selectedRuleGroup == undefined"
+                  icon="bx bx-trash-alt"
+                  (click)="onClickedDeleteRuleGroupDialog()"
+                  matTooltip="Delete Rule Group"
+                  [matTooltipPosition]="'below'"
+                  class="p-button-danger"
+                ></button>
+              </ng-template>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Id</th>
+            <th pResizableColumn>Group Name</th>
+            <th pResizableColumn>Threshold Black</th>
+            <th pResizableColumn>Threshold Grey</th>
+            <th pResizableColumn>Priority</th>
+            <th pResizableColumn>Status</th>
+            <th pResizableColumn></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-i="rowIndex">
+          <tr [pSelectableRow]="product">
+            <td class="row-width-xs">{{ product.id }}</td>
+            <td class="row-width-xs">{{ product.groupName }}</td>
+            <td class="row-width">{{ product.threshouldBlack }}</td>
+            <td class="row-width">{{ product.threshouldGrey }}</td>
+            <td class="row-width">{{ product.priority }}</td>
+            <td class="row-width">
+              {{ StringUtils.converterStatus(product.isActive) }}
+            </td>
+
+            <td class="row-width-xs">
+              <button
+                mat-raised-button
+                class="detail-btn"
+                (click)="onRuleGroupDetailClicked(product)"
+                matTooltip="View Details Data"
+                [matTooltipPosition]="'below'"
+                [disabled]="selectedRuleGroup == undefined"
+              >
+                <div class="detail-container">
+                  <span class="detail-text">Details</span>
+                </div>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="8">There is no rule group.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+  <div class="third-container">
+    <p-tabView class="rule-group-detail-tab">
+      <p-tabPanel header="Rules">
+        <app-rules-summary [rules]="rules"></app-rules-summary>
+      </p-tabPanel>
+
+      <p-tabPanel header="Reactions">
+        <app-reaction-summary
+          [reactions]="reactionByBinding"
+          [groupSelected]="selectedRuleGroup"
+          (isLoading)="onLoading($event)"
+        ></app-reaction-summary>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<!--Search Filter DIALOG-->
+<ng-template [ngIf]="visibleSearchDialog">
+  <p-dialog
+    header="Search Filter"
+    [(visible)]="visibleSearchDialog"
+    [modal]="true"
+    [style]="{ width: '50vw' }"
+    [draggable]="false"
+    [resizable]="false"
+    class="search-dialog"
+  >
+    <div class="addt-search-filter-container" [formGroup]="formGroup">
+      <div class="search-addt-field">
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Group Name</span>
+          <input
+            formControlName="groupName"
+            pInputText
+            aria-describedby="username-help"
+          />
+        </div>
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Threshold Black</span>
+          <input
+            formControlName="threshouldBlack"
+            pInputText
+            aria-describedby="username-help"
+          />
+        </div>
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Threshold Grey</span>
+          <input
+            formControlName="threshouldGrey"
+            pInputText
+            aria-describedby="username-help"
+          />
+        </div>
+      </div>
+
+      <p-divider align="center" class="search-divider">
+        <span
+          style="
+            font-size: 0.8rem;
+            color: var(--inactive-txt-color);
+            margin-top: 2px;
+            opacity: 0.5;
+          "
+          >Additional Search Filter</span
+        >
+      </p-divider>
+
+      <div class="addt-row-container">
+        <div
+          class="addt-row"
+          *ngFor="let filterField of searchFilterFields | keyvalue"
+        >
+          <div class="addt-text-field" *ngFor="let row of filterField.value">
+            <span class="label-txt-field">{{ row.name }}</span>
+            <input
+              [formControlName]="row.field"
+              *ngIf="row.type == 1"
+              pInputText
+              [id]="row.name"
+            />
+            <p-dropdown
+              appendTo="body"
+              formControlName="isActive"
+              class="field-dropdown"
+              *ngIf="row.type == 2"
+              [options]="isActive"
+              optionLabel="name"
+              [placeholder]="'Select ' + row.name.toLowerCase()"
+              [showClear]="true"
+            ></p-dropdown>
+            <p-dropdown
+              appendTo="body"
+              formControlName="isForcedReaction"
+              class="field-dropdown"
+              *ngIf="row.type == 3"
+              [options]="isActive"
+              optionLabel="name"
+              [placeholder]="'Select ' + row.name.toLowerCase()"
+              [showClear]="true"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="addt-button-container">
+        <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onReset()"
+      >
+        Reset
+      </button>
+        <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+        <p-button
+          label="Search"
+          class="addt-button"
+          icon="pi pi-search"
+          (click)="onSearchClicked(formGroup.getRawValue())"
+        ></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleRuleGroupDetailDialog">
+  <!--Rule Group Details Dialog-->
+  <app-rule-group-details
+    [selectedItem]="selectedRuleGroup"
+    [isOpen]="visibleRuleGroupDetailDialog"
+    (closeSelf)="onCloseRuleGroupDetail($event)"
+  ></app-rule-group-details>
+</ng-template>
+
+<ng-template [ngIf]="visibleRuleGroupDialog">
+  <!--Rule Group CRUD Dialog-->
+  <app-rule-group-dialog
+    *ngIf="visibleRuleGroupDialog"
+    [isOpen]="visibleRuleGroupDialog"
+    [dialogMode]="dialogMode"
+    [itemSelected]="selectedRuleGroup"
+    (closeSelf)="onCloseRuleGroupDialog($event)"
+    (isLoading)="onLoading($event)"
+  ></app-rule-group-dialog>
+</ng-template>

@@ -1,0 +1,101 @@
+<!--BlackList Dialog-->
+<p-dialog
+  [header]="
+    StringUtils.capitalizeFirstLetter(dialogMode.toLocaleLowerCase()) +
+    ' Black List'
+  "
+  [(visible)]="isOpen"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  class="black-list-dialog"
+  (onShow)="onDialogVisible()"
+  (onHide)="onClose()"
+>
+  <div class="black-list-dialog-container" [formGroup]="form">
+    <div class="black-form-container">
+      <div class="black-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Value</span>
+          <input class="input" pInputText formControlName="value"/>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Entity Type</span>
+          <p-dropdown
+            formControlName="entityType"
+            class="field-dropdown"
+            [options]="transParams"
+            optionLabel="description"
+            [placeholder]="'Select Entity Type'"
+            [filter]="true"
+            filterBy="description"
+          ></p-dropdown>
+        </div>
+      </div>
+      <div class="black-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Date In</span>
+          <p-calendar
+            formControlName="dateIn"
+            appendTo="body"
+            class="calender-field-pick"
+            [showIcon]="true"
+            [showTime]="true"
+            [showSeconds]="true"
+          ></p-calendar>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Date To</span>
+          <p-calendar
+            formControlName="dateOut"
+            appendTo="body"
+            class="calender-field-pick"
+            [showIcon]="true"
+            [showTime]="true"
+            [showSeconds]="true"
+          ></p-calendar>
+        </div>
+      </div>
+      <div class="black-first-form">
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">Reason</span>
+          <input class="input" formControlName="reason" pInputText/>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <span class="label-txt-field-sm">User Group</span>
+          <p-dropdown
+            class="field-dropdown"
+            formControlName="userGroup"
+            [options]="userGroups"
+            optionLabel="groupName"
+            [placeholder]="'Select User Group'"
+            [filter]="true"
+            filterBy="groupName"
+          ></p-dropdown>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="dialog-button-container">
+      <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="dialog-button"
+        [disabled]="isValueNotValid()"
+        (click)="onSave(form.getRawValue())"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</p-dialog>

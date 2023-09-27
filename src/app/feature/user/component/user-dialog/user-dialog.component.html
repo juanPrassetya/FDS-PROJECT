@@ -1,0 +1,169 @@
+<p-dialog
+  [header]="
+    StringUtils.capitalizeFirstLetter(dialogMode.toLocaleLowerCase()) + ' User'"
+  [(visible)]="isOpen"
+  [modal]="true"
+  [style]="{ width: '70vw' }"
+  [draggable]="false"
+  [resizable]="false"
+  class="user-dialog"
+  (onShow)="onDialogVisible()"
+  (onHide)="onClose()">
+  <div class="user-dialog-container" [formGroup]="form">
+    <div class="black-form-container">
+
+      <div class="first-row-container">
+        <div class="image-container">
+          <div class="image">
+            <span>V</span>
+          </div>
+        </div>
+
+        <div class="black-form-container">
+          <div class="black-first-form">
+            <div class="common-text-field-dialog-container">
+              <div class="common-text-field-dialog-container">
+                <span class="label-txt-field-sm">Firstname</span>
+                <input class="input" pInputText formControlName="firstName"/>
+              </div>
+            </div>
+            <div class="common-text-field-dialog-container">
+              <div class="common-text-field-dialog-container">
+                <span class="label-txt-field-sm">Lastname</span>
+                <input class="input" pInputText formControlName="lastName"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="black-first-form">
+            <div class="common-text-field-dialog-container">
+              <div class="common-text-field-dialog-container">
+                <span class="label-txt-field-sm">Username</span>
+                <input class="input" pInputText formControlName="username"/>
+              </div>
+            </div>
+            <div class="common-text-field-dialog-container">
+              <div class="common-text-field-dialog-container">
+                <span class="label-txt-field-sm">Email</span>
+                <input class="input" pInputText formControlName="email"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="black-first-form">
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">User Type</span>
+            <p-dropdown appendTo="body"
+                        formControlName="type"
+                        class="field-dropdown"
+                        [options]="dummyUserType"
+                        optionLabel="typeName"
+                        [placeholder]="'Select User Type'"
+                        [filter]="true"
+                        filterBy="typeName"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Role</span>
+            <p-dropdown appendTo="body"
+                        formControlName="role"
+                        class="field-dropdown"
+                        [options]="roles"
+                        optionLabel="roleName"
+                        [placeholder]="'Select Role'"
+                        [filter]="true"
+                        filterBy="roleName"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="black-first-form">
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Institution</span>
+            <p-dropdown appendTo="body"
+                        formControlName="institution"
+                        class="field-dropdown"
+                        [options]="institutions"
+                        optionLabel="institutionName"
+                        [placeholder]="'Select Institution'"
+                        [filter]="true"
+                        filterBy="institutionName"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Group</span>
+            <p-dropdown appendTo="body"
+                        formControlName="userGroup"
+                        class="field-dropdown"
+                        [options]="userGroups"
+                        optionLabel="groupName"
+                        [placeholder]="'Select Group'"
+                        [filter]="true"
+                        filterBy="groupName"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="black-first-form">
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Status</span>
+            <p-dropdown appendTo="body"
+                        formControlName="active"
+                        class="field-dropdown"
+                        [options]="dummyStatus"
+                        optionLabel="name"
+                        [placeholder]="'Select Status'"
+                        [filter]="true"
+                        filterBy="name"
+            ></p-dropdown>
+          </div>
+        </div>
+        <div class="common-text-field-dialog-container">
+          <div class="common-text-field-dialog-container">
+            <span class="label-txt-field-sm">Lock</span>
+            <p-dropdown appendTo="body"
+                        formControlName="notLocked"
+                        class="field-dropdown"
+                        [options]="dummyOption"
+                        optionLabel="name"
+                        [placeholder]="'Select Status'"
+                        [filter]="true"
+                        filterBy="name"
+            ></p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="dialog-button-container">
+      <button
+        mat-stroked-button
+        color="warn"
+        class="dialog-button"
+        (click)="onClose()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        class="dialog-button"
+        [disabled]="isValueNotValid()"
+        (click)="onSave(form.getRawValue())">
+        Save
+      </button>
+    </div>
+  </div>
+</p-dialog>

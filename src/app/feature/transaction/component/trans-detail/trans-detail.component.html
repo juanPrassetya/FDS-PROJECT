@@ -1,0 +1,43 @@
+<p-dialog header="Transaction Detail" class="pay-detail-container"
+          [modal]="true" [(visible)]="isOpen"
+          [position]="'right'" [draggable]="false"
+          [resizable]="false" [maximizable]="true"
+          (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [style]="{ width: '30vw', height: '100vh' }">
+  <p-tabView class="payment-detail-tab">
+    <p-tabPanel header="Information">
+      <div class="information-container">
+
+        <div class="trans-detail-field-container">
+          <div class="text-field-tran-detail" *ngFor="let labelValue of informationLabelValues">
+            <span class="label-txt-field">{{labelValue.label}}</span>
+            <span class="value-txt">{{labelValue.value}}</span>
+          </div>
+        </div>
+
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Additional Data">
+      <div class="addt-container">
+
+        <div class="trans-detail-field-container">
+          <ng-container *ngFor="let addtLabelValue of addtData">
+            <div class="text-field-tran-detail" *ngIf="addtLabelValue.attr != 'sysday' && addtLabelValue.attr != 'syshour' && addtLabelValue.attr != 'syssec' && addtLabelValue.value != ''">
+              <span class="label-txt-field">{{addtLabelValue.description}}</span>
+              <span class="value-txt">{{addtLabelValue.value}}</span>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Rule Info">
+      <div class="rule-container">
+        <p-tree [value]="ruleInfo" class="rule-tree">
+<!--          <ng-template let-node pTemplate="default">-->
+<!--            <span style="white-space: pre-line">{{ node.label}}</span>-->
+<!--          </ng-template>-->
+        </p-tree>
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>

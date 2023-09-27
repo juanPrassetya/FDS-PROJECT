@@ -1,0 +1,266 @@
+<div class="alert-investigation-main-container">
+  <div class="first-container">
+    <p-card class="search-card">
+      <div class="search-container" [formGroup]="formGroup">
+        <div class="sc-first-row">
+          <div class="field">
+            <div class="sc-field-container">
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Utrnno</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="utrnno"
+                />
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Case Id</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="caseId"
+                />
+              </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">HPAN</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="hpan"
+                />
+              </div>
+            </div>
+
+            <div class="search-button-container">
+              <button
+                mat-mini-fab
+                color="primary"
+                class="sc-mini-search-button"
+                (click)="showAddtSearchFilter()"
+              >
+                <span class="bx bxs-chevron-down"></span>
+              </button>
+
+              <button
+                mat-raised-button
+                color="primary"
+                class="sc-search-button"
+                (click)="onSearchClicked(formGroup.getRawValue())"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="second-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="alertItems"
+        selectionMode="single"
+        [paginator]="true"
+        [exportHeader]="'customExportHeader'"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="15"
+        [(selection)]="selectedAlertCase"
+        (onRowSelect)="onAlertClicked()"
+        (onRowUnselect)="onAlertUnClicked()"
+        dataKey="case_id"
+        class="alert-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+      >
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem"
+            >Alert Case Data</span
+            >
+
+            <div class="table-func-container-2" style="opacity: 0">
+              <button
+                type="button"
+                pButton
+                pRipple
+                icon="bx bx-layer-plus"
+                [disabled]="true"
+              ></button>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th pResizableColumn>Case Id</th>
+            <th pResizableColumn>Utrnno</th>
+            <th pResizableColumn>HPAN</th>
+            <th pResizableColumn>CIF Id</th>
+            <th pResizableColumn>Account</th>
+            <th pResizableColumn>Classify State</th>
+            <th pResizableColumn>Classified Date</th>
+            <th pResizableColumn>Action</th>
+            <th pResizableColumn>Action Date</th>
+            <th pResizableColumn>Locked By</th>
+            <th pResizableColumn></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product let-i="rowIndex">
+          <tr [pSelectableRow]="product" [pSelectableRowDisabled]="disableSelectRow(product)">
+            <td class="row-width-xs">{{product.case_id}}</td>
+            <td class="row-width-xs">{{product.utrnno}}</td>
+            <td class="row-width">{{product.HPAN}}</td>
+            <td class="row-width">{{product.cif_id}}</td>
+            <td class="row-width">{{product.acct1}}</td>
+            <td>
+              <div style="display: flex; gap: 5px; align-items: center">
+                <span class="flag-status-color" [className]="getSev(product.clasification_type)">
+                  <span class="flag-status-icon"></span>
+                </span>
+                <span>{{getClassified(product.clasification_type)}}</span>
+              </div>
+            </td>
+            <td class="row-width">{{DateUtils.ConvertToDateFormat(product.classified_date)}}</td>
+            <td class="row-width">{{getActionDesc(product.action_type)}}</td>
+            <td class="row-width">{{DateUtils.ConvertToDateFormat(product.action_date)}}</td>
+            <td class="row-width">{{product.locked_by}}</td>
+
+            <td class="row-width-xs">
+              <button
+                mat-raised-button
+                class="detail-btn"
+                (click)="onAlertCaseDetailClicked(product)"
+                matTooltip="View Details Data"
+                [matTooltipPosition]="'below'"
+                [disabled]="
+                  selectedAlertCase == undefined || disableSelectRow(product)
+                "
+              >
+                <div class="detail-container">
+                  <span class="detail-text">Details</span>
+                </div>
+              </button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="11">There is no alert case.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+
+  <div class="third-container">
+    <p-tabView class="alert-detail-tab">
+      <p-tabPanel header="Transaction Summary">
+        <app-transaction-summary
+          [transactions]="transactions"
+          [alertData]="alertItem"
+        ></app-transaction-summary>
+      </p-tabPanel>
+
+      <p-tabPanel header="Case Management">
+        <app-case-management [itemSelected]="alertItem"></app-case-management>
+      </p-tabPanel>
+
+      <p-tabPanel header="Alert Detail">
+        <app-alert-details></app-alert-details>
+      </p-tabPanel>
+
+      <p-tabPanel header="Investigation History">
+        <app-investigation-history
+          [history]="alertHistory"
+        ></app-investigation-history>
+      </p-tabPanel>
+    </p-tabView>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<!--Search Filter DIALOG-->
+<ng-template [ngIf]="visibleSearchDialog">
+  <p-dialog header="Search Filter" [(visible)]="visibleSearchDialog" [modal]="true" [style]="{ width: '50vw' }"
+            [draggable]="false" [resizable]="false" class="search-dialog">
+    <div class="addt-search-filter-container" [formGroup]="formGroup">
+
+      <div class="search-addt-field">
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Utrnno</span>
+          <input formControlName="utrnno" pInputText aria-describedby="username-help"/>
+        </div>
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">Case Id</span>
+          <input formControlName="caseId" pInputText aria-describedby="username-help"/>
+        </div>
+        <div class="sc-first-text-field-1">
+          <span class="label-txt-field">HPAN</span>
+          <input formControlName="hpan" pInputText aria-describedby="username-help"/>
+        </div>
+      </div>
+
+      <p-divider align="center" class="search-divider">
+        <span style="font-size: 0.8rem; color: var(--inactive-txt-color); margin-top: 2px; opacity: .5">Additional Search Filter</span>
+      </p-divider>
+
+      <div class="addt-row-container">
+        <div class="addt-row" *ngFor="let filterField of searchFilterFields | keyvalue">
+          <div class="addt-text-field" *ngFor="let row of filterField.value">
+            <span class="label-txt-field">{{row.name}}</span>
+            <input [formControlName]="row.field" *ngIf="row.type == 1" pInputText [id]="row.name"/>
+            <p-dropdown formControlName="actionType" [showClear]="true" class="field-dropdown" *ngIf="row.type == 2"
+                        [options]="dummyActionType" optionLabel="name"
+                        [placeholder]="'Select ' + row.name.toLowerCase()"></p-dropdown>
+            <p-calendar *ngIf="row.type == 3" [showButtonBar]="true" class="calender-field-pick" formControlName="dateFrom"
+                        [showIcon]="true"></p-calendar>
+            <p-calendar *ngIf="row.type == 4" [showButtonBar]="true" class="calender-field-pick" formControlName="dateTo"
+                        [showIcon]="true"></p-calendar>
+            <p-dropdown formControlName="lockedBy" [showClear]="true" class="field-dropdown" *ngIf="row.type == 5"
+                        [options]="users" optionLabel="username"
+                        [placeholder]="'Select ' + row.name.toLowerCase()"></p-dropdown>
+            <p-dropdown formControlName="clasificationType" [showClear]="true" class="field-dropdown" *ngIf="row.type == 6"
+                        [options]="dummyClassificationType" optionLabel="name"
+                        [placeholder]="'Select ' + row.name.toLowerCase()"></p-dropdown>
+          </div>
+        </div>
+      </div>
+
+      <div class="addt-button-container">
+        <button
+          mat-stroked-button
+          color="warn"
+          class="dialog-button"
+          (click)="onReset()"
+        >
+          Reset
+        </button>
+        <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+        <p-button label="Search" class="addt-button" icon="pi pi-search"
+                  (click)="onSearchClicked(formGroup.getRawValue())"></p-button>
+      </div>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<!--Alert Case Details Dialog-->
+<ng-template [ngIf]="visibleAlertCaseDetailDialog">
+  <app-alert-case-details
+    [isOpen]="visibleAlertCaseDetailDialog"
+    [selectedItem]="selectedAlertCase"
+    (closeSelf)="onAlertCaseCloseDetail($event)"
+  ></app-alert-case-details>
+</ng-template>

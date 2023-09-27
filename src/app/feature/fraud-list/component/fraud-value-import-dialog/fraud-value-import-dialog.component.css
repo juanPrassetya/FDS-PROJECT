@@ -1,0 +1,83 @@
+.import-fraud-value-dialog-container {
+  @apply
+  se-w-full
+  se-flex se-flex-col se-gap-[30px]
+}
+
+.import-fraud-value-form-container {
+  @apply
+  se-w-full
+  se-flex se-flex-col se-justify-center se-gap-[10px]
+}
+
+/*NG DEEP*/
+::ng-deep .import-fraud-value-dialog .p-dialog-content {
+  overflow-y: unset !important;
+}
+
+::ng-deep .import-fraud-value-dialog .p-dialog .p-dialog-content {
+  padding: 0 1.5rem 1rem;
+}
+
+::ng-deep .p-fileupload-choose {
+  font-size: 0.7rem;
+  padding: 0.5rem 1rem;
+  gap: 5px;
+}
+
+::ng-deep .p-fileupload-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 !important;
+}
+
+::ng-deep .p-fileupload-advanced {
+  height: 100%
+}
+
+::ng-deep .cs-choose-button {
+  font-size: 0.7rem;
+  padding: 0.5rem 1rem;
+  gap: 5px;
+  width: 8rem;
+}
+
+::ng-deep .p-fileupload .p-fileupload-buttonbar {
+  display: flex;
+  justify-content: center;
+  padding: 0.8rem;
+}
+
+::ng-deep .p-fileupload-content .p-progressbar {
+  display: none;
+}
+
+::ng-deep .p-fileupload-row div:first-child {
+  display: none;
+}
+
+::ng-deep .p-fileupload-row {
+  font-size: .8rem;
+}
+
+::ng-deep .p-fileupload-files {
+  width: 100%;
+}
+
+::ng-deep .p-fileupload-content .p-message {
+  margin: 0 !important;
+}
+
+::ng-deep .p-fileupload-content p-messages {
+  width: 100%
+}
+
+::ng-deep .p-fileupload-content .p-message-icon {
+  display: flex;
+}
+
+::ng-deep .p-fileupload-content .p-message-summary,
+::ng-deep .p-fileupload-content .p-message-detail {
+  font-size: .8rem;
+}

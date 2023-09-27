@@ -1,0 +1,208 @@
+<div class="report-main-container" id="test">
+
+  <div class="second-container">
+    <p-card class="table-card">
+      <p-table
+        #dt
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [resizableColumns]="true"
+        [value]="dummyAlertType"
+        [paginator]="true"
+        [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15, 25, 50, 100, 250, 500]"
+        [scrollable]="true"
+        [rows]="15"
+        class="report-table"
+        styleClass="p-datatable-sm p-datatable-gridlines"
+        dataKey="id"
+      >
+
+        <ng-template pTemplate="caption">
+          <div class="header-table">
+            <span style="font-size: 0.8rem; padding-left: 1rem">Report Template</span>
+
+            <div class="table-func-container-2">
+              <ng-template [ngIf]="StringUtils.findOperations(authorities, 'EXPORT_REPORT')">
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  class="btn-with-txt-prime"
+                  [disabled]="selectedItem == undefined"
+                  (click)="onGenerate()"
+                  matTooltip="Generate Report"
+                  [matTooltipPosition]="'below'"
+                >Generate Report
+                </button>
+              </ng-template>
+
+              <ng-template [ngIf]="StringUtils.findOperations(authorities, 'IMPORT_REPORT')">
+                <button
+                  type="button"
+                  pButton
+                  pRipple
+                  icon="bx bx-import"
+                  (click)="onClickedImportReport()"
+                  matTooltip="Import Report"
+                  [matTooltipPosition]="'below'"
+                ></button>
+              </ng-template>
+
+              <ng-template [ngIf]="StringUtils.findOperations(authorities, 'DELETE_REPORT')">
+                <button
+                  type="button" pButton pRipple
+                  icon="bx bx-trash-alt"
+                  (click)="onClickedDelete()"
+                  [disabled]="isGenerateJDisable()"
+                  matTooltip="Delete Report"
+                  [matTooltipPosition]="'below'"
+                  class="p-button-danger"
+                ></button>
+              </ng-template>
+            </div>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+          </tr>
+        </ng-template>
+
+        <!-- Main Table Body -->
+        <ng-template pTemplate="body" let-group let-expanded="expanded">
+          <tr [pSelectableRow]="group">
+            <td>
+              <div style="display: flex; align-items: center; gap: 0.5rem">
+                <button
+                  mat-icon-button
+                  [pRowToggler]="group"
+                  class="toggle-btn-json"
+                >
+                  <span style="opacity: .9;" [class]="expanded ? 'bx bx-folder-open' : 'bx bx-folder'"></span>
+                </button>
+                <span>{{ group.name }}</span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <!-- Row Expansion for States -->
+        <ng-template pTemplate="rowexpansion" let-group>
+          <tr>
+            <td colspan="1" style="padding: 0">
+              <p-table
+                [value]="group.reportList"
+                selectionMode="single"
+                [(selection)]="selectedItem"
+                (onRowSelect)="onSelectReport(group)"
+                (onRowUnselect)="onUnselectReport()"
+                dataKey="reportId"
+                class="state-table"
+              >
+                <!-- Table Body for States -->
+                <ng-template pTemplate="body" let-state>
+                  <tr class="row-state" [pSelectableRow]="state">
+                    <td class="row-expand" style="text-align: left">
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          gap: 0.5rem;
+                          padding-left: 2.5rem;
+                        "
+                      >
+                        <span class="bx bx-receipt" style="font-size: 1.2rem; opacity: .9"></span>
+                        <span>{{state.reportName}}</span>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>
+
+<ng-template [ngIf]="visibleReportImportDialog">
+  <!--Import Dialog Report-->
+  <app-report-import
+    [isOpen]="visibleReportImportDialog"
+    [itemSelected]="selectedItem"
+    (closeSelf)="onCloseImportReport($event)"
+    (isLoading)="onLoading($event)"
+  ></app-report-import>
+</ng-template>
+
+
+<ng-template [ngIf]="visibleGenerateDialog">
+  <app-generate-dialog
+    [isOpen]="visibleGenerateDialog"
+    [itemSelected]="selectedItem"
+    [groupItemSelected]="selectedGroupItem"
+    (closeSelf)="onCloseGenerateDialog($event)"
+    (isLoading)="onLoading($event)"></app-generate-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleReport1">
+  <app-report-1-dialog
+    [isOpen]="visibleReport1"
+    [reportData]="reportData"
+    (closeSelf)="onCloseReport1Dialog($event)"
+  ></app-report-1-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleReport2">
+  <app-report-2-dialog
+    [isOpen]="visibleReport2"
+    [reportData]="reportData"
+    (closeSelf)="onCloseReport2Dialog($event)"
+  ></app-report-2-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleReport3">
+  <app-report-3-dialog
+    [isOpen]="visibleReport3"
+    [reportData]="reportData"
+    (closeSelf)="onCloseReport3Dialog($event)"
+  ></app-report-3-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleReport4">
+  <app-report-4-dialog
+    [isOpen]="visibleReport4"
+    [reportData]="reportData"
+    (closeSelf)="onCloseReport4Dialog($event)"
+  ></app-report-4-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleReport5">
+  <app-report-5-dialog
+    [isOpen]="visibleReport5"
+    [reportData]="reportData"
+    (closeSelf)="onCloseReport5Dialog($event)"
+  ></app-report-5-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleReport6">
+  <app-report-6-dialog
+    [isOpen]="visibleReport6"
+    [reportData]="reportData"
+    (closeSelf)="onCloseReport6Dialog($event)"
+  ></app-report-6-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleReport7">
+  <app-report-7-dialog
+    [isOpen]="visibleReport7"
+    [reportData]="reportData"
+    (closeSelf)="onCloseReport7Dialog($event)"
+  ></app-report-7-dialog>
+</ng-template>

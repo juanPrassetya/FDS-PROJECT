@@ -1,0 +1,35 @@
+<p-dialog [header]="'Cardholder Detail'" [(visible)]="isOpen" [modal]="true"
+          [style]="{ width: '80vw'}" [draggable]="false"
+          [resizable]="false" class="card-detail-dialog" (onShow)="onDialogVisible()" (onHide)="onClose()">
+  <div class="card-detail-dialog-container">
+    <p-carousel [value]="mapData" [numVisible]="1" [numScroll]="1">
+      <ng-template let-item pTemplate="item">
+        <p-table #dt
+                 [value]="item"
+                 [resizableColumns]="true"
+                 [scrollable]="true"
+                 scrollHeight="50vh"
+                 dataKey="id" class="card-detail-table" styleClass="p-datatable-sm p-datatable-gridlines">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th colspan="2">Information</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-product let-i="rowIndex">
+            <tr [pSelectableRow]="product" [pSelectableRowDisabled]="true">
+              <td style="width: 10rem">{{product.key}}</td>
+              <td class="row-width-xs">{{product.value}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr style="">
+              <td colspan="6">There is no data.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-template>
+    </p-carousel>
+  </div>
+</p-dialog>

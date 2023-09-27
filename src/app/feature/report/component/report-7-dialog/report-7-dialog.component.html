@@ -1,0 +1,58 @@
+<p-dialog header="Card Added to Stop List" [(visible)]="isOpen" [modal]="true" [closeOnEscape]="false"
+          [style]="{ width: '70vw'}" [draggable]="false" (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [resizable]="false" class="report-1-dialog">
+
+  <div class="report-1-main-container">
+    <div class="first-container">
+      <span>Date From: {{reportData.fromDate}}</span>
+      <span>Date To: {{reportData.toDate}}</span>
+    </div>
+
+    <div class="second-container">
+      <p-table #dt [tableStyle]="{'min-width': '50rem'}"
+               [value]="reportData.data" selectionMode="single"
+               [exportHeader]="'customExportHeader'"
+               [scrollable]="true"
+               [columns]="cols"
+               scrollHeight="70vh"
+               dataKey="id" class="exist-aggregate-table" styleClass="p-datatable-sm p-datatable-gridlines">
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{ col.header }}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="true">
+            <td *ngFor="let col of columns">
+              {{ rowData[col.field] }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr style="">
+            <td colspan="10">There is no data.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button"
+              (click)="onGenerate()">Generate
+      </button>
+    </div>
+  </div>
+</p-dialog>
+
+<ng-template [ngIf]="visibleExportDialog">
+  <app-report-export
+    [isOpen]="visibleExportDialog"
+    [itemSelected]="{name: name, reportData: reportData, exportColumns: exportColumns}"
+    [groupItemSelected]="{id: 1}"
+    (closeSelf)="onCloseExport($event)"
+  ></app-report-export>
+</ng-template>

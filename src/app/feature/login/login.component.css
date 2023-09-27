@@ -1,0 +1,76 @@
+.login-container {
+  background: var(--fd-main-color);
+
+  @apply
+  se-h-screen se-w-screen
+  se-m-0 se-p-0
+  se-flex se-flex-col se-items-center se-justify-center se-gap-[20px]
+}
+
+.logo-container {
+  @apply
+  se-w-full se-flex se-justify-center
+}
+
+.logo-text {
+  @apply
+  se-text-[2rem] se-font-semibold se-text-white
+}
+
+.login-form-container {
+  @apply
+  se-h-[400px] se-w-[500px]
+  se-rounded-xl
+  se-bg-white
+  se-flex se-flex-col se-justify-between
+  se-p-8
+}
+
+.login-form-title-container {
+  @apply
+  se-flex se-flex-col se-justify-start se-gap-2
+}
+
+.login-form-title {
+  @apply
+  se-text-xl/[1rem]
+  se-font-semibold
+}
+
+.login-form-caption {
+  @apply
+  se-text-xs
+  se-text-slate-500
+}
+
+.login-field-container {
+  @apply
+  se-w-full
+  se-flex se-flex-col se-justify-center se-items-center se-gap-[15px]
+}
+
+.common-text-field-container {
+  @apply
+  se-w-full
+  se-flex se-flex-col se-gap-[5px]
+}
+
+.text-field-label {
+  @apply
+  se-font-light
+}
+
+.button-container {
+  @apply
+  se-w-full
+  se-flex se-justify-center
+}
+
+.login-button {
+  @apply se-w-full
+}
+
+.login-button > span {
+  @apply
+  se-flex se-items-center
+}

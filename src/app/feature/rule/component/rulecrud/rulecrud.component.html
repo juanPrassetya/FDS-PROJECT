@@ -1,0 +1,239 @@
+<div class="rulecrud-container">
+  <p-card class="first-card">
+    <div class="card-container" [formGroup]="form">
+      <div class="first-container">
+        <span class="header-title">Rule Parameters</span>
+        <div class="form-container">
+          <div class="common-text-field-container">
+            <span class="label-txt-field-sm">Rule Id</span>
+            <input pInputText class="input-sm" formControlName="ruleId" />
+          </div>
+
+          <div class="common-text-field-container">
+            <span class="label-txt-field-sm">Type</span>
+            <p-dropdown class="field-dropdown-sm" [options]="dummyRuleGroups" optionLabel="value" formControlName="type"></p-dropdown>
+          </div>
+
+          <div class="common-text-field-container">
+            <span class="label-txt-field-sm">Rule name</span>
+            <input class="input-sm" formControlName="ruleName" pInputText/>
+          </div>
+
+          <div class="common-text-field-container">
+            <span class="label-txt-field-sm">Rule Group</span>
+            <p-dropdown class="field-dropdown-sm" [options]="ruleGroups" [placeholder]="'Select Rule Group'"
+                        formControlName="ruleGroup" optionLabel="groupName"></p-dropdown>
+          </div>
+
+          <div class="common-text-field-container">
+            <span class="label-txt-field-sm">Risk value</span>
+            <input class="input-sm" formControlName="riskValue" type="number" pInputText/>
+          </div>
+
+          <div class="common-text-field-container">
+            <span class="label-txt-field-sm">Status</span>
+            <p-dropdown class="field-dropdown-sm" [options]="ruleStatus" formControlName="isActive" optionLabel="value"></p-dropdown>
+          </div>
+
+          <div class="common-text-field-container">
+            <span class="label-txt-field-sm">Priority</span>
+            <p-dropdown class="field-dropdown-sm" [options]="StringUtils.priority" [placeholder]="'Select Priority'" formControlName="priority" optionLabel="code"></p-dropdown>
+          </div>
+
+          <div class="common-text-field-container">
+            <span class="label-txt-field-sm">Description</span>
+            <textarea rows="1" cols="20" class="input-sm" pInputTextarea formControlName="description" [autoResize]="true"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="second-container">
+        <span class="header-title">Active Period & Formula Generator</span>
+        <div class="form-container">
+          <div class="calender-field-container">
+            <div class="common-text-field-container">
+              <span class="label-txt-field-sm">Active date begin</span>
+              <p-calendar appendTo="body" class="calender-field-pick-sm" [showIcon]="true"
+                          [showTime]="true" [showSeconds]="true" formControlName="dateFrom"></p-calendar>
+            </div>
+
+            <div class="common-text-field-container">
+              <span class="label-txt-field-sm">Active date end</span>
+              <p-calendar appendTo="body" class="calender-field-pick-sm" [showIcon]="true"
+                          [showTime]="true" [showSeconds]="true" formControlName="dateTo"></p-calendar>
+            </div>
+          </div>
+
+          <div class="common-text-field-container">
+            <span class="label-txt-field-sm">Formula (S)</span>
+            <input pInputText class="input-sm" formControlName="sformula"/>
+          </div>
+        </div>
+        <div class="table-container">
+          <div style="height: 100%">
+            <p-table #dt [tableStyle]="{'min-width': '30vw'}"
+                     [resizableColumns]="true"
+                     [value]="ruleBody" selectionMode="single"
+                     [paginator]="true"
+                     [exportHeader]="'customExportHeader'"
+                     [showCurrentPageReport]="true"
+                     [scrollable]="true"
+                     [rows]="5"
+                     [(selection)]="itemSelected"
+                     dataKey="conditionId" class="rulecrud-table" styleClass="p-datatable-sm p-datatable-gridlines">
+
+              <ng-template pTemplate="caption">
+                <div class="header-table">
+                  <span class="header-title-sm">Rule Condition</span>
+
+                  <div class="table-func-container-2">
+                    <button type="button" pButton pRipple icon="bx bx-layer-plus" (click)="onAddCondition()"
+                            matTooltip="Add Rule" [matTooltipPosition]="'below'"></button>
+                    <button type="button" pButton pRipple [disabled]="itemSelected == undefined" icon="bx bx-edit" (click)="onEditRuleBody()"
+                            matTooltip="Edit Rule" [matTooltipPosition]="'below'"></button>
+                    <button type="button" pButton pRipple [disabled]="itemSelected == undefined" icon="bx bx-trash-alt" (click)="onDeleteCondition($event)"
+                            matTooltip="Delete Rule" [matTooltipPosition]="'below'" class="p-button-danger"></button>
+                  </div>
+                </div>
+              </ng-template>
+
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pResizableColumn style="min-width:5rem">Condition Id</th>
+                  <th pResizableColumn style="min-width:5rem">Condition Type</th>
+                  <th pResizableColumn style="min-width:5rem">Detail Condition</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item>
+                <tr [pSelectableRow]="item">
+                  <td>{{item.conditionId}}</td>
+                  <td>{{item.condition}}</td>
+                  <td class="row-width-wrap" >{{item.detailCondition}}</td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                  <td colspan="3">There is no condition.</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+
+          <div class="dialog-button-container">
+            <button mat-stroked-button color="warn" class="dialog-button" (click)="onCancel()">Cancel</button>
+            <button mat-raised-button color="primary" class="dialog-button" [disabled]="isValueNotValid()"  (click)="onSave(form.getRawValue())">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>
+
+<ng-template [ngIf]="visibleActionDialog">
+  <!--Action Dialog-->
+  <p-dialog header="Actions" [(visible)]="visibleActionDialog" [modal]="true" [style]="{ width: '50vw'}"
+            [draggable]="false"
+            [resizable]="false">
+    <div class="action-container">
+      <p-button class="action-main-container" (onClick)="onLogicalClicked()" styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>Logical</span>
+        </div>
+      </p-button>
+
+      <p-button class="action-main-container" (onClick)="onConstantClicked()" styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>Constant</span>
+        </div>
+      </p-button>
+
+      <p-button class="action-main-container" (onClick)="onArithClicked()" styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>Arithmetic</span>
+        </div>
+      </p-button>
+
+      <p-button class="action-main-container" (onClick)="onListClicked()" styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>List</span>
+        </div>
+      </p-button>
+
+      <p-button class="action-main-container" (onClick)="onLimitClicked()" styleClass="p-button-raised p-button-text">
+        <div class="action-button-container">
+          <span class="bx bx-sitemap action-button"></span>
+          <span>Limit</span>
+        </div>
+      </p-button>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleLogicalDialog">
+  <!--Logical Dialog-->
+  <app-logical-dialog
+    [isOpen]="visibleLogicalDialog"
+    [itemSelected]="itemSelected"
+    (closeSelf)="onCloseLogical($event)"
+    (isLoading)="onLoadingCondition($event)"
+    (onAddItem)="onAddRuleBody($event)"
+    [conditionCounter]="conditionCounter"
+    [dialogMode]="dialogMode"></app-logical-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleConstantDialog">
+  <!--Constant Dialog-->
+  <app-constant-dialog
+    [isOpen]="visibleConstantDialog"
+    [itemSelected]="itemSelected"
+    (closeSelf)="onCloseConstant($event)"
+    (isLoading)="onLoadingCondition($event)"
+    (onAddItem)="onAddRuleBody($event)"
+    [conditionCounter]="conditionCounter"
+    [dialogMode]="dialogMode"></app-constant-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleArithDialog">
+  <!--Arith Dialog-->
+  <app-arithmetic-dialog
+    [isOpen]="visibleArithDialog"
+    [itemSelected]="itemSelected"
+    (closeSelf)="onCloseArith($event)"
+    (isLoading)="onLoadingCondition($event)"
+    (onAddItem)="onAddRuleBody($event)"
+    [conditionCounter]="conditionCounter"
+    [dialogMode]="dialogMode"></app-arithmetic-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleListDialog">
+  <!--List Dialog-->
+  <app-list-dialog
+    [isOpen]="visibleListDialog"
+    [itemSelected]="itemSelected"
+    (closeSelf)="onCloseList($event)"
+    (isLoading)="onLoadingCondition($event)"
+    (onAddItem)="onAddRuleBody($event)"
+    [conditionCounter]="conditionCounter"
+    [dialogMode]="dialogMode"></app-list-dialog>
+</ng-template>
+
+<ng-template [ngIf]="visibleLimitDialog">
+  <!--Limit Dialog-->
+  <app-limit-dialog
+    [isOpen]="visibleLimitDialog"
+    [itemSelected]="itemSelected"
+    (closeSelf)="onCloseLimit($event)"
+    (isLoading)="onLoadingCondition($event)"
+    (onAddItem)="onAddRuleBody($event)"
+    [conditionCounter]="conditionCounter"
+    [dialogMode]="dialogMode"></app-limit-dialog>
+</ng-template>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>

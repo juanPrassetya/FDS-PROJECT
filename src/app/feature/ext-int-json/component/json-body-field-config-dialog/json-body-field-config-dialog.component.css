@@ -1,0 +1,54 @@
+.json-dialog-container {
+  @apply se-w-full
+    se-flex se-flex-col se-gap-[30px];
+}
+
+.json-form-container {
+  @apply se-w-full
+    se-flex se-flex-col se-justify-center se-gap-[10px];
+}
+
+.json-first-form {
+  @apply se-grid se-grid-cols-2 se-auto-cols-auto se-gap-[20px] se-items-center;
+}
+
+.common-text-field-dialog-container {
+  @apply se-w-full;
+}
+
+.label-txt-field-sm {
+  @apply se-text-[.8rem]
+    se-font-semibold;
+}
+
+.dialog-button-container {
+  @apply se-flex se-justify-end se-gap-[15px];
+}
+
+.dialog-button {
+  @apply se-w-[100px] se-text-[.8rem];
+}
+
+.table-func-container-2 {
+  display: flex;
+  gap: 10px;
+}
+
+.action-tb-container {
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.action-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/*NG DEEP*/
+::ng-deep .json-dialog .p-dialog-content {
+  overflow-y: unset !important;
+}

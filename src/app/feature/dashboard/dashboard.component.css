@@ -1,0 +1,90 @@
+.dashboard-container {
+  height: 100%;
+  width: 100%;
+  padding: 15px 20px 15px 20px;
+  display: grid;
+  grid-template-columns: 1fr .5fr;
+  gap: 15px;
+}
+
+.ds-con-1 {
+  display: flex;
+  flex-direction: column;
+  gap: 10px
+}
+
+.ds-con-2 {
+  width: 100%;
+  display: grid;
+  grid-template-rows: .8fr 1fr;
+  gap: 15px
+}
+
+.top-rule-trigger-container {
+  display: grid;
+  grid-template-rows: 0.22fr .78fr;
+  height: 100%;
+}
+
+.counter-main-container {
+  @apply
+  se-flex se-justify-between se-gap-[1rem]
+}
+
+.counter-container {
+  width: calc(100% / 3);
+}
+
+.summary-con {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.summary-sub-con {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.txt-1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.txt-2 {
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.percentage-con {
+  display: flex;
+  justify-content: space-between;
+  font-size: .7rem;
+}
+
+/*NG DEEP*/
+::ng-deep .ds-card .p-card .p-card-content {
+  padding: 0
+}
+
+::ng-deep .ds-card-not-fraud .p-card {
+  background: rgba(194, 255, 202, 0.51)
+}
+
+::ng-deep .ds-card-suspicious .p-card {
+  background: rgba(251, 255, 194, 0.51);
+}
+
+::ng-deep .ds-card-fraud .p-card {
+  background: rgba(255, 194, 194, 0.51)
+}
+
+::ng-deep .top-rule-trigger-table .p-datatable-wrapper {
+  height: 100% !important;
+}
+
+::ng-deep .top-rule-trigger-table .p-datatable.p-datatable-sm .p-datatable-thead > tr > th,
+::ng-deep .top-rule-trigger-table .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+  font-size: .65rem;
+}

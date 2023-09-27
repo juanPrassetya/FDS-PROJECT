@@ -1,0 +1,35 @@
+.report-dialog-container {
+  @apply se-w-full
+    se-flex se-flex-col se-gap-[30px];
+}
+
+.report-form-container {
+  @apply se-w-full
+    se-flex se-flex-col se-justify-center se-gap-[10px];
+}
+
+.report-first-form {
+  @apply se-flex se-flex-col se-gap-[20px] se-items-center;
+}
+
+.common-text-field-dialog-container {
+  @apply se-w-full;
+}
+
+.label-txt-field-sm {
+  @apply se-text-[.8rem]
+    se-font-semibold;
+}
+
+.dialog-button-container {
+  @apply se-flex se-justify-end se-gap-[15px] se-mt-2;
+}
+
+.dialog-button {
+  @apply se-w-[100px] se-text-[.8rem];
+}
+
+/*NG DEEP*/
+::ng-deep .report-dialog .p-dialog-content {
+  overflow-y: unset !important;
+}

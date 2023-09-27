@@ -1,0 +1,25 @@
+.card-detail-dialog-container {
+  /*margin-top: 10px;*/
+}
+
+/*NG DEEP*/
+::ng-deep .card-detail-dialog .p-dialog-content {
+  overflow-y: unset !important;
+}
+
+::ng-deep .card-detail-dialog .p-dialog .p-dialog-content {
+  padding: 0 1.5rem 1.5rem;
+}
+
+::ng-deep .card-detail-table .p-datatable.p-datatable-gridlines:has(.p-datatable-thead):has(.p-datatable-tbody) .p-datatable-tbody > tr > td:last-child,
+::ng-deep .card-detail-table .p-datatable.p-datatable-gridlines:has(.p-datatable-thead):has(.p-datatable-tbody) .p-datatable-tbody > tr > td{
+  /*border-width: 1px;*/
+}
+
+::ng-deep .card-detail-table .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
+  text-align: left;
+}
+
+::ng-deep .card-detail-table .p-datatable {
+  height: auto !important;
+}

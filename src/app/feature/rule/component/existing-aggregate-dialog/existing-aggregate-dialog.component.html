@@ -1,0 +1,91 @@
+<p-dialog header="Aggregate Counter" [(visible)]="isOpen" [modal]="true" [closeOnEscape]="false"
+          [style]="{ width: '70vw'}" [draggable]="false" (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [resizable]="false" class="existing-aggregate-dialog">
+
+  <div class="existing-aggregate-main-container">
+    <div class="first-container" [formGroup]="formGroup">
+      <p-card class="search-card">
+        <div class="search-container">
+          <div class="sc-first-row">
+            <div class="field">
+              <div class="sc-field-container">
+                <div class="sc-first-text-field-1">
+                  <span class="label-txt-field">Aggregate Name</span>
+                  <input class="input-sm" formControlName="name" pInputText aria-describedby="username-help"/>
+                </div>
+              </div>
+
+              <div class="search-button-container">
+                <button mat-raised-button color="primary" (click)="onSearchClicked(formGroup.getRawValue())" class="sc-search-button">Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="second-container">
+      <p-card class="table-card">
+        <p-table #dt [tableStyle]="{'min-width': '50rem'}"
+                 [resizableColumns]="true"
+                 [value]="items" selectionMode="single"
+                 [paginator]="true"
+                 [exportHeader]="'customExportHeader'"
+                 [showCurrentPageReport]="true"
+                 [scrollable]="true"
+                 [rows]="15"
+                 [(selection)]="selectedItem"
+                 dataKey="id" class="exist-aggregate-table" styleClass="p-datatable-sm p-datatable-gridlines">
+
+          <ng-template pTemplate="caption">
+            <div class="header-table">
+              <span style="font-size: .8rem; padding-left: 1rem">Aggregate Data</span>
+
+              <div class="table-func-container-2" style="opacity: 0">
+                <button type="button" pButton pRipple icon="bx bx-layer-plus" routerLink="Add-rule"
+                        matTooltip="Add Rule" [matTooltipPosition]="'below'"></button>
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>Id</th>
+              <th pResizableColumn>Name</th>
+              <th pResizableColumn>Aggregating Entity</th>
+              <th pResizableColumn>Attribute</th>
+              <th pResizableColumn>Metric Type</th>
+              <th pResizableColumn>Description</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-product let-i="rowIndex">
+            <tr [pSelectableRow]="product">
+              <td class="row-width-xs">{{product.id}}</td>
+              <td class="row-width-wrap">{{product.name}}</td>
+              <td class="row-width-xs">{{product.aggregatingEntity}}</td>
+              <td class="row-width-xs">{{product.attribute}}</td>
+              <td class="row-width-xs">{{product.metricType}}</td>
+              <td class="row-width-wrap">{{product.description}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr style="">
+              <td colspan="10">There is no aggregate.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+
+    <div class="dialog-button-container">
+      <button mat-stroked-button color="warn" class="dialog-button" (click)="onClose()">Cancel</button>
+      <button mat-raised-button color="primary" class="dialog-button" [disabled]="selectedItem == undefined"
+              (click)="onSave()">Save
+      </button>
+    </div>
+  </div>
+</p-dialog>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>

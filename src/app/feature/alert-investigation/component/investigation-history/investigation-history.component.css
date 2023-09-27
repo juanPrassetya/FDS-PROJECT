@@ -1,0 +1,12 @@
+.header-table {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 20px;
+}
+
+.table-func-container-2 {
+  display: flex;
+  gap: 10px
+}

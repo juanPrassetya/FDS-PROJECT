@@ -1,0 +1,55 @@
+<p-dialog header="Black List Detail" class="black-detail-container"
+          [modal]="true" [(visible)]="isOpen"
+          [position]="'right'" [draggable]="false"
+          [resizable]="false"
+          (onShow)="onDialogVisible()" (onHide)="onClose()"
+          [style]="{ width: '30vw', height: '100vh' }">
+  <p-tabView class="black-detail-tab">
+    <p-tabPanel header="Information">
+      <div class="information-container">
+        <div class="black-detail-field-container">
+          <div class="text-field-black-detail" *ngIf="StringUtils.isAvailable(selectedItem?.id)">
+            <span class="label-txt-field">Black List Id</span>
+            <span class="value-txt">{{selectedItem?.id}}</span>
+          </div>
+
+          <div class="text-field-black-detail" *ngIf="StringUtils.isAvailable(selectedItem?.entityType)">
+            <span class="label-txt-field">Entity Type</span>
+            <span class="value-txt">{{selectedItem?.entityType}}</span>
+          </div>
+
+          <div class="text-field-black-detail" *ngIf="StringUtils.isAvailable(selectedItem?.value)">
+            <span class="label-txt-field">Value</span>
+            <span class="value-txt">{{selectedItem?.value}}</span>
+          </div>
+
+          <div class="text-field-black-detail" *ngIf="StringUtils.isAvailable(selectedItem?.dateIn)">
+            <span class="label-txt-field">Date In</span>
+            <span class="value-txt">{{DateUtils.ConvertToDateFormat(selectedItem?.dateIn)}}</span>
+          </div>
+
+          <div class="text-field-black-detail" *ngIf="StringUtils.isAvailable(selectedItem?.dateOut)">
+            <span class="label-txt-field">Date Out</span>
+            <span class="value-txt">{{DateUtils.ConvertToDateFormat(selectedItem?.dateOut)}}</span>
+          </div>
+
+          <div class="text-field-black-detail" *ngIf="StringUtils.isAvailable(selectedItem?.userGroup?.groupName)">
+            <span class="label-txt-field">Group</span>
+            <span class="value-txt">{{selectedItem?.userGroup?.groupName}}</span>
+          </div>
+
+          <div class="text-field-black-detail" *ngIf="StringUtils.isAvailable(selectedItem?.initiator?.username)">
+            <span class="label-txt-field">Initiator</span>
+            <span class="value-txt">{{selectedItem?.initiator?.username}}</span>
+          </div>
+
+          <div class="text-field-black-detail-desc" *ngIf="StringUtils.isAvailable(selectedItem?.reason)">
+            <span class="label-txt-field">Reason</span>
+            <span class="value-txt-desc">{{selectedItem?.reason}}</span>
+          </div>
+        </div>
+
+      </div>
+    </p-tabPanel>
+  </p-tabView>
+</p-dialog>
