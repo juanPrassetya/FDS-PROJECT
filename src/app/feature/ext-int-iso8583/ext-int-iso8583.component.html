@@ -5,28 +5,37 @@
         <div class="sc-first-row">
           <div class="field">
             <div class="sc-field-container">
+              <div class="sc-field-container">
               <div class="sc-first-text-field-1">
-                <span class="label-txt-field">Name</span>
+                <span class="label-txt-field">username</span>
                 <input
                   class="input-sm"
                   pInputText
                   aria-describedby="username-help"
-                  formControlName="name"
+                  formControlName="username"
                 />
               </div>
 
               <div class="sc-first-text-field-1">
-                <span class="label-txt-field">hasHeader</span>
-                <p-dropdown
-                  class="field-dropdown-sm"
-                  [options]="StringUtils.dummyHasHeader"
-                  [filter]="true"
-                  optionLabel="name"
-                  placeholder="Select Has Header"
-                  formControlName="hasHeader"
-                  [showClear]="true"
-                ></p-dropdown>
+                <span class="label-txt-field">Email</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="email"
+                />
               </div>
+
+              <div class="sc-first-text-field-1">
+                <span class="label-txt-field">Role</span>
+                <input
+                  class="input-sm"
+                  pInputText
+                  aria-describedby="username-help"
+                  formControlName="Role"
+                />
+              </div>
+            </div>
             </div>
 
             <div class="search-button-container">
@@ -76,7 +85,7 @@
         <ng-template pTemplate="caption">
           <div class="header-table">
             <span style="font-size: 0.8rem; padding-left: 1rem"
-              >Message Configuration Data</span
+              >Terminal</span
             >
 
             <div class="table-func-container-2" style="opacity: 0">
@@ -87,16 +96,17 @@
 
         <ng-template pTemplate="header">
           <tr>
-            <th pResizableColumn>Config Id</th>
-            <th pResizableColumn>Name</th>
-            <th pResizableColumn>Header</th>
-            <th pResizableColumn>Type</th>
+            <th pResizableColumn>Terminal Id</th>
+            <th pResizableColumn>Merchant</th>
+            <th pResizableColumn>Currency Code</th>
+            <th pResizableColumn>Comment</th>
             <th pResizableColumn></th>
-          </tr>
+          </tr> 
         </ng-template>
         <ng-template pTemplate="body" let-product let-i="rowIndex">
           <tr [pSelectableRow]="product">
-            <td class="row-width">{{ product.configId }}</td>
+            <!-- ini belum diganti -->
+            <td class="row-width">{{ product.configId }}</td> 
             <td class="row-width">{{ product.name }}</td>
             <td class="row-width">
               {{ StringUtils.converterStatus(product.hasHeader) }}

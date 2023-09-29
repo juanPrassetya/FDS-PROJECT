@@ -29,6 +29,7 @@ import {ReportComponent} from "./feature/report/report.component";
 import {ExtIntJsonComponent} from "./feature/ext-int-json/ext-int-json.component";
 import {JsonDetailsComponent} from "./feature/ext-int-json/component/json-details/json-details.component";
 import { TransactionTestComponent } from './feature/test/transaction-test.component';
+import { MerchantComponent } from './feature/merchant/merchant.component';
 
 const routes: Routes = [
   {
@@ -278,6 +279,14 @@ const routes: Routes = [
                 }
               }
             ]
+          },
+          {
+            path: 'merchant',
+            component: MerchantComponent,
+            canActivate: [AuthGuard],
+            data: {
+              operations: ''
+            }
           },
           {
             path: 'institution',

@@ -83,6 +83,11 @@ export class SidebarComponent {
           "operation": "VIEW_EXT_ISO8583",
         },
         {
+          "text": "Merchant",
+          "routerLink": "ext-interfaces/merchant",
+          "operation": "",
+        },
+        {
           "text": "JSON",
           "routerLink": "ext-interfaces/JSON",
           "operation": "VIEW_EXT_JSON",
