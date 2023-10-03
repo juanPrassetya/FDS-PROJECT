@@ -28,7 +28,6 @@ import {UnauthorizedScreenComponent} from './shared/component/unauthorized-scree
 import {ReportComponent} from "./feature/report/report.component";
 import {ExtIntJsonComponent} from "./feature/ext-int-json/ext-int-json.component";
 import {JsonDetailsComponent} from "./feature/ext-int-json/component/json-details/json-details.component";
-import { TransactionTestComponent } from './feature/test/transaction-test.component';
 import { PanComponent } from './feature/pan/pan.component';
 import { MerchantComponent } from './feature/merchant/merchant.component';
 import { KeysComponent } from './feature/keys/keys.component';
@@ -46,14 +45,7 @@ const routes: Routes = [
           operations: 'VIEW_DASHBOARD'
         }
       },
-      {
-        path: 'transaction-test',
-        component: TransactionTestComponent,
-        canActivate: [AuthGuard],
-        data: {
-          operations: ''
-        }
-      },
+    
       {
         path: 'transaction',
         component: TransactionComponent,

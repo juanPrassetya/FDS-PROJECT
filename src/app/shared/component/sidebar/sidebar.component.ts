@@ -19,18 +19,13 @@ export class SidebarComponent {
       "routerLink": "dashboard",
       "operation": "VIEW_DASHBOARD"
     },
-    {
-      "text": "Transaction Test",
-      "icon": "bx bx-child",  
-      "routerLink": "transaction-test",
-      "operation": ""
-    },
-    {
-      "text": "Transaction",
-      "icon": "bx bx-candles",  
-      "routerLink": "transaction",
-      "operation": "VIEW_TRANSACTION"
-    },
+   
+    // {
+    //   "text": "Transaction",
+    //   "icon": "bx bx-candles",  
+    //   "routerLink": "transaction",
+    //   "operation": "VIEW_TRANSACTION"
+    // },
     {
       "text": "Fraud Management",
       "icon": "bx bx-shield-plus",
