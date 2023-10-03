@@ -1,15 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
 import { MerchantComponent } from './merchant.component';
-
+import { MerchantDialogComponent } from './component/instution-dialog/merchant-dialog.component';
+import {SharedModule} from "../../shared/module/shared.module";
 
 
 @NgModule({
   declarations: [
-    MerchantComponent
+    MerchantComponent,
+    MerchantDialogComponent
   ],
   imports: [
-    CommonModule
+    SharedModule
   ]
 })
 export class MerchantModule { }

@@ -34,6 +34,9 @@ import {HeaderState} from "../component/header/state/header.state";
 import {DashboardState} from "../../feature/dashboard/state/dashboard.state";
 import {ReportState} from "../../feature/report/state/report.state";
 import {ExtIntJSONState} from "../../feature/ext-int-json/state/ext-int-json.state";
+import { PanState } from 'src/app/feature/pan/state/pan.state';
+import { MerchantState } from 'src/app/feature/merchant/state/merchant.state';
+import { KeysState } from 'src/app/feature/keys/state/keys.state';
 
 const stateModules = [
   NgxsLoggerPluginModule.forRoot(),
@@ -65,6 +68,9 @@ const stateModules = [
     RecipientSetupState,
     RecipientGroupState,
     InstitutionState,
+    PanState,
+    MerchantState,
+    KeysState,
     UserAuditState,
     UserRoleState,
     HeaderState,

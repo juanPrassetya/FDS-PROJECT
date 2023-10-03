@@ -29,7 +29,9 @@ import {ReportComponent} from "./feature/report/report.component";
 import {ExtIntJsonComponent} from "./feature/ext-int-json/ext-int-json.component";
 import {JsonDetailsComponent} from "./feature/ext-int-json/component/json-details/json-details.component";
 import { TransactionTestComponent } from './feature/test/transaction-test.component';
+import { PanComponent } from './feature/pan/pan.component';
 import { MerchantComponent } from './feature/merchant/merchant.component';
+import { KeysComponent } from './feature/keys/keys.component';
 
 const routes: Routes = [
   {
@@ -52,6 +54,14 @@ const routes: Routes = [
           operations: ''
         }
       },
+      {
+        path: 'transaction',
+        component: TransactionComponent,
+        canActivate: [AuthGuard],
+        data: {
+          operations: 'VIEW_TRANSACTION'
+        }
+      },
       
       {
         path: 'report',
@@ -65,14 +75,7 @@ const routes: Routes = [
       {
         path: 'fraud-management',
         children: [
-          {
-            path: 'transaction',
-            component: TransactionComponent,
-            canActivate: [AuthGuard],
-            data: {
-              operations: 'VIEW_TRANSACTION'
-            }
-          },
+         
           {
             path: 'alert-investigation',
             component: AlertInvestigationComponent,
@@ -280,20 +283,37 @@ const routes: Routes = [
               }
             ]
           },
-          {
-            path: 'merchant',
-            component: MerchantComponent,
-            canActivate: [AuthGuard],
-            data: {
-              operations: ''
-            }
-          },
+         
           {
             path: 'institution',
             component: InstitutionComponent,
             canActivate: [AuthGuard],
             data: {
               operations: 'VIEW_INSTITUTION'
+            }
+          },
+          {
+            path: 'pan',
+            component: PanComponent,
+            canActivate: [],
+            data: {
+              operations: ''
+            }
+          },
+          {
+            path: 'merchant',
+            component: MerchantComponent,
+            canActivate: [],
+            data: {
+              operations: ''
+            }
+          },
+          {
+            path: 'keys',
+            component: KeysComponent,
+            canActivate: [],
+            data: {
+              operations: ''
             }
           },
           {

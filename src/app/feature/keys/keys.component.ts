@@ -13,27 +13,27 @@ import { UserDomain } from '../user/domain/user.domain';
 import { ConfirmService } from '../../shared/services/confirm.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { StringUtils } from '../../shared/utils/string.utils';
-import { MerchantState } from './state/merchant.state';
-import { MerchantDomain } from './domain/merchant.domain';
-import { MerchantService } from './service/merchant.service';
+import { KeysState } from './state/keys.state';
+import { KeysDomain } from './domain/keys.component';
+import { KeysService } from './service/keys.service';
 import {
-  MerchantAdd,
-  MerchantDelete,
-  MerchantGet,
-  MerchantGetQuery,
-  MerchantUpdate,
-} from './state/merchant.actions';
+  KeysAdd,
+  KeysDelete,
+  KeysGet,
+  KeysGetQuery,
+  KeysUpdate,
+} from './state/keys.actions';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-merchant',
-  templateUrl: './merchant.component.html',
-  styleUrls: ['./merchant.component.css'],
+  selector: 'app-keys',
+  templateUrl: './keys.component.html',
+  styleUrls: ['./keys.component.css'],
 })
-export class MerchantComponent implements OnInit, OnDestroy {
+export class KeysComponent implements OnInit, OnDestroy {
   @Select(AuthState.userData) userData$!: Observable<UserDomain>;
-  @Select(MerchantState.data) merchants$!: Observable<
-    MerchantDomain[]
+  @Select(KeysState.data) keyss$!: Observable<
+    KeysDomain[]
   >;
 
   private destroyer$ = new Subject();
@@ -42,11 +42,11 @@ export class MerchantComponent implements OnInit, OnDestroy {
 
   authorities: string[] = [];
 
-  selectedItem: MerchantDomain | undefined;
+  selectedItem: KeysDomain | undefined;
 
-  items: Array<MerchantDomain> = [];
+  items: Array<KeysDomain> = [];
 
-  visibleMerchantDialog: boolean = false;
+  visibleKeysDialog: boolean = false;
 
   dialogMode: string = 'ADD';
   isLoading: boolean = true;
@@ -54,7 +54,7 @@ export class MerchantComponent implements OnInit, OnDestroy {
   constructor(
     private store$: Store,
     private action$: Actions,
-    private merchantService: MerchantService,
+    private keysService: KeysService,
     private confirmService: ConfirmService,
     private authService: AuthService,
     private fb: FormBuilder
@@ -62,49 +62,49 @@ export class MerchantComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      merchantName: [''],
+      keysName: [''],
     });
     this.authorities = this.authService.getAuthorities();
 
     this.userData$.pipe(takeUntil(this.destroyer$)).subscribe((data) => {
       if (data != undefined) {
-        if (this.store$.selectSnapshot(MerchantState.data).length > 0) {
+        if (this.store$.selectSnapshot(KeysState.data).length > 0) {
           this.isLoading = false;
         } else {
           this.isLoading = true;
-          this.merchantService.onFetchMerchant();
+          this.keysService.onFetchKeys();
         }
       } else this.isLoading = false;
     });
 
-    this.merchants$.pipe(takeUntil(this.destroyer$)).subscribe((data) => {
+    this.keyss$.pipe(takeUntil(this.destroyer$)).subscribe((data) => {
       this.items = data;
     });
 
     this.action$
       .pipe(
         ofActionSuccessful(
-          MerchantAdd,
-          MerchantUpdate,
-          MerchantDelete
+          KeysAdd,
+          KeysUpdate,
+          KeysDelete
         ),
         takeUntil(this.destroyer$)
       )
       .subscribe(() => {
         this.isLoading = true;
         this.selectedItem = undefined;
-        this.merchantService.onFetchMerchant();
+        this.keysService.onFetchKeys();
       });
 
     this.action$
-      .pipe(ofActionCompleted(MerchantGet), takeUntil(this.destroyer$))
+      .pipe(ofActionCompleted(KeysGet), takeUntil(this.destroyer$))
       .subscribe(() => {
         this.isLoading = false;
       });
 
     this.action$
       .pipe(
-        ofActionErrored(MerchantAdd, MerchantUpdate, MerchantDelete),
+        ofActionErrored(KeysAdd, KeysUpdate, KeysDelete),
         takeUntil(this.destroyer$)
       )
       .subscribe(() => {
@@ -112,13 +112,13 @@ export class MerchantComponent implements OnInit, OnDestroy {
       });
 
       this.action$
-      .pipe(ofActionCompleted(MerchantGetQuery), takeUntil(this.destroyer$))
+      .pipe(ofActionCompleted(KeysGetQuery), takeUntil(this.destroyer$))
       .subscribe(() => {
         this.isLoading = false;
       });
 
       this.action$
-      .pipe(ofActionErrored(MerchantGetQuery), takeUntil(this.destroyer$))
+      .pipe(ofActionErrored(KeysGetQuery), takeUntil(this.destroyer$))
       .subscribe(() => {
         this.isLoading = false;
       });
@@ -136,7 +136,7 @@ export class MerchantComponent implements OnInit, OnDestroy {
   onReset() {
     this.isLoading = true;
     this.formGroup.reset();
-    this.merchantService.onFetchMerchant();
+    this.keysService.onFetchKeys();
   }
 
   onSearchClicked(data: any) {
@@ -147,13 +147,13 @@ export class MerchantComponent implements OnInit, OnDestroy {
       if(controls.hasOwnProperty(controlName)) {
         const controlValue = controls[controlName].value;
         if(controlValue != null && controlValue != undefined && controlValue != '') {
-          this.merchantService.onFetchMerchantQuery(data);
+          this.keysService.onFetchKeysQuery(data);
           return
         }
       }
     }
 
-    this.merchantService.onFetchMerchant();
+    this.keysService.onFetchKeys();
   }
 
   onListClicked() {}
@@ -164,25 +164,25 @@ export class MerchantComponent implements OnInit, OnDestroy {
 
   onClickedAddListDialog() {
     this.dialogMode = 'ADD';
-    this.visibleMerchantDialog = true;
+    this.visibleKeysDialog = true;
   }
 
   onClickedEditListDialog() {
     this.dialogMode = 'EDIT';
     this.isLoading = true;
-    this.visibleMerchantDialog = true;
+    this.visibleKeysDialog = true;
   }
 
   onClickedDeleteList() {
     this.confirmService.showDialogConfirm(() => {
       this.isLoading = true;
-      this.merchantService.onDeleteMerchant(
+      this.keysService.onDeleteKeys(
         Number(this.selectedItem?.id)
       );
     });
   }
 
   onCloseListDialog(stat: boolean) {
-    this.visibleMerchantDialog = stat;
+    this.visibleKeysDialog = stat;
   }
 }

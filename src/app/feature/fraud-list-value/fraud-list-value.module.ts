@@ -10,3 +10,4 @@ import {FraudListValueService} from "./service/fraud-list-value.service";
   ]
 })
 export class FraudListValueModule { }
+ 

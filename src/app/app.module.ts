@@ -36,6 +36,14 @@ import {ReportModule} from "./feature/report/report.module";
 import { ExtIntJsonComponent } from './feature/ext-int-json/ext-int-json.component';
 import {ExtIntJsonModule} from "./feature/ext-int-json/ext-int-json.module";
 import { ResetPassDialogComponent } from './shared/component/reset-pass-dialog/reset-pass-dialog.component';
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { PanModule } from './feature/pan/pan.module';
+import { KeysModule } from './feature/keys/keys.module';
+
+import { MerchantModule } from './feature/merchant/merchant.module';
 
 @NgModule({
   declarations: [
@@ -46,6 +54,11 @@ import { ResetPassDialogComponent } from './shared/component/reset-pass-dialog/r
     BrowserAnimationsModule,
     AppRoutingModule,
 
+
+    MatTooltipModule,
+    ReactiveFormsModule,
+    CardModule,
+    TableModule,
     SharedModule,
     TransactionModule,
     RuleModule,
@@ -71,6 +84,9 @@ import { ResetPassDialogComponent } from './shared/component/reset-pass-dialog/r
     RecipientSetupModule,
     RecipientGroupModule,
     InstitutionModule,
+    PanModule,
+    KeysModule,
+    MerchantModule,
     UserAuditModule,
     UserRoleModule,
     ReportModule,

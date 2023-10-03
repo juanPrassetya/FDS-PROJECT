@@ -5,7 +5,7 @@
         <div class="sc-first-row" [formGroup]="formGroup">
           <div class="field">
             <div class="sc-first-text-field-1">
-              <span class="label-txt-field">Utrnno</span>
+              <span class="label-txt-field">Username</span>
               <input
                 class="input-sm"
                 formControlName="utrnno"
@@ -14,32 +14,28 @@
                 aria-describedby="username-help"
               />
             </div>
-
-            <div class="sc-first-text-field-2">
-              <span class="label-txt-field">Transaction Date</span>
-              <div class="date-range-container">
-                <div class="calender-field">
-                  <span class="label-txt-field-sm">From</span>
-                  <p-calendar
-                    appendTo="body"
-                    class="calender-field-pick-sm"
-                    formControlName="dateFrom"
-                    [showIcon]="true"
-                    [showButtonBar]="true"
-                  ></p-calendar>
-                </div>
-                <div class="calender-field">
-                  <span class="label-txt-field-sm">To</span>
-                  <p-calendar
-                    appendTo="body"
-                    class="calender-field-pick-sm"
-                    formControlName="dateTo"
-                    [showIcon]="true"
-                    [showButtonBar]="true"
-                  ></p-calendar>
-                </div>
-              </div>
+            <div class="sc-first-text-field-1">
+              <span class="label-txt-field">Email</span>
+              <input
+                class="input-sm"
+                formControlName="utrnno"
+                pInputText
+                id="email"
+                aria-describedby="username-help"
+              />
             </div>
+            <div class="sc-first-text-field-1">
+              <span class="label-txt-field">Role</span>
+              <input
+                class="input-sm"
+                formControlName="utrnno"
+                pInputText
+                id="role"
+                aria-describedby="username-help"
+              />
+            </div>
+
+            
 
             <div class="search-button-container">
               <button
@@ -90,13 +86,13 @@
       >
         <ng-template pTemplate="caption">
           <div class="header-table">
-            <p-checkbox
+            <!-- <p-checkbox
               name="groupname"
               (onChange)="updateCheck($event)"
               [value]="true"
               label="Update Every 60 Second"
               class="update-60"
-            ></p-checkbox>
+            ></p-checkbox> -->
 
             <div class="table-func-container-2">
               <button
@@ -139,7 +135,7 @@
             <th pResizableColumn *ngFor="let col of columns">
               {{ col.header }}
           </th>
-            <!-- <th pResizableColumn>Transaction Date</th>
+            <!-- <th pResizableColumn>ah  </th>
             <th pResizableColumn>Transaction Type</th>
             <th pResizableColumn>Utrnno</th>
             <th pResizableColumn>HPAN</th>
@@ -241,7 +237,7 @@
           />
         </div>
 
-        <div style="width: 100%">
+        <!-- <div style="width: 100%">
           <span class="label-txt-field">Transaction Date</span>
           <div class="date-range-container">
             <div class="calender-field">
@@ -265,7 +261,7 @@
               ></p-calendar>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <p-divider align="center" class="search-divider">

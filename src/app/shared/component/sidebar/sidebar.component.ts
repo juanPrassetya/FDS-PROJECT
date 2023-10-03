@@ -26,15 +26,17 @@ export class SidebarComponent {
       "operation": ""
     },
     {
+      "text": "Transaction",
+      "icon": "bx bx-candles",  
+      "routerLink": "transaction",
+      "operation": "VIEW_TRANSACTION"
+    },
+    {
       "text": "Fraud Management",
       "icon": "bx bx-shield-plus",
       "operation": "FRAUD_MANAGEMENT_MENU",
       "children": [
-        {
-          "text": "Transaction",
-          "routerLink": "fraud-management/transaction",
-          "operation": "VIEW_TRANSACTION"
-        },
+       
         {
           "text": "Alert Investigation",
           "routerLink": "fraud-management/alert-investigation",
@@ -82,11 +84,7 @@ export class SidebarComponent {
           "routerLink": "ext-interfaces/ISO8583",
           "operation": "VIEW_EXT_ISO8583",
         },
-        {
-          "text": "Merchant",
-          "routerLink": "ext-interfaces/merchant",
-          "operation": "",
-        },
+        
         {
           "text": "JSON",
           "routerLink": "ext-interfaces/JSON",
@@ -96,6 +94,21 @@ export class SidebarComponent {
           "text": "Institution",
           "routerLink": "ext-interfaces/institution",
           "operation": "VIEW_INSTITUTION",
+        },
+        {
+          "text": "PAN",
+          "routerLink": "ext-interfaces/pan",
+          "operation": "",
+        },
+        {
+          "text": "Merchant",
+          "routerLink": "ext-interfaces/merchant",
+          "operation": "",
+        },
+        {
+          "text": "Keys",
+          "routerLink": "ext-interfaces/keys",
+          "operation": "",
         }
       ]
     },

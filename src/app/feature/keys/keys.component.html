@@ -1,4 +1,4 @@
-<div class="merchant-main-container">
+<div class="keys-main-container">
     <div class="first-container">
       <p-card class="search-card">
         <div class="search-container" [formGroup]="formGroup">
@@ -17,7 +17,7 @@
                 </div>
   
                 <div class="sc-first-text-field-1">
-                  <span class="label-txt-field">Email</span>
+                  <span class="label-txt-field">Institution Id</span>
                   <input
                     class="input-sm"
                     pInputText
@@ -26,15 +26,7 @@
                   />
                 </div>
   
-                <div class="sc-first-text-field-1">
-                  <span class="label-txt-field">Role</span>
-                  <input
-                    class="input-sm"
-                    pInputText
-                    aria-describedby="username-help"
-                    formControlName="Role"
-                  />
-                </div>
+             
               </div>
               </div>
   
@@ -80,19 +72,19 @@
           (onRowSelect)="onListClicked()"
           (onRowUnselect)="onListUnClicked()"
           dataKey="id"
-          class="merchant-table"
+          class="keys-table"
           styleClass="p-datatable-sm p-datatable-gridlines"
         >
           <ng-template pTemplate="caption">
             <div class="header-table">
               <span style="font-size: 0.8rem; padding-left: 1rem">
-                Merchant</span
+                Keys</span
               >
   
               <div class="table-func-container-2">
                 <ng-template
                   [ngIf]="
-                    StringUtils.findOperations(authorities, 'ADD_MERCHANT')
+                    StringUtils.findOperations(authorities, 'ADD_KEYS')
                   "
                 >
                   <button
@@ -101,7 +93,7 @@
                     pRipple
                     icon="bx bx-layer-plus"
                     (click)="onClickedAddListDialog()"
-                    matTooltip="Add Merchant"
+                    matTooltip="Add Keys"
                     [matTooltipPosition]="'below'"
                   ></button>
                   <button
@@ -111,13 +103,13 @@
                     [disabled]="selectedItem == undefined"
                     icon="bx bx-edit"
                     (click)="onClickedEditListDialog()"
-                    matTooltip="Edit Merchant"
+                    matTooltip="Edit Keys"
                     [matTooltipPosition]="'below'"
                   ></button>
                 </ng-template>
                 <ng-template
                   [ngIf]="
-                    StringUtils.findOperations(authorities, 'DELETE_MERCHANT')
+                    StringUtils.findOperations(authorities, 'DELETE_KEYS')
                   "
                 >
                   <button
@@ -127,7 +119,7 @@
                     [disabled]="selectedItem == undefined"
                     icon="bx bx-trash-alt"
                     (click)="onClickedDeleteList()"
-                    matTooltip="Delete Merchant"
+                    matTooltip="Delete Keys"
                     [matTooltipPosition]="'below'"
                     class="p-button-danger"
                   ></button>
@@ -138,30 +130,28 @@
   
           <ng-template pTemplate="header">
             <tr>
-              <th pResizableColumn>Merchant Number</th>
               <th pResizableColumn>Name</th>
-              <th pResizableColumn>Acquirer</th>
-              <th pResizableColumn>Category Code (SIC)</th>
+              <th pResizableColumn>Key Value</th>
+              <th pResizableColumn>Key Check Value </th>
               <th pResizableColumn>Comment</th>
-            
+              
+  
   
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-product let-i="rowIndex">
             <tr [pSelectableRow]="product">
-              <td class="row-width">{{ product.number }}</td>
               <td class="row-width">{{ product.name }}</td>
+              <td class="row-width">{{ product.keysID }}</td>
               <td class="row-width">{{ product.fiid }}</td>
-              <td class="row-width">{{ product.Acquirer }}</td>
-              <td class="row-width">{{ product.category }}</td>
-              <td class="row-width">{{ product.comment }}</td>
+              <td class="row-width">{{ product.sexondaryID }}</td>
               
   
             </tr>
           </ng-template>
           <ng-template pTemplate="emptymessage">
             <tr style="">
-              <td colspan="6">There is no Merchant.</td>
+              <td colspan="6">There is no Keys.</td>
             </tr>
           </ng-template>
         </p-table>
@@ -173,13 +163,13 @@
     <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
   </ng-template>
   
-  <ng-template [ngIf]="visibleMerchantDialog">
-    <app-merchant-dialog
-      [isOpen]="visibleMerchantDialog"
+  <ng-template [ngIf]="visibleKeysDialog">
+    <app-keys-dialog
+      [isOpen]="visibleKeysDialog"
       [itemSelected]="selectedItem"
       (closeSelf)="onCloseListDialog($event)"
       (isLoading)="onLoading($event)"
       [dialogMode]="dialogMode"
-    ></app-merchant-dialog>
+    ></app-keys-dialog>
   </ng-template>
   

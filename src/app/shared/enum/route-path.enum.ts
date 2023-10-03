@@ -38,6 +38,24 @@ export enum RoutePathEnum {
   INSTITUTION_DELETE_PATH = 'institution/delete',
   INSTITUTION_GET_QUERY_PATH = 'institution/search',
 
+  MERCHANT_GET_PATH = 'merchant/list',
+  MERCHANT_ADD_PATH = 'merchant/add',
+  MERCHANT_UPDATE_PATH = 'merchant/update',
+  MERCHANT_DELETE_PATH = 'merchant/delete',
+  MERCHANT_GET_QUERY_PATH = 'merchant/search',
+
+  PAN_GET_PATH = 'pan/list',
+  PAN_ADD_PATH = 'pan/add',
+  PAN_UPDATE_PATH = 'pan/update',
+  PAN_DELETE_PATH = 'pan/delete',
+  PAN_GET_QUERY_PATH = 'pan/search',
+
+  KEYS_GET_PATH = 'keys/list',
+  KEYS_ADD_PATH = 'keys/add',
+  KEYS_UPDATE_PATH = 'keys/update',
+  KEYS_DELETE_PATH = 'keys/delete',
+  KEYS_GET_QUERY_PATH = 'keys/search',
+
   GROUP_GET_PATH = 'user/group/list',
   GROUP_ADD_PATH = 'user/group/add',
   GROUP_UPDATE_PATH = 'user/group/update',

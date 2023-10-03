@@ -13,27 +13,27 @@ import { UserDomain } from '../user/domain/user.domain';
 import { ConfirmService } from '../../shared/services/confirm.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { StringUtils } from '../../shared/utils/string.utils';
-import { MerchantState } from './state/merchant.state';
-import { MerchantDomain } from './domain/merchant.domain';
-import { MerchantService } from './service/merchant.service';
+import { PanState } from './state/pan.state';
+import { PanDomain } from './domain/pan.component';
+import { PanService } from './service/pan.service';
 import {
-  MerchantAdd,
-  MerchantDelete,
-  MerchantGet,
-  MerchantGetQuery,
-  MerchantUpdate,
-} from './state/merchant.actions';
+  PanAdd,
+  PanDelete,
+  PanGet,
+  PanGetQuery,
+  PanUpdate,
+} from './state/pan.actions';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-merchant',
-  templateUrl: './merchant.component.html',
-  styleUrls: ['./merchant.component.css'],
+  selector: 'app-pan',
+  templateUrl: './pan.component.html',
+  styleUrls: ['./pan.component.css'],
 })
-export class MerchantComponent implements OnInit, OnDestroy {
+export class PanComponent implements OnInit, OnDestroy {
   @Select(AuthState.userData) userData$!: Observable<UserDomain>;
-  @Select(MerchantState.data) merchants$!: Observable<
-    MerchantDomain[]
+  @Select(PanState.data) pans$!: Observable<
+    PanDomain[]
   >;
 
   private destroyer$ = new Subject();
@@ -42,11 +42,11 @@ export class MerchantComponent implements OnInit, OnDestroy {
 
   authorities: string[] = [];
 
-  selectedItem: MerchantDomain | undefined;
+  selectedItem: PanDomain | undefined;
 
-  items: Array<MerchantDomain> = [];
+  items: Array<PanDomain> = [];
 
-  visibleMerchantDialog: boolean = false;
+  visiblePanDialog: boolean = false;
 
   dialogMode: string = 'ADD';
   isLoading: boolean = true;
@@ -54,7 +54,7 @@ export class MerchantComponent implements OnInit, OnDestroy {
   constructor(
     private store$: Store,
     private action$: Actions,
-    private merchantService: MerchantService,
+    private panService: PanService,
     private confirmService: ConfirmService,
     private authService: AuthService,
     private fb: FormBuilder
@@ -62,49 +62,49 @@ export class MerchantComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      merchantName: [''],
+      panName: [''],
     });
     this.authorities = this.authService.getAuthorities();
 
     this.userData$.pipe(takeUntil(this.destroyer$)).subscribe((data) => {
       if (data != undefined) {
-        if (this.store$.selectSnapshot(MerchantState.data).length > 0) {
+        if (this.store$.selectSnapshot(PanState.data).length > 0) {
           this.isLoading = false;
         } else {
           this.isLoading = true;
-          this.merchantService.onFetchMerchant();
+          this.panService.onFetchPan();
         }
       } else this.isLoading = false;
     });
 
-    this.merchants$.pipe(takeUntil(this.destroyer$)).subscribe((data) => {
+    this.pans$.pipe(takeUntil(this.destroyer$)).subscribe((data) => {
       this.items = data;
     });
 
     this.action$
       .pipe(
         ofActionSuccessful(
-          MerchantAdd,
-          MerchantUpdate,
-          MerchantDelete
+          PanAdd,
+          PanUpdate,
+          PanDelete
         ),
         takeUntil(this.destroyer$)
       )
       .subscribe(() => {
         this.isLoading = true;
         this.selectedItem = undefined;
-        this.merchantService.onFetchMerchant();
+        this.panService.onFetchPan();
       });
 
     this.action$
-      .pipe(ofActionCompleted(MerchantGet), takeUntil(this.destroyer$))
+      .pipe(ofActionCompleted(PanGet), takeUntil(this.destroyer$))
       .subscribe(() => {
         this.isLoading = false;
       });
 
     this.action$
       .pipe(
-        ofActionErrored(MerchantAdd, MerchantUpdate, MerchantDelete),
+        ofActionErrored(PanAdd, PanUpdate, PanDelete),
         takeUntil(this.destroyer$)
       )
       .subscribe(() => {
@@ -112,13 +112,13 @@ export class MerchantComponent implements OnInit, OnDestroy {
       });
 
       this.action$
-      .pipe(ofActionCompleted(MerchantGetQuery), takeUntil(this.destroyer$))
+      .pipe(ofActionCompleted(PanGetQuery), takeUntil(this.destroyer$))
       .subscribe(() => {
         this.isLoading = false;
       });
 
       this.action$
-      .pipe(ofActionErrored(MerchantGetQuery), takeUntil(this.destroyer$))
+      .pipe(ofActionErrored(PanGetQuery), takeUntil(this.destroyer$))
       .subscribe(() => {
         this.isLoading = false;
       });
@@ -136,7 +136,7 @@ export class MerchantComponent implements OnInit, OnDestroy {
   onReset() {
     this.isLoading = true;
     this.formGroup.reset();
-    this.merchantService.onFetchMerchant();
+    this.panService.onFetchPan();
   }
 
   onSearchClicked(data: any) {
@@ -147,13 +147,13 @@ export class MerchantComponent implements OnInit, OnDestroy {
       if(controls.hasOwnProperty(controlName)) {
         const controlValue = controls[controlName].value;
         if(controlValue != null && controlValue != undefined && controlValue != '') {
-          this.merchantService.onFetchMerchantQuery(data);
+          this.panService.onFetchPanQuery(data);
           return
         }
       }
     }
 
-    this.merchantService.onFetchMerchant();
+    this.panService.onFetchPan();
   }
 
   onListClicked() {}
@@ -164,25 +164,25 @@ export class MerchantComponent implements OnInit, OnDestroy {
 
   onClickedAddListDialog() {
     this.dialogMode = 'ADD';
-    this.visibleMerchantDialog = true;
+    this.visiblePanDialog = true;
   }
 
   onClickedEditListDialog() {
     this.dialogMode = 'EDIT';
     this.isLoading = true;
-    this.visibleMerchantDialog = true;
+    this.visiblePanDialog = true;
   }
 
   onClickedDeleteList() {
     this.confirmService.showDialogConfirm(() => {
       this.isLoading = true;
-      this.merchantService.onDeleteMerchant(
+      this.panService.onDeletePan(
         Number(this.selectedItem?.id)
       );
     });
   }
 
   onCloseListDialog(stat: boolean) {
-    this.visibleMerchantDialog = stat;
+    this.visiblePanDialog = stat;
   }
 }
