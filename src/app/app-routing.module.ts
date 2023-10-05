@@ -31,6 +31,11 @@ import {JsonDetailsComponent} from "./feature/ext-int-json/component/json-detail
 import { PanComponent } from './feature/pan/pan.component';
 import { MerchantComponent } from './feature/merchant/merchant.component';
 import { KeysComponent } from './feature/keys/keys.component';
+import { MessagesetComponent } from './feature/messageset/messageset.component';
+import { ConnectsetComponent } from './feature/connectset/connectset.component';
+import { ManagementComponent } from './feature/management/management.component';
+import { MappingComponent } from './feature/mapping/mapping.component';
+import { RescodeComponent } from './feature/rescode/rescode.component';
 
 const routes: Routes = [
   {
@@ -328,6 +333,54 @@ const routes: Routes = [
                 }
               }
             ]
+          },
+        ]
+      },
+
+      // ----------------------------------
+      {
+        path: 'scheme',
+        children: [
+         
+          {
+            path: 'messageset',
+            component: MessagesetComponent,
+            canActivate: [],
+            data: {
+              operations: ''
+            }
+          },
+          {
+            path: 'connectset',
+            component: ConnectsetComponent,
+            canActivate: [],
+            data: {
+              operations: ''
+            }
+          },
+          {
+            path: 'management',
+            component: ManagementComponent,
+            canActivate: [],
+            data: {
+              operations: ''
+            }
+          },
+          {
+            path: 'mapping',
+            component: MappingComponent,
+            canActivate: [],
+            data: {
+              operations: ''
+            }
+          },
+          {
+            path: 'rescode',
+            component: RescodeComponent,
+            canActivate: [],
+            data: {
+              operations: ''
+            }
           },
         ]
       },

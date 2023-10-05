@@ -99,33 +99,39 @@
                 type="button"
                 pButton
                 pRipple
-                icon="pi pi-file"
+                icon="pi pi-pencil"
                 (click)="transtable.exportCSV()"
                 class="p-button-info"
-                matTooltip="Export CSV"
+                matTooltip="Edit"
                 [matTooltipPosition]="'below'"
               ></button>
               <button
                 type="button"
                 pButton
                 pRipple
-                icon="pi pi-file-excel"
+                icon="pi pi-trash"
                 (click)="exportExcel()"
-                class="p-button-success"
-                matTooltip="Export XLS"
+                class="p-button-danger"
+                matTooltip="Delete"
                 [matTooltipPosition]="'below'"
               ></button>
+            
               <button
                 type="button"
                 pButton
                 pRipple
                 (click)="onActionClicked()"
-                icon="pi pi-sliders-h"
+                icon="pi pi-plus"
                 [disabled]="selectedItem == undefined"
-                class="p-button-info"
-                matTooltip="Actions"
+                class="p-button-success"
+                matTooltip="Add"
                 [matTooltipPosition]="'below'"
               ></button>
+              <!-- Actions -->
+              <p-button
+              label="Action"
+              class="addt-button"
+            ></p-button>
             </div>
           </div>
         </ng-template>

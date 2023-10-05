@@ -140,16 +140,15 @@ export class TransactionComponent implements OnInit, OnDestroy {
   ];
 
   columns = [
-    {header: 'Transaction Date'},
-    {header: 'Transaction Type'},
-    {header: 'Utrnno'},
+    {header: 'Name'},
+    {header: 'MTI'},
     {header: 'HPAN'},
-    {header: 'CIF id'},
-    {header: 'Account'},
-    {header: 'Amount'},
-    {header: 'Currency Code'},
-    {header: 'Response Code'},
-    {header: 'Fraud Flag'},
+    {header: 'Processing'},
+    {header: 'POS Entry'},
+    {header: 'Terminal'},
+    {header: 'Institution'},
+    {header: 'Last Modify'},
+    {header: 'Status'},
     {header: ''}
 
   ]

@@ -20,12 +20,12 @@ export class SidebarComponent {
       "operation": "VIEW_DASHBOARD"
     },
    
-    // {
-    //   "text": "Transaction",
-    //   "icon": "bx bx-candles",  
-    //   "routerLink": "transaction",
-    //   "operation": "VIEW_TRANSACTION"
-    // },
+    {
+      "text": "Transaction",
+      "icon": "bx bx-candles",  
+      "routerLink": "transaction",
+      "operation": "VIEW_TRANSACTION"
+    },
     {
       "text": "Fraud Management",
       "icon": "bx bx-shield-plus",
@@ -107,6 +107,42 @@ export class SidebarComponent {
         }
       ]
     },
+
+    // --------------------SCHEME SETTING--------------------------------
+    {
+      "text": "Scheme Setting", 
+      "icon": "bx bx-shape-polygon",
+      "operation": "EXT_INT_MENU",
+      "children": [
+        {
+          "text": "Message Setting",
+          "routerLink": "scheme/messageset",
+          "operation": "",
+        },
+        {
+          "text": "Connection Setting",
+          "routerLink": "scheme/connectset",
+          "operation": "",
+        },
+        {
+          "text": "Key Management",
+          "routerLink": "scheme/management",
+          "operation": "",
+        },
+        {
+          "text": "TransType Mapping",
+          "routerLink": "scheme/mapping",
+          "operation": "",
+        },
+        {
+          "text": "RespCode Mapping",
+          "routerLink": "scheme/rescode",
+          "operation": "",
+        },
+        
+      ]
+    },
+    // ---------------------------------------------------------
     {
       "text": "Notifications",
       "icon": "bx bx-bell",

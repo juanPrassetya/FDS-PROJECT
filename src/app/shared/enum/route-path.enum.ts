@@ -56,6 +56,36 @@ export enum RoutePathEnum {
   KEYS_DELETE_PATH = 'keys/delete',
   KEYS_GET_QUERY_PATH = 'keys/search',
 
+  CONNECTSET_GET_PATH = 'connectset/list',
+  CONNECTSET_ADD_PATH = 'connectset/add',
+  CONNECTSET_UPDATE_PATH = 'connectset/update',
+  CONNECTSET_DELETE_PATH = 'connectset/delete',
+  CONNECTSET_GET_QUERY_PATH = 'connectset/search',
+
+  MANAGEMENT_GET_PATH = 'management/list',
+  MANAGEMENT_ADD_PATH = 'management/add',
+  MANAGEMENT_UPDATE_PATH = 'management/update',
+  MANAGEMENT_DELETE_PATH = 'management/delete',
+  MANAGEMENT_GET_QUERY_PATH = 'management/search',
+
+  MAPPING_GET_PATH = 'mapping/list',
+  MAPPING_ADD_PATH = 'mapping/add',
+  MAPPING_UPDATE_PATH = 'mapping/update',
+  MAPPING_DELETE_PATH = 'mapping/delete',
+  MAPPING_GET_QUERY_PATH = 'mapping/search',
+
+  RESCODE_GET_PATH = 'rescode/list',
+  RESCODE_ADD_PATH = 'rescode/add',
+  RESCODE_UPDATE_PATH = 'rescode/update',
+  RESCODE_DELETE_PATH = 'rescode/delete',
+  RESCODE_GET_QUERY_PATH = 'rescode/search',
+
+ MESSAGESET_GET_PATH = 'messageset/list',
+ MESSAGESET_ADD_PATH = 'messageset/add',
+ MESSAGESET_UPDATE_PATH = 'messageset/update',
+ MESSAGESET_DELETE_PATH = 'messageset/delete',
+ MESSAGESET_GET_QUERY_PATH = 'messageset/search',
+
   GROUP_GET_PATH = 'user/group/list',
   GROUP_ADD_PATH = 'user/group/add',
   GROUP_UPDATE_PATH = 'user/group/update',

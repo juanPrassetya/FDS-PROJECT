@@ -42,8 +42,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PanModule } from './feature/pan/pan.module';
 import { KeysModule } from './feature/keys/keys.module';
+import { MessagesetModule } from './feature/messageset/messageset.module';
 
 import { MerchantModule } from './feature/merchant/merchant.module';
+import { ConnectsetModule } from './feature/connectset/connectset.module';
+import { ManagementModule } from './feature/management/management.module';
+import { MappingModule } from './feature/mapping/mapping.module';
+import { RescodeModule } from './feature/rescode/rescode.module';
 
 @NgModule({
   declarations: [
@@ -86,6 +91,11 @@ import { MerchantModule } from './feature/merchant/merchant.module';
     InstitutionModule,
     PanModule,
     KeysModule,
+    MessagesetModule,
+    ConnectsetModule,
+    ManagementModule,
+    MappingModule,
+    RescodeModule,
     MerchantModule,
     UserAuditModule,
     UserRoleModule,

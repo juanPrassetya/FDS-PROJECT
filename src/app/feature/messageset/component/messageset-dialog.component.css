@@ -1,0 +1,43 @@
+.messageset-dialog-container {
+    @apply
+    se-w-full
+    se-flex se-flex-col se-gap-[30px]
+  }
+  
+  .black-form-container {
+    @apply
+    se-w-full
+    se-flex se-flex-col se-justify-center se-gap-[10px]
+  }
+  
+  .black-first-form {
+    @apply
+    se-grid se-grid-cols-2 se-auto-cols-auto se-gap-[20px] se-items-center
+  }
+  
+  .common-text-field-dialog-container {
+    @apply
+    se-w-full
+  }
+  
+  .label-txt-field-sm {
+    @apply
+    se-text-[.8rem]
+    se-font-semibold
+  }
+  
+  .dialog-button-container {
+    @apply
+    se-flex se-justify-end se-gap-[15px]
+  }
+  
+  .dialog-button {
+    @apply
+    se-w-[100px] se-text-[.8rem]
+  }
+  
+  /*NG DEEP*/
+  ::ng-deep .messageset-dialog .p-dialog-content {
+    /*overflow-y: unset !important;*/
+  }
+  
