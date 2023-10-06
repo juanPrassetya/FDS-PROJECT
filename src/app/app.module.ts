@@ -49,6 +49,7 @@ import { ConnectsetModule } from './feature/connectset/connectset.module';
 import { ManagementModule } from './feature/management/management.module';
 import { MappingModule } from './feature/mapping/mapping.module';
 import { RescodeModule } from './feature/rescode/rescode.module';
+import { Tran2Module } from './feature/tran2/tran2.module';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { RescodeModule } from './feature/rescode/rescode.module';
     ManagementModule,
     MappingModule,
     RescodeModule,
+    Tran2Module,
     MerchantModule,
     UserAuditModule,
     UserRoleModule,

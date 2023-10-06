@@ -26,49 +26,7 @@ export class SidebarComponent {
       "routerLink": "transaction",
       "operation": "VIEW_TRANSACTION"
     },
-    {
-      "text": "Fraud Management",
-      "icon": "bx bx-shield-plus",
-      "operation": "FRAUD_MANAGEMENT_MENU",
-      "children": [
-       
-        {
-          "text": "Alert Investigation",
-          "routerLink": "fraud-management/alert-investigation",
-          "operation": "VIEW_ALERT"
-        },
-        {
-          "text": "Fraud Reactions",
-          "routerLink": "fraud-management/fraud-reactions",
-          "operation": "VIEW_REACTIONS"
-        },
-        {
-          "text": "Fraud List",
-          "routerLink": "fraud-management/fraud-list",
-          "operation": "VIEW_FRAUD_LIST"
-        },
-        {
-          "text": "White List",
-          "routerLink": "fraud-management/white-list",
-          "operation": "VIEW_WHITE_LIST"
-        },
-        {
-          "text": "Black List",
-          "routerLink": "fraud-management/black-list",
-          "operation": "VIEW_BLACK_LIST"
-        },
-        {
-          "text": "Rule Group",
-          "routerLink": "fraud-management/rule-group",
-          "operation": "VIEW_RULE_GROUP"
-        },
-        {
-          "text": "Rule",
-          "routerLink": "fraud-management/rule",
-          "operation": "VIEW_RULE"
-        }
-      ]
-    },
+   
     {
       "text": "Test Data", //sebelumnya ext-int 
       "icon": "bx bx-coin-stack",
@@ -143,28 +101,28 @@ export class SidebarComponent {
       ]
     },
     // ---------------------------------------------------------
-    {
-      "text": "Notifications",
-      "icon": "bx bx-bell",
-      "operation": "NOTIFICATION_MENU",
-      "children": [
-        {
-          "text": "Notification Template",
-          "routerLink": "notification-template/template-setup",
-          "operation": "VIEW_NOTIF_TEMP",
-        },
-        {
-          "text": "Recipient Setup",
-          "routerLink": "notification-template/recipient-setup",
-          "operation": "VIEW_RECIPIENT_SETUP",
-        },
-        {
-          "text": "Recipient Group",
-          "routerLink": "notification-template/recipient-group",
-          "operation": "VIEW_RECIPIENT_GROUP",
-        },
-      ]
-    },
+    // {
+    //   "text": "Notifications",
+    //   "icon": "bx bx-bell",
+    //   "operation": "NOTIFICATION_MENU",
+    //   "children": [
+    //     {
+    //       "text": "Notification Template",
+    //       "routerLink": "notification-template/template-setup",
+    //       "operation": "VIEW_NOTIF_TEMP",
+    //     },
+    //     {
+    //       "text": "Recipient Setup",
+    //       "routerLink": "notification-template/recipient-setup",
+    //       "operation": "VIEW_RECIPIENT_SETUP",
+    //     },
+    //     {
+    //       "text": "Recipient Group",
+    //       "routerLink": "notification-template/recipient-group",
+    //       "operation": "VIEW_RECIPIENT_GROUP",
+    //     },
+    //   ]
+    // },
     // {
     //   "text": "System Parameters",
     //   "icon": "bx bxl-codepen",
@@ -197,12 +155,7 @@ export class SidebarComponent {
     //   "icon": "bx bx-objects-vertical-bottom",
     //   "routerLink": "/statistic-setup"
     // },
-    {
-      "text": "Report",
-      "icon": "bx bx-notepad",
-      "routerLink": "report",
-      "operation": "VIEW_REPORT"
-    },
+    
     {
       "text": "User Management",
       "icon": "bx bx-group",
@@ -227,9 +180,63 @@ export class SidebarComponent {
           "text": "Audit",
           "routerLink": "user-management/audit",
           "operation": "VIEW_USER_AUDIT",
+        },
+        {
+          "text": "Institution",
+          "routerLink": "user-management/inst",
+          "operation": "",
         }
       ]
-    }
+    },
+    {
+      "text": "Fraud Management",
+      "icon": "bx bx-shield-plus",
+      "operation": "FRAUD_MANAGEMENT_MENU",
+      "children": [
+       
+        {
+          "text": "Alert Investigation",
+          "routerLink": "fraud-management/alert-investigation",
+          "operation": "VIEW_ALERT"
+        },
+        {
+          "text": "Fraud Reactions",
+          "routerLink": "fraud-management/fraud-reactions",
+          "operation": "VIEW_REACTIONS"
+        },
+        {
+          "text": "Fraud List",
+          "routerLink": "fraud-management/fraud-list",
+          "operation": "VIEW_FRAUD_LIST"
+        },
+        {
+          "text": "White List",
+          "routerLink": "fraud-management/white-list",
+          "operation": "VIEW_WHITE_LIST"
+        },
+        {
+          "text": "Black List",
+          "routerLink": "fraud-management/black-list",
+          "operation": "VIEW_BLACK_LIST"
+        },
+        {
+          "text": "Rule Group",
+          "routerLink": "fraud-management/rule-group",
+          "operation": "VIEW_RULE_GROUP"
+        },
+        {
+          "text": "Rule",
+          "routerLink": "fraud-management/rule",
+          "operation": "VIEW_RULE"
+        }
+      ]
+    },
+    {
+      "text": "Report",
+      "icon": "bx bx-notepad",
+      "routerLink": "report",
+      "operation": "VIEW_REPORT"
+    },
   ];
 
   constructor(

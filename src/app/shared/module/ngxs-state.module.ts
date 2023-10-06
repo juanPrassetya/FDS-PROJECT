@@ -42,6 +42,7 @@ import { ConnectsetState } from 'src/app/feature/connectset/state/connectset.sta
 import { ManagementState } from 'src/app/feature/management/state/management.state';
 import { MappingState } from 'src/app/feature/mapping/state/mapping.state';
 import { RescodeState } from 'src/app/feature/rescode/state/rescode.state';
+import { Tran2State } from 'src/app/feature/tran2/state/tran2.state';
 
 
 const stateModules = [
@@ -82,6 +83,7 @@ const stateModules = [
     ManagementState,
     MappingState,
     RescodeState, 
+    Tran2State,
     UserAuditState,
     UserRoleState,
     HeaderState,

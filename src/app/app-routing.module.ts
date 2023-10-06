@@ -36,6 +36,8 @@ import { ConnectsetComponent } from './feature/connectset/connectset.component';
 import { ManagementComponent } from './feature/management/management.component';
 import { MappingComponent } from './feature/mapping/mapping.component';
 import { RescodeComponent } from './feature/rescode/rescode.component';
+import { Tran2Component } from './feature/tran2/tran2.component';
+import { AuditComponent } from './feature/audit/audit.component';
 
 const routes: Routes = [
   {
@@ -217,6 +219,15 @@ const routes: Routes = [
               operations: 'VIEW_USER_GROUP'
             }
           },
+          {
+            path: 'inst',
+            component: Tran2Component,
+            canActivate: [AuthGuard],
+            data: {
+              operations: ''
+            }
+          },
+         
         ]
       },
       // {

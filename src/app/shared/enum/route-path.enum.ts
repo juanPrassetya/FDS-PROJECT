@@ -80,6 +80,13 @@ export enum RoutePathEnum {
   RESCODE_DELETE_PATH = 'rescode/delete',
   RESCODE_GET_QUERY_PATH = 'rescode/search',
 
+  
+  TRAN2_GET_PATH = 'tran2/list',
+  TRAN2_ADD_PATH = 'tran2/add',
+  TRAN2_UPDATE_PATH = 'tran2/update',
+  TRAN2_DELETE_PATH = 'tran2/delete',
+  TRAN2_GET_QUERY_PATH = 'tran2/search',
+
  MESSAGESET_GET_PATH = 'messageset/list',
  MESSAGESET_ADD_PATH = 'messageset/add',
  MESSAGESET_UPDATE_PATH = 'messageset/update',
