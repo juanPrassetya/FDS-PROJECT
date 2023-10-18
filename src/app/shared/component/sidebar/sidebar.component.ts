@@ -22,11 +22,11 @@ export class SidebarComponent {
    
     {
       "text": "Transaction",
-      "icon": "bx bx-candles",  
-      "routerLink": "transaction",
-      "operation": "VIEW_TRANSACTION"
+      "icon": "bx bx-money",
+      "routerLink": "transaksi",
+      "operation": ""
     },
-   
+    
     {
       "text": "Test Data", //sebelumnya ext-int 
       "icon": "bx bx-coin-stack",
@@ -43,11 +43,7 @@ export class SidebarComponent {
           "routerLink": "ext-interfaces/JSON",
           "operation": "VIEW_EXT_JSON",
         },
-        {
-          "text": "Institution",
-          "routerLink": "ext-interfaces/institution",
-          "operation": "VIEW_INSTITUTION",
-        },
+       
         {
           "text": "PAN",
           "routerLink": "ext-interfaces/pan",
@@ -73,30 +69,16 @@ export class SidebarComponent {
       "operation": "EXT_INT_MENU",
       "children": [
         {
+          "text": "ISO20022 - JSON ",
+          "routerLink": "scheme/isojson",
+          "operation": "",
+        },
+        {
           "text": "Message Setting",
           "routerLink": "scheme/messageset",
           "operation": "",
         },
-        {
-          "text": "Connection Setting",
-          "routerLink": "scheme/connectset",
-          "operation": "",
-        },
-        {
-          "text": "Key Management",
-          "routerLink": "scheme/management",
-          "operation": "",
-        },
-        {
-          "text": "TransType Mapping",
-          "routerLink": "scheme/mapping",
-          "operation": "",
-        },
-        {
-          "text": "RespCode Mapping",
-          "routerLink": "scheme/rescode",
-          "operation": "",
-        },
+    
         
       ]
     },
@@ -183,9 +165,15 @@ export class SidebarComponent {
         },
         {
           "text": "Institution",
-          "routerLink": "user-management/inst",
+          "routerLink": "user-management/institution",
+          "operation": "VIEW_INSTITUTION",
+        },
+        {
+          "text": "Action",
+          "routerLink": "user-management/action",
           "operation": "",
         }
+
       ]
     },
     {

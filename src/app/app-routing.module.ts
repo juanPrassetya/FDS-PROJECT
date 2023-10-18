@@ -32,15 +32,12 @@ import { PanComponent } from './feature/pan/pan.component';
 import { MerchantComponent } from './feature/merchant/merchant.component';
 import { KeysComponent } from './feature/keys/keys.component';
 import { MessagesetComponent } from './feature/messageset/messageset.component';
-import { ConnectsetComponent } from './feature/connectset/connectset.component';
-import { ManagementComponent } from './feature/management/management.component';
-import { MappingComponent } from './feature/mapping/mapping.component';
-import { RescodeComponent } from './feature/rescode/rescode.component';
-import { Tran2Component } from './feature/tran2/tran2.component';
-import { AuditComponent } from './feature/audit/audit.component';
+import { ActionComponent } from './feature/action/action.component';
+import { TransaksiComponent } from './feature/transaksi/transaksi.component';
 
 const routes: Routes = [
   {
+    // na
     path: 'home',
     component: DefaultComponent,
     children: [
@@ -53,14 +50,24 @@ const routes: Routes = [
         }
       },
     
+      // {
+      //   path: 'transaction',
+      //   component: TransactionComponent,
+      //   canActivate: [AuthGuard],
+      //   data: {
+      //     operations: 'VIEW_TRANSACTION'
+      //   }
+      // },
       {
-        path: 'transaction',
-        component: TransactionComponent,
+        path: 'transaksi',
+        component: TransaksiComponent,
         canActivate: [AuthGuard],
         data: {
-          operations: 'VIEW_TRANSACTION'
+          operations: ''
         }
       },
+
+      
       
       {
         path: 'report',
@@ -202,6 +209,14 @@ const routes: Routes = [
               operations: 'VIEW_ROLE'
             }
           },
+          {
+            path: 'institution',
+            component: InstitutionComponent,
+            canActivate: [AuthGuard],
+            data: {
+              operations: 'VIEW_INSTITUTION'
+            }
+          },
           
           {
             path: 'audit',
@@ -210,6 +225,8 @@ const routes: Routes = [
             data: {
               operations: 'VIEW_USER_AUDIT'
             }
+
+            // nama saya
           },
           {
             path: 'group',
@@ -219,9 +236,10 @@ const routes: Routes = [
               operations: 'VIEW_USER_GROUP'
             }
           },
+         
           {
-            path: 'inst',
-            component: Tran2Component,
+            path: 'action',
+            component: ActionComponent,
             canActivate: [AuthGuard],
             data: {
               operations: ''
@@ -292,14 +310,7 @@ const routes: Routes = [
             ]
           },
          
-          {
-            path: 'institution',
-            component: InstitutionComponent,
-            canActivate: [AuthGuard],
-            data: {
-              operations: 'VIEW_INSTITUTION'
-            }
-          },
+         
           {
             path: 'pan',
             component: PanComponent,
@@ -352,6 +363,8 @@ const routes: Routes = [
       {
         path: 'scheme',
         children: [
+
+          
          
           {
             path: 'messageset',
@@ -361,38 +374,7 @@ const routes: Routes = [
               operations: ''
             }
           },
-          {
-            path: 'connectset',
-            component: ConnectsetComponent,
-            canActivate: [],
-            data: {
-              operations: ''
-            }
-          },
-          {
-            path: 'management',
-            component: ManagementComponent,
-            canActivate: [],
-            data: {
-              operations: ''
-            }
-          },
-          {
-            path: 'mapping',
-            component: MappingComponent,
-            canActivate: [],
-            data: {
-              operations: ''
-            }
-          },
-          {
-            path: 'rescode',
-            component: RescodeComponent,
-            canActivate: [],
-            data: {
-              operations: ''
-            }
-          },
+          
         ]
       },
     ]

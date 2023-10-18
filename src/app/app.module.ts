@@ -45,11 +45,8 @@ import { KeysModule } from './feature/keys/keys.module';
 import { MessagesetModule } from './feature/messageset/messageset.module';
 
 import { MerchantModule } from './feature/merchant/merchant.module';
-import { ConnectsetModule } from './feature/connectset/connectset.module';
-import { ManagementModule } from './feature/management/management.module';
-import { MappingModule } from './feature/mapping/mapping.module';
-import { RescodeModule } from './feature/rescode/rescode.module';
-import { Tran2Module } from './feature/tran2/tran2.module';
+import { ActionModule } from './feature/action/action.module';
+import { TransaksiModule } from './feature/transaksi/transaksi.module';
 
 @NgModule({
   declarations: [
@@ -91,17 +88,14 @@ import { Tran2Module } from './feature/tran2/tran2.module';
     RecipientGroupModule,
     InstitutionModule,
     PanModule,
+    ActionModule,
     KeysModule,
     MessagesetModule,
-    ConnectsetModule,
-    ManagementModule,
-    MappingModule,
-    RescodeModule,
-    Tran2Module,
     MerchantModule,
     UserAuditModule,
     UserRoleModule,
     ReportModule,
+    TransaksiModule,
     ExtIntJsonModule
   ],
   providers: [MessageService, ConfirmationService],

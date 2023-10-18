@@ -6,14 +6,14 @@
   [style]="{ width: '50vw' }"
   [draggable]="false"
   [resizable]="false"
-  class="tran2-dialog"
+  class="action-dialog"
   (onShow)="onDialogVisible()"
   (onHide)="onClose()">
-  <div class="tran2-dialog-container" [formGroup]="form">
+  <div class="action-dialog-container" [formGroup]="form">
     <div class="black-form-container">
       <div class="common-text-field-dialog-container">
         <span class="label-txt-field-sm">Name</span>
-        <input class="input" pInputText formControlName="tran2Name"/>
+        <input class="input" pInputText formControlName="actionName"/>
       </div>
 
       <div class="common-text-field-dialog-container">

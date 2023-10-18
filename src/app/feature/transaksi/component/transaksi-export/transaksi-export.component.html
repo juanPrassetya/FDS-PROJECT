@@ -1,0 +1,25 @@
+<ng-template [ngIf]="isOpen">
+  <p-dialog header="Export" [(visible)]="isOpen" [modal]="true" [style]="{ width: '30vw'}"
+            [draggable]="false"
+            [resizable]="false">
+    <div class="action-container">
+      <p-button class="action-main-container" styleClass="p-button-raised p-button-text" (onClick)="onExportXLS()">
+        <div class="action-button-container">
+          <span class="bx bxs-file action-icon"></span>
+          <span>Export to XLS</span>
+        </div>
+      </p-button>
+
+      <p-button class="action-main-container" styleClass="p-button-raised p-button-text" (onClick)="onExportPDF()">
+        <div class="action-button-container">
+          <span class="bx bxs-file-pdf action-icon"></span>
+          <span>Export to PDF</span>
+        </div>
+      </p-button>
+    </div>
+  </p-dialog>
+</ng-template>
+
+<ng-template [ngIf]="isLoading">
+  <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+</ng-template>

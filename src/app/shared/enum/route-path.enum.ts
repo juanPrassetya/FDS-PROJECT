@@ -80,6 +80,12 @@ export enum RoutePathEnum {
   RESCODE_DELETE_PATH = 'rescode/delete',
   RESCODE_GET_QUERY_PATH = 'rescode/search',
 
+  ACTION_GET_PATH = 'action/list',
+  ACTION_ADD_PATH = 'action/add',
+  ACTION_UPDATE_PATH = 'action/update',
+  ACTION_DELETE_PATH = 'action/delete',
+  ACTION_GET_QUERY_PATH = 'action/search',
+
   
   TRAN2_GET_PATH = 'tran2/list',
   TRAN2_ADD_PATH = 'tran2/add',
@@ -174,6 +180,8 @@ export enum RoutePathEnum {
   RULE_GROUP_UPDATE_PATH = 'ruleGroup/update',
   RULE_GROUP_DELETE_PATH = 'ruleGroup/delete',
   RULE_GROUP_GET_QUERY_PATH = 'ruleGroup/search',
+
+ 
 
   RULE_GET_PATH = 'rule/list',
   RULE_GET_BY_ID_PATH = 'rule/findRuleByRuleId',
@@ -283,4 +291,10 @@ export enum RoutePathEnum {
   IMPORT_REPORT_PATH = 'jReport/import',
   EXPORT_REPORT_PATH = 'jReport/export',
   REPORT_DELETE_PATH = 'jReport/delete',
+
+  GENERATE_TRANSAKSI_PATH = 'transaksi/generate',
+  TRANSAKSI_GET_PATH = 'jtransaksi/list',
+  IMPORT_TRANSAKSI_PATH = 'jtransaksi/import',
+  EXPORT_TRANSAKSI_PATH = 'jtransaksi/export',
+  TRANSAKSI_DELETE_PATH = 'jtransaksi/delete',
 }

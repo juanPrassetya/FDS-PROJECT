@@ -13,27 +13,27 @@ import { UserDomain } from '../user/domain/user.domain';
 import { ConfirmService } from '../../shared/services/confirm.service';
 import { AuthService } from '../../shared/services/auth.service';
 import { StringUtils } from '../../shared/utils/string.utils';
-import { Tran2State } from './state/tran2.state';
-import { Tran2Domain } from './domain/tran2.component';
-import { Tran2Service } from './service/tran2.service';
+import { ActionState } from './state/action.state';
+import { ActionDomain } from './domain/action.component';
+import { ActionService } from './service/action.service';
 import {
-  Tran2Add,
-  Tran2Delete,
-  Tran2Get,
-  Tran2GetQuery,
-  Tran2Update,
-} from './state/tran2.actions';
+  ActionAdd,
+  ActionDelete,
+  ActionGet,
+  ActionGetQuery,
+  ActionUpdate,
+} from './state/action.actions';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-tran2',
-  templateUrl: './tran2.component.html',
-  styleUrls: ['./tran2.component.css'],
+  selector: 'app-action',
+  templateUrl: './action.component.html',
+  styleUrls: ['./action.component.css'],
 })
-export class Tran2Component implements OnInit, OnDestroy {
+export class ActionComponent implements OnInit, OnDestroy {
   @Select(AuthState.userData) userData$!: Observable<UserDomain>;
-  @Select(Tran2State.data) tran2s$!: Observable<
-    Tran2Domain[]
+  @Select(ActionState.data) actions$!: Observable<
+    ActionDomain[]
   >;
 
   private destroyer$ = new Subject();
@@ -42,11 +42,11 @@ export class Tran2Component implements OnInit, OnDestroy {
 
   authorities: string[] = [];
 
-  selectedItem: Tran2Domain | undefined;
+  selectedItem: ActionDomain | undefined;
 
-  items: Array<Tran2Domain> = [];
+  items: Array<ActionDomain> = [];
 
-  visibleTran2Dialog: boolean = false;
+  visibleActionDialog: boolean = false;
 
   dialogMode: string = 'ADD';
   isLoading: boolean = true;
@@ -54,7 +54,7 @@ export class Tran2Component implements OnInit, OnDestroy {
   constructor(
     private store$: Store,
     private action$: Actions,
-    private tran2Service: Tran2Service,
+    private actionService: ActionService,
     private confirmService: ConfirmService,
     private authService: AuthService,
     private fb: FormBuilder
@@ -62,49 +62,49 @@ export class Tran2Component implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      tran2Name: [''],
+      actionName: [''],
     });
     this.authorities = this.authService.getAuthorities();
 
     this.userData$.pipe(takeUntil(this.destroyer$)).subscribe((data) => {
       if (data != undefined) {
-        if (this.store$.selectSnapshot(Tran2State.data).length > 0) {
+        if (this.store$.selectSnapshot(ActionState.data).length > 0) {
           this.isLoading = false;
         } else {
           this.isLoading = true;
-          this.tran2Service.onFetchTran2();
+          this.actionService.onFetchAction();
         }
       } else this.isLoading = false;
     });
 
-    this.tran2s$.pipe(takeUntil(this.destroyer$)).subscribe((data) => {
+    this.actions$.pipe(takeUntil(this.destroyer$)).subscribe((data) => {
       this.items = data;
     });
 
     this.action$
       .pipe(
         ofActionSuccessful(
-          Tran2Add,
-          Tran2Update,
-          Tran2Delete
+          ActionAdd,
+          ActionUpdate,
+          ActionDelete
         ),
         takeUntil(this.destroyer$)
       )
       .subscribe(() => {
         this.isLoading = true;
         this.selectedItem = undefined;
-        this.tran2Service.onFetchTran2();
+        this.actionService.onFetchAction();
       });
 
     this.action$
-      .pipe(ofActionCompleted(Tran2Get), takeUntil(this.destroyer$))
+      .pipe(ofActionCompleted(ActionGet), takeUntil(this.destroyer$))
       .subscribe(() => {
         this.isLoading = false;
       });
 
     this.action$
       .pipe(
-        ofActionErrored(Tran2Add, Tran2Update, Tran2Delete),
+        ofActionErrored(ActionAdd, ActionUpdate, ActionDelete),
         takeUntil(this.destroyer$)
       )
       .subscribe(() => {
@@ -112,13 +112,13 @@ export class Tran2Component implements OnInit, OnDestroy {
       });
 
       this.action$
-      .pipe(ofActionCompleted(Tran2GetQuery), takeUntil(this.destroyer$))
+      .pipe(ofActionCompleted(ActionGetQuery), takeUntil(this.destroyer$))
       .subscribe(() => {
         this.isLoading = false;
       });
 
       this.action$
-      .pipe(ofActionErrored(Tran2GetQuery), takeUntil(this.destroyer$))
+      .pipe(ofActionErrored(ActionGetQuery), takeUntil(this.destroyer$))
       .subscribe(() => {
         this.isLoading = false;
       });
@@ -136,7 +136,7 @@ export class Tran2Component implements OnInit, OnDestroy {
   onReset() {
     this.isLoading = true;
     this.formGroup.reset();
-    this.tran2Service.onFetchTran2();
+    this.actionService.onFetchAction();
   }
 
   onSearchClicked(data: any) {
@@ -147,13 +147,13 @@ export class Tran2Component implements OnInit, OnDestroy {
       if(controls.hasOwnProperty(controlName)) {
         const controlValue = controls[controlName].value;
         if(controlValue != null && controlValue != undefined && controlValue != '') {
-          this.tran2Service.onFetchTran2Query(data);
+          this.actionService.onFetchActionQuery(data);
           return
         }
       }
     }
 
-    this.tran2Service.onFetchTran2();
+    this.actionService.onFetchAction();
   }
 
   onListClicked() {}
@@ -164,25 +164,25 @@ export class Tran2Component implements OnInit, OnDestroy {
 
   onClickedAddListDialog() {
     this.dialogMode = 'ADD';
-    this.visibleTran2Dialog = true;
+    this.visibleActionDialog = true;
   }
 
   onClickedEditListDialog() {
     this.dialogMode = 'EDIT';
     this.isLoading = true;
-    this.visibleTran2Dialog = true;
+    this.visibleActionDialog = true;
   }
 
   onClickedDeleteList() {
     this.confirmService.showDialogConfirm(() => {
       this.isLoading = true;
-      this.tran2Service.onDeleteTran2(
+      this.actionService.onDeleteAction(
         Number(this.selectedItem?.id)
       );
     });
   }
 
   onCloseListDialog(stat: boolean) {
-    this.visibleTran2Dialog = stat;
+    this.visibleActionDialog = stat;
   }
 }

@@ -112,9 +112,7 @@
             <th pResizableColumn>Endpoint</th>
             <th pResizableColumn>Method</th>
             <th pResizableColumn>Status</th>
-            <th pResizableColumn>Elapsed Time</th>
-            <th pResizableColumn>Agent</th>
-            <th pResizableColumn></th>
+            
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product let-i="rowIndex">
@@ -127,8 +125,7 @@
             <td class="row-width">{{ product.uri }}</td>
             <td class="row-width">{{ product.method }}</td>
             <td class="row-width">{{ product.status }}</td>
-            <td class="row-width">{{ product.timeTaken }}</td>
-            <td class="row-width">{{ product.userAgent }}</td>
+           
             <td class="row-width-xs">
               <button
                 mat-raised-button

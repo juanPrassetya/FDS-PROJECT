@@ -54,6 +54,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     TransactionAddtDomain[]
   >;
 
+
   private destroyer$ = new Subject();
   private intervalId: any;
   protected readonly StringUtils = StringUtils;
@@ -140,16 +141,16 @@ export class TransactionComponent implements OnInit, OnDestroy {
   ];
 
   columns = [
-    {header: 'Name'},
-    {header: 'MTI'},
-    {header: 'HPAN'},
-    {header: 'Processing'},
-    {header: 'POS Entry'},
-    {header: 'Terminal'},
-    {header: 'Institution'},
-    {header: 'Last Modify'},
-    {header: 'Status'},
-    {header: ''}
+    {header: 'Username'},
+    {header: 'First Name'},
+    {header: 'Last Name'},
+    {header: 'Phone'},
+    {header: 'Group'},
+    {header: 'Password'},
+    {header: 'Role'},
+    {header: 'Role'},
+    {header: 'Role'},
+    
 
   ]
 

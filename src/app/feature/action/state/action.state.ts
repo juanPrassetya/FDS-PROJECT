@@ -2,38 +2,38 @@ import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {Injectable} from "@angular/core";
 import {NotificationService} from "../../../shared/services/notification.service";
 import {tap} from "rxjs";
-import { Tran2Domain } from "../domain/tran2.component";
-import { Tran2Service } from "../service/tran2.service";
-import {Tran2Add, Tran2Delete, Tran2Get, Tran2GetQuery, Tran2Update} from "./tran2.actions";
+import { ActionDomain } from "../domain/action.component";
+import { ActionService } from "../service/action.service";
+import {ActionAdd, ActionDelete, ActionGet, ActionGetQuery, ActionUpdate} from "./action.actions";
 
-export class Tran2StateModel {
-  data: Tran2Domain[] = [];
+export class ActionStateModel {
+  data: ActionDomain[] = [];
 }
 
-@State<Tran2StateModel>({
-  name: 'tran2State',
+@State<ActionStateModel>({
+  name: 'actionState',
   defaults: {
     data: [],
   }
 })
 
 @Injectable()
-export class Tran2State {
+export class ActionState {
 
   constructor(
-    private tran2Service: Tran2Service,
+    private actionService: ActionService,
     private notificationService: NotificationService
   ) {
   }
 
   @Selector()
-  static data(state: Tran2StateModel) {
+  static data(state: ActionStateModel) {
     return state.data
   }
 
-  @Action(Tran2Get, {cancelUncompleted: true})
-  getData(ctx: StateContext<Tran2StateModel>) {
-    return this.tran2Service.getTran2().pipe(
+  @Action(ActionGet, {cancelUncompleted: true})
+  getData(ctx: StateContext<ActionStateModel>) {
+    return this.actionService.getAction().pipe(
       tap(
         response => {
           ctx.setState({
@@ -48,9 +48,9 @@ export class Tran2State {
     )
   }
 
-  @Action(Tran2GetQuery, {cancelUncompleted: true})
-  getDataQuery(ctx: StateContext<Tran2StateModel>, {data}: Tran2GetQuery) {
-    return this.tran2Service.getTran2Query(data).pipe(
+  @Action(ActionGetQuery, {cancelUncompleted: true})
+  getDataQuery(ctx: StateContext<ActionStateModel>, {data}: ActionGetQuery) {
+    return this.actionService.getActionQuery(data).pipe(
       tap(
         response => {
           ctx.setState({
@@ -65,9 +65,9 @@ export class Tran2State {
     )
   }
 
-  @Action(Tran2Add, {cancelUncompleted: true})
-  addData(ctx: StateContext<Tran2StateModel>, {data}: Tran2Add) {
-    return this.tran2Service.addTran2(data).pipe(
+  @Action(ActionAdd, {cancelUncompleted: true})
+  addData(ctx: StateContext<ActionStateModel>, {data}: ActionAdd) {
+    return this.actionService.addAction(data).pipe(
       tap(
         response => {
           this.notificationService.successNotification(response.responseReason, response.responseMessage)
@@ -79,9 +79,9 @@ export class Tran2State {
     )
   }
 
-  @Action(Tran2Update, {cancelUncompleted: true})
-  updateData(ctx: StateContext<Tran2StateModel>, {currentName, data}: Tran2Update) {
-    return this.tran2Service.updateTran2(currentName, data).pipe(
+  @Action(ActionUpdate, {cancelUncompleted: true})
+  updateData(ctx: StateContext<ActionStateModel>, {currentName, data}: ActionUpdate) {
+    return this.actionService.updateAction(currentName, data).pipe(
       tap(
         response => {
           this.notificationService.successNotification(response.responseReason, response.responseMessage)
@@ -93,9 +93,9 @@ export class Tran2State {
     )
   }
 
-  @Action(Tran2Delete, {cancelUncompleted: true})
-  deleteData(ctx: StateContext<Tran2StateModel>, {id}: Tran2Delete) {
-    return this.tran2Service.deleteTran2(id).pipe(
+  @Action(ActionDelete, {cancelUncompleted: true})
+  deleteData(ctx: StateContext<ActionStateModel>, {id}: ActionDelete) {
+    return this.actionService.deleteAction(id).pipe(
       tap(
         response => {
           this.notificationService.successNotification(response.responseReason, response.responseMessage)

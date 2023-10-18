@@ -2,20 +2,20 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {Actions, ofActionCompleted, ofActionSuccessful} from "@ngxs/store";
 import {Subject, takeUntil} from "rxjs";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {Tran2Domain} from "../domain/tran2.component";
+import {ActionDomain} from "../domain/action.component";
 import { StringUtils } from 'src/app/shared/utils/string.utils';
-import { Tran2Service } from '../service/tran2.service';
-import { Tran2Add, Tran2Update } from '../state/tran2.actions';
+import { ActionService } from '../service/action.service';
+import { ActionAdd, ActionUpdate } from '../state/action.actions';
 
 @Component({
-  selector: 'app-tran2-dialog',
-  templateUrl: './tran2-dialog.component.html',
-  styleUrls: ['./tran2-dialog.component.css']
+  selector: 'app-action-dialog',
+  templateUrl: './action-dialog.component.html',
+  styleUrls: ['./action-dialog.component.css']
 })
-export class Tran2DialogComponent implements OnInit, OnDestroy {
+export class ActionDialogComponent implements OnInit, OnDestroy {
   @Input() isOpen: boolean = true
   @Input() dialogMode: string = 'ADD'
-  @Input() itemSelected: Tran2Domain | undefined
+  @Input() itemSelected: ActionDomain | undefined
   @Output() closeSelf = new EventEmitter<boolean>();
   @Output() isLoading = new EventEmitter<boolean>();
 
@@ -29,19 +29,19 @@ export class Tran2DialogComponent implements OnInit, OnDestroy {
   constructor(
     private action$: Actions,
     private fb: FormBuilder,
-    private tran2Service: Tran2Service
+    private actionService: ActionService
   ) {
   }
 
   ngOnInit() {
     this.form = this.fb.group({
-      tran2Name: ['', Validators.required],
+      actionName: ['', Validators.required],
       description: ['', Validators.required],
     })
 
     this.action$
       .pipe(
-        ofActionSuccessful(Tran2Add, Tran2Update),
+        ofActionSuccessful(ActionAdd, ActionUpdate),
         takeUntil(this.destroyer$)
       ).subscribe(() => { this.onClose() })
 
@@ -59,9 +59,9 @@ export class Tran2DialogComponent implements OnInit, OnDestroy {
 
   onDialogVisible() {
     if (this.dialogMode == 'EDIT') {
-      this.currentName = this.itemSelected != undefined ? this.itemSelected.tran2Name : ''
+      this.currentName = this.itemSelected != undefined ? this.itemSelected.actionName : ''
 
-      this.getNameField()?.setValue(this.itemSelected?.tran2Name)
+      this.getNameField()?.setValue(this.itemSelected?.actionName)
       this.getDescriptionField()?.setValue(this.itemSelected?.description)
     }
 
@@ -72,8 +72,8 @@ export class Tran2DialogComponent implements OnInit, OnDestroy {
     this.isLoading.emit(true)
 
     if (this.dialogMode == 'EDIT') {
-      this.tran2Service.onUpdateTran2(this.currentName, data)
-    } else this.tran2Service.onAddTran2(data)
+      this.actionService.onUpdateAction(this.currentName, data)
+    } else this.actionService.onAddAction(data)
   }
 
   onClose() {
@@ -87,7 +87,7 @@ export class Tran2DialogComponent implements OnInit, OnDestroy {
   }
 
   getNameField() {
-    return this.form.get('tran2Name')
+    return this.form.get('actionName')
   }
 
   getDescriptionField() {

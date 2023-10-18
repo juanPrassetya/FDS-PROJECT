@@ -1,0 +1,198 @@
+<div class="transaksi-main-container" id="test">
+
+    <div class="second-container">
+      <p-card class="table-card">
+        <p-table
+          #dt
+          [tableStyle]="{ 'min-width': '50rem' }"
+          [resizableColumns]="true"
+          [value]="dummyAlertType"
+          [paginator]="true"
+          [rowsPerPageOptions]="[15, 25, 50, 100, 250, 500]"
+          [scrollable]="true"
+          [rows]="15"
+          class="transaksi-table"
+          styleClass="p-datatable-sm p-datatable-gridlines"
+          dataKey="id"
+        >
+  
+          <ng-template pTemplate="caption">
+            <div class="header-table">
+              <span style="font-size: 0.8rem; padding-left: 1rem">Transactions Data</span>
+  
+              <div class="table-func-container-2">
+                <ng-template [ngIf]="StringUtils.findOperations(authorities, 'EXPORT_TRANSAKSI')">
+                  <button
+                    type="button"
+                    pButton
+                    pRipple
+                    class="btn-with-txt-prime"
+                    [disabled]="selectedItem == undefined"
+                    (click)="onGenerate()"
+                    matTooltip="Generate Transaksi"
+                    [matTooltipPosition]="'below'"
+                  >Generate Transaction
+                  </button>
+                </ng-template>
+  
+                <ng-template [ngIf]="StringUtils.findOperations(authorities, 'IMPORT_TRANSAKSI')">
+                  <button
+                    type="button"
+                    pButton
+                    pRipple
+                    icon="bx bx-import"
+                    (click)="onClickedImportTransaksi()"
+                    matTooltip="Import Transaksi"
+                    [matTooltipPosition]="'below'"
+                  ></button>
+                </ng-template>
+  
+                <ng-template [ngIf]="StringUtils.findOperations(authorities, 'DELETE_TRANSAKSI')">
+                  <button
+                    type="button" pButton pRipple
+                    icon="bx bx-trash-alt"
+                    (click)="onClickedDelete()"
+                    [disabled]="isGenerateJDisable()"
+                    matTooltip="Delete Transaksi"
+                    [matTooltipPosition]="'below'"
+                    class="p-button-danger"
+                  ></button>
+                </ng-template>
+              </div>
+            </div>
+          </ng-template>
+  
+          <ng-template pTemplate="header">
+            <tr>
+              <th pResizableColumn>Username</th>
+              <th pResizableColumn>First Name</th>
+              <th pResizableColumn>Last Name</th>
+              <th pResizableColumn>Phone</th>
+              <th pResizableColumn>Group</th>
+              <th pResizableColumn>Password</th>
+              <th pResizableColumn>Role</th>
+              <th pResizableColumn>Role</th>
+              <th pResizableColumn>Role</th>
+
+            </tr>
+          </ng-template>
+  
+          <!-- Main Table Body -->
+          <ng-template pTemplate="body" let-group let-expanded="expanded">
+            <tr [pSelectableRow]="group">
+              <td>
+                <div style="display: flex; align-items: center; gap: 0.5rem">
+                  <button
+                    mat-icon-button
+                    [pRowToggler]="group"
+                    class="toggle-btn-json"
+                  >
+                    <span style="opacity: .9;" [class]="expanded ? 'bx bx-folder-open' : 'bx bx-folder'"></span>
+                  </button>
+                  <span>{{ group.name }}</span>
+                  <span>{{ group.firstname }}</span>
+                  <span>{{ group.lastname }}</span>
+                  <span>{{ group.phone }}</span>
+                  <span>{{ group.group }}</span>
+                  <span>{{ group.password }}</span>
+                  <span>{{ group.role }}</span>
+                  <span>{{ group.role }}</span>
+                  <span>{{ group.role }}</span>
+
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+  
+          <!-- Row Expansion for States -->
+          <ng-template pTemplate="rowexpansion" let-group>
+            <tr>
+              <td colspan="1" style="padding: 0">
+                <p-table
+                  [value]="group.transaksiList"
+                  selectionMode="single"
+                  [(selection)]="selectedItem"
+                  (onRowSelect)="onSelectTransaksi(group)"
+                  (onRowUnselect)="onUnselectTransaksi()"
+                  dataKey="transaksiId"
+                  class="state-table"
+                >
+                
+                  <!-- Table Body for States -->
+                  <ng-template pTemplate="body" let-state>
+                    <tr class="row-state" [pSelectableRow]="state">
+                      <td class="row-expand" style="text-align: left">
+                        <div
+                          style="
+                            display: flex;
+                            align-items: center;
+                            gap: 0.5rem;
+                            padding-left: 2.5rem;
+                          "
+                        >
+                          <span class="bx bx-receipt" style="font-size: 1.2rem; opacity: .9"></span>
+                          <span>{{state.transaksiName}}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  </div>
+  
+  <ng-template [ngIf]="isLoading">
+    <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
+  </ng-template>
+  
+  <ng-template [ngIf]="visibleTransaksiImportDialog">
+    <!--Import Dialog transaksi-->
+    <app-transaksi-import
+      [isOpen]="visibleTransaksiImportDialog"
+      [itemSelected]="selectedItem"
+      (closeSelf)="onCloseImportTransaksi($event)"
+      (isLoading)="onLoading($event)"
+    ></app-transaksi-import>
+  </ng-template>
+  
+  
+  <ng-template [ngIf]="visibleGenerateDialog">
+    <app-generate-dialog
+      [isOpen]="visibleGenerateDialog"
+      [itemSelected]="selectedItem"
+      [groupItemSelected]="selectedGroupItem"
+      (closeSelf)="onCloseGenerateDialog($event)"
+      (isLoading)="onLoading($event)"></app-generate-dialog>
+  </ng-template>
+  
+  <ng-template [ngIf]="visibleTransaksi1 ">
+    <app-transaksi-1-dialog
+      [isOpen]="visibleTransaksi1"
+      [transaksiData]="transaksiData"
+      (closeSelf)="onCloseTransaksi1Dialog($event)"      
+      
+    ></app-transaksi-1-dialog>
+  </ng-template>
+  
+  <ng-template [ngIf]="visibleTransaksi2">
+    <app-transaksi-2-dialog
+      [isOpen]="visibleTransaksi2"
+      [transaksiData]="transaksiData"
+      (closeSelf)="onCloseTransaksi2Dialog($event)"
+    ></app-transaksi-2-dialog>
+  </ng-template>
+  
+  <ng-template [ngIf]="visibleTransaksi3">
+    <app-transaksi-3-dialog
+      [isOpen]="visibleTransaksi3"
+      [transaksiData]="transaksiData"
+      (closeSelf)="onCloseTransaksi3Dialog($event)"
+    ></app-transaksi-3-dialog>
+  </ng-template>
+  
+  
+  

@@ -1,4 +1,4 @@
-<div class="tran2-main-container">
+<div class="action-main-container">
     <div class="first-container">
       <p-card class="search-card">
         <div class="search-container" [formGroup]="formGroup">
@@ -12,11 +12,11 @@
                     class="input-sm"
                     pInputText
                     aria-describedby="username-help"
-                    formControlName="username"
+                    formControlName="name"
                   />
                 </div>
   
-                
+               
   
              
               </div>
@@ -64,17 +64,19 @@
           (onRowSelect)="onListClicked()"
           (onRowUnselect)="onListUnClicked()"
           dataKey="id"
-          class="tran2-table"
+          class="action-table"
           styleClass="p-datatable-sm p-datatable-gridlines"
         >
           <ng-template pTemplate="caption">
             <div class="header-table">
-             <b>Institution</b>
+              <span style="font-size: 0.8rem; padding-left: 1rem">
+                Action</span
+              >
   
               <div class="table-func-container-2">
                 <ng-template
                   [ngIf]="
-                    StringUtils.findOperations(authorities, 'ADD_TRAN2')
+                    StringUtils.findOperations(authorities, 'ADD_ACTION')
                   "
                 >
                   <button
@@ -83,7 +85,7 @@
                     pRipple
                     icon="bx bx-layer-plus"
                     (click)="onClickedAddListDialog()"
-                    matTooltip="Add Tran2"
+                    matTooltip="Add Action"
                     [matTooltipPosition]="'below'"
                   ></button>
                   <button
@@ -93,13 +95,13 @@
                     [disabled]="selectedItem == undefined"
                     icon="bx bx-edit"
                     (click)="onClickedEditListDialog()"
-                    matTooltip="Edit Tran2"
+                    matTooltip="Edit Action"
                     [matTooltipPosition]="'below'"
                   ></button>
                 </ng-template>
                 <ng-template
                   [ngIf]="
-                    StringUtils.findOperations(authorities, 'DELETE_TRAN2')
+                    StringUtils.findOperations(authorities, 'DELETE_ACTION')
                   "
                 >
                   <button
@@ -109,7 +111,7 @@
                     [disabled]="selectedItem == undefined"
                     icon="bx bx-trash-alt"
                     (click)="onClickedDeleteList()"
-                    matTooltip="Delete Tran2"
+                    matTooltip="Delete Action"
                     [matTooltipPosition]="'below'"
                     class="p-button-danger"
                   ></button>
@@ -120,10 +122,13 @@
   
           <ng-template pTemplate="header">
             <tr>
-              <th pResizableColumn>ID</th>
-              <th pResizableColumn> Name</th>
-              <th pResizableColumn>Description </th>
-              
+              <th pResizableColumn>PAN</th>
+              <th pResizableColumn>Cardholder Name</th>
+              <th pResizableColumn>issuer </th>
+              <th pResizableColumn>Comment</th>
+              <th pResizableColumn>External Version</th>
+              <th pResizableColumn>Internal Revision</th>
+              <th pResizableColumn>ATM Limit Max</th>
   
   
             </tr>
@@ -142,7 +147,7 @@
           </ng-template>
           <ng-template pTemplate="emptymessage">
             <tr style="">
-              <td colspan="6">There is no Institution.</td>
+              <td colspan="6">There is no Action.</td>
             </tr>
           </ng-template>
         </p-table>
@@ -154,13 +159,13 @@
     <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
   </ng-template>
   
-  <ng-template [ngIf]="visibleTran2Dialog">
-    <app-tran2-dialog
-      [isOpen]="visibleTran2Dialog"
+  <ng-template [ngIf]="visibleActionDialog">
+    <app-action-dialog
+      [isOpen]="visibleActionDialog"
       [itemSelected]="selectedItem"
       (closeSelf)="onCloseListDialog($event)"
       (isLoading)="onLoading($event)"
       [dialogMode]="dialogMode"
-    ></app-tran2-dialog>
+    ></app-action-dialog>
   </ng-template>
   

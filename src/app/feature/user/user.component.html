@@ -100,7 +100,7 @@
                   pRipple
                   icon="bx bx-layer-plus"
                   (click)="onClickedAddListDialog()"
-                  matTooltip="Add User"
+                  matTooltip="Create User"
                   [matTooltipPosition]="'below'"
                 ></button>
                 <button
@@ -196,9 +196,9 @@
   </div>
 </div>
 
-<ng-template [ngIf]="isLoading">
+<!-- <ng-template [ngIf]="isLoading">
   <app-overlay-loading [isLoading]="isLoading"></app-overlay-loading>
-</ng-template>
+</ng-template> -->
 
 <ng-template [ngIf]="visibleSearchDialog">
   <p-dialog

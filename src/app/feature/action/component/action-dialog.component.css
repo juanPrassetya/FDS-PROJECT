@@ -1,4 +1,4 @@
-.tran2-dialog-container {
+.action-dialog-container {
     @apply
     se-w-full
     se-flex se-flex-col se-gap-[30px]
@@ -37,7 +37,7 @@
   }
   
   /*NG DEEP*/
-  ::ng-deep .tran2-dialog .p-dialog-content {
+  ::ng-deep .action-dialog .p-dialog-content {
     /*overflow-y: unset !important;*/
   }
   
